@@ -187,6 +187,15 @@ CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
   FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
 );
 
+CREATE TABLE `demande` (
+  `id_sous` int(10) DEFAULT NULL,
+  `id_etud` int(10) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `autoriser` int(1) DEFAULT 0 COMMENT '1=Autoriser | 0= Non Autoriser'
+);
+
+
+
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
