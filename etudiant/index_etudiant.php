@@ -5,16 +5,12 @@ if ($_SESSION["role"] != "etudiant") {
     header("location:../authentification.php");
     exit;
 }
-
 include_once "../connexion.php";
 include_once "nav_bar.php";
 $sql_etud = "SELECT * FROM etudiant WHERE email = '$email' ;";
 $etud_qry = mysqli_query($conn, $sql_etud);
 $row_etud = mysqli_fetch_assoc($etud_qry);
-
 ?>
-<!DOCTYPE html>
-<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -53,52 +49,40 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
         </div>
         <div class="container">
 <div class="b-example-divider"></div>
-
-        <div style="overflow-x:auto;">
-          
+    <div style="overflow-x:auto;">
         <div class="row">
                 <?php
-                
                 $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'";
                 $req = mysqli_query($conn, $req_ens_mail);
                 if (mysqli_num_rows($req) == 0) {
                     echo "Il n'y a pas encore de matières ajoutées !";
                 } else {
                   $i=0;
-                  $list_colors = array('primary', 'info', 'success', 'warning');
-                              
-                    while ($row = mysqli_fetch_assoc($req)) {
-                        ?>
-                    
-                     
+                  $list_colors = array('primary', 'info', 'success', 'warning');        
+                  while ($row = mysqli_fetch_assoc($req)) {
+              ?>
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $list_colors[$i] ?> card-img-holder text-white">
-                  
                   <div class="card-body"  onclick="redirectToDetails(<?php echo $row['id_matiere'] ?>)" >
                     <h3 class="mb-5"><?= $row['libelle'] ?>            <?= $row['code'] ?></h3>
                     <h6 class="card-text"> filiere : <?= $row['specialite'] ?></h6>
                   </div>
                   <footer class="footer">
-            <div class="container-fluid d-flex justify-content-between">
+              <div class="container-fluid d-flex justify-content-between">
             </div>
-          </footer>
-                </div>
-              </div>
-   
-                <?php
-                   if ($i ==3){
-                     
-                    $i=-1;
-                   }
-                     
-                   $i++;  
-                    }
-
-                }
-                ?>
-             </div>
         </div>
-        </div>
+    </div>
+    <?php
+if ($i ==3){
+    $i=-1;
+    }
+  $i++;  
+  }
+}
+?>
+</div>
+ </div>
+</div>
        
   <br>
 
@@ -108,7 +92,4 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
             window.location.href = "soumission_etu_par_matiere.php?id_matiere=" + id_matiere ;
         }
     </script>
-  
-</body>
 
-</html>

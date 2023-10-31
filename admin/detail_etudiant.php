@@ -21,15 +21,15 @@ while($row=mysqli_fetch_assoc($req)){
 <div class="main-panel">
     <div class="content-wrapper">
     <div class="row">
-            <div class="col-md-8 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
+          <div class="col-md-9 grid-margin">
+            <div class="card">
+                <div class="card-body">
                     <h4>Détails sur l'etudiant <?= $row['nom']." ".$row['prenom']?> : </h4>
                     <br>
                     <h4 class="font-weight-normal mb-3">
-                            <?php echo "<strong class='font-weight-bold'>Matricule : </strong>". $row['matricule']; ?><br>
-                            <?php echo "<strong class='font-weight-bold'>Nom : </strong>". $row['nom']; ?><br>
-                            <?php echo " <strong class='font-weight-bold'>Prenom : </strong>" . $row['prenom']; ?><br>
+                            <?php echo "<strong class='font-weight-bold'><p>Matricule : ". $row['matricule'] ."</p></strong>" ?>
+                            <?php echo "<strong class='font-weight-bold'><p>Nom : </strong>". $row['nom']."</p></strong>" ?>
+                            <?php echo " <strong class='font-weight-bold'>Prénom : </strong>" . $row['prenom']."</p></strong>" ?><br>
                             <?php echo "<strong class='font-weight-bold'>Date de naissance : </strong>".$row['Date_naiss']; ?><br>
                             <?php echo "<strong class='font-weight-bold'>Lieu de naissance : </strong>". $row['lieu_naiss']; ?><br>
                             <?php echo "<strong class='font-weight-bold'>E-mail : </strong>".$row['email']; ?><br>
@@ -38,10 +38,8 @@ while($row=mysqli_fetch_assoc($req)){
                             <?php echo "<strong class='font-weight-bold'>Groupe : </strong>".$row['libelle']; ?>
                     </h4>
                     <p>
-                    <a href="etudiant.php" class="btn btn-light" >Retour</a>
+                    <a href="etudiant.php" class="btn btn-primary" >Retour</a>
                     </p>
-                    <!-- <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6> -->
                   </div>
                 </div>
               </div>

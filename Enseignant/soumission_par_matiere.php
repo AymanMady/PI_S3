@@ -228,7 +228,6 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
 
             ?>
 
- 
 
     </div>       
 

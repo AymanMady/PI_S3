@@ -21,7 +21,6 @@ include "../nav_bar.php";
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            
             <ol class="breadcrumb">
             <li><a href="#">Acceuil</a></li>
             <li>Reclemation</li>
@@ -34,9 +33,7 @@ include "../nav_bar.php";
             <div class="col-md-6">
                 <textarea name="description_sous" id="" class = "form-control" cols="30" rows="10"></textarea>
             </div>
-            
         </div>
-        
         <div class="form-group">
             
                     <div class="col-md-offset-2 col-md-10">

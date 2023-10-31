@@ -1,15 +1,9 @@
-
-
 <?php
  session_start() ;
  $email = $_SESSION['email'];
  if($_SESSION["role"]!="ens"){
      header("location:../authentification.php");
  }
- //*********************************************************************** */
-//  if (isset($_SESSION['id_matirer'])){
-//     session_unset($_SESSION['id_matirer']);
-// }
 
  include_once "../connexion.php";
 
@@ -17,9 +11,6 @@ $sql_ens = "SELECT * FROM enseignant WHERE enseignant.email ='$email'";
 $req_ens = mysqli_query($conn , $sql_ens);
 $row_ens = mysqli_fetch_assoc($req_ens);
 
-
-?>
-<?php
 include "nav_bar.php";
 ?>
 
