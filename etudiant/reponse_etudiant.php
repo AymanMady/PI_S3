@@ -1,3 +1,4 @@
+
 <?php 
  session_start() ;
  $email = $_SESSION['email'];
@@ -6,7 +7,10 @@
  }
 
 include_once "../connexion.php";
+?>
 
+<?php
+include "nav_bar.php";
 
 if(!empty($_GET['id_sous'])){
     $id_sous = $_GET['id_sous'];
@@ -80,45 +84,40 @@ if (isset($_POST['button'])) {
     }
 }
 }
-include "nav_bar.php";
 
 ?>
-<div class="container">
-    <div class="row">
-    
-    </div>
-   
-<div class="form-horizontal">
-    <br /><br />
-    <p class="erreur_message">
-            <?php 
-            if(isset($message)){
-                echo $message;
-            }
-            ?>
 
-        </p>
-        <form action="" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label class="col-md-1">Description </label>
-            <div class="col-md-6">
-                <textarea name="description_sous" id="" class = "form-control" cols="30" rows="10"></textarea>
+    
+            <div class="form-horizontal">
+                <br />
+                <p class="erreur_message">
+                        <?php 
+                        if(isset($message)){
+                            echo $message;
+                        }
+                        ?>
+
+                    </p>
             </div>
-        </div>
-        <div class="form-group">
-                    <label class="col-md-1">Sélectionnez un fichier : </label>
-                    <div class="col-md-6">
-                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+
+            
+            <div class="col-md-5 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleInputUsername1" class="col-md-4">Description : </label>
+                                <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ></textarea>
+                            </div>
+                                <div class="form-group ">
+                                <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
+                                        <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
+                                </div>
+                        </form>
                     </div>
                 </div>
-                <div id="newElementId"></div>
-                <br><br><br>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" name="button" value="Enregistrer" class="btn-primary" />
-                    </div>
-                </div>
-</form>
+            </div>
+
 
 <?php
 }else{
@@ -184,71 +183,46 @@ include "nav_bar.php";
     $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";
     $req1 = mysqli_query($conn , $sql);
     $row = mysqli_fetch_assoc($req1);
-    include "nav_bar.php";
       
 ?>
-</br></br></br>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+        
 
- <div class="content-wrapper">
-    
- <div style="overflow-x:auto;">
-    <div class="row" >
-    <div class="col-md-6">
-               
-                    <fieldset class="fsStyle" style="width: 2000px;">
-                       
-                       
+                <div class="col-md-5 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
                             <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="search-box">
-                                        <div class="col-md-4 col-sm-2">
-                                            <div class="form-group " style="width: 600px;">
-                                                <label class="col-md-4">Description : </label>
-                                                <br><br>
-                                                <div class="col-md-5" style="width: 350px;">
-                                                    <textarea name="description_sous" id="" class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
-                                                </div>
-                                         
-                                            </div>
-                                        </div>
-                                     </div>
-                                     <div class="search-box">
-                                        <div class="col-md-5 col-sm-2">
-                                            <div class="form-group " style="width: 700px;">
-                                            <label class="col-md-4" style="margin-top: 30px;">Sélectionnez un fichier : </label>
-                                                <br><br>
-                                                <div class="col-md-5" style="width: 350px;">
-                                                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
-                                                  
-                                                </div>
-                                         
-                                            </div>
-                                            <div class="form-group" style="margin-left:100px; ">
-                                                    <div class="col-md-6" style="margin-top: 50px;">
-                                                        <input type="submit" name="button" value="Enregistrer" class="btn-primary" />
-                                                        
-                                                    </div>
-                                                    </div>
-                                        </div>
-                                     </div>
-                 </div>
-                 <div class="col-md-9 stretch-card grid-margin" style="height: 500px;width:600px">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                     <br><strong style="top: 2;left: 0;color:aqua"  >Le(s) liste(s) de Fichier(s)</strong><br>
-                <div >
-                <?php
-                    
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1" class="col-md-4">Description : </label>
+                                    <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
+                                </div>
+                                    <div class="form-group ">
+                                    <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
+                                            <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-7 grid-margin">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Le(s) liste(s) de Fichier(s)</p>
+                            <?php
+                                
                                 $sql2 = "select * from fichiers_reponses,reponses,etudiant where fichiers_reponses.id_rep=reponses.id_rep and reponses.id_etud=etudiant.id_etud AND email='$email' And reponses.id_sous= '$id_sous';";
                                 $req2 = mysqli_query($conn,$sql2);
                                 if(mysqli_num_rows($req2) == 0){
-                                    ?>
-                        <div>
-                        <?php
+                            ?>
+                                <?php
                                     echo "Il n'y a pas des fichier ajouter !" ;
-                                    ?>
-                                       
-                        </div>
-                        </div>
-                        <?php
+                                 ?>
+                                <ul style="list-style: none;">
+                                <?php
                                 }else {
                                     while($row2=mysqli_fetch_assoc($req2)){
                                         ?>
@@ -256,54 +230,48 @@ include "nav_bar.php";
                                         $file_name = $row2['nom_fichiere']; 
                                         $id_rep = $row2['id_rep'];
                                         ?>
-                                        <div style="display: flex ; justify-content: center;align-items: center;">
-                                        <div>
-                                        <p><?=$row2['nom_fichiere']?></p>
-                                        </div>
-                                        <div>
+                                          <li style="list-style: none;">
+                                          <?=$row2['nom_fichiere']?>
                                         <?php 
                                         $test=explode(".",$file_name);
                                         if( $test[1]=="pdf"){
                                         ?>
-                                        <a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Voir</a>
-                                        </div>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>"> Voir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <?php 
                                         }
                                         else{
                                             ?>
-                                            <a >Voir</a>
-                                            </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a >Voir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <?php 
                                             }
                                         
                                         ?>
-                                        <div>
-                                        <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
-                                        </div>
-                                        <div>
+                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                         <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>"><img style="width: 18px; margin-left:110px; " title="Supprimer" src="images/close.png" alt=""></a>
-                                        </div>
-                                        
-
-
+                                        </li>
                                         <br>
-                                        <br> <br>
+
                                         <?php
                                     }
                                 }
                             ?> 
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                            
-                <br>
-    
-    
-    
 
-    
+                <div class="form-group" >
+                    <div class="col-md-6" >
+                        <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />  
+                    </div>
+                </div>
+            </div>
+  
+         </div>
     </div>
-</div>
-</div>
-</div>
+</div>  
+
+
 <?php
 if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
     echo "<script>
@@ -322,3 +290,5 @@ if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] ==
 }
   
 ?>
+
+

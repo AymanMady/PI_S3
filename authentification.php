@@ -23,16 +23,16 @@ include_once("controller.php");
                             if (count($errors) > 0) {
                                 foreach ($errors as $displayErrors) {
                             ?>
-                                    <div><?php echo $displayErrors; ?></div>
+                                    <div class="form-group me-4 ms-4"><?php echo $displayErrors; ?></div>
                             <?php
                                 }
                             }
                             ?>
                             <div class="form-group me-4 ms-4">
-                                <input type="email" name="email" class="form-control form-control-sm " id="exampleInputEmail1" placeholder="Adresse e-mail">
+                                <input type="email" name="email" class="form-control form-control-sm " id="exampleInputEmail1" placeholder="Adresse e-mail" required>
                             </div>
                             <div class="form-group  me-4 ms-4">
-                                <input type="password" name="password" class="form-control form-control-sm " id="exampleInputPassword1" placeholder="Mot de passe">
+                                <input type="password" name="password" class="form-control form-control-sm " id="exampleInputPassword1" placeholder="Mot de passe" required>
                             </div>
                             <div class="mt-3">
                                 <center>
