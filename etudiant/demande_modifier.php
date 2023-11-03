@@ -58,7 +58,7 @@ if ($_SESSION["role"] != "etudiant") {
                         </p>
                       <form action="" method="POST" class="forms-sample">
                       <div class="form-group">
-                            <label>Description : </label>
+                            <label>Justification : </label>
                             <div class="col-md-12">
                                 <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
                             </div>

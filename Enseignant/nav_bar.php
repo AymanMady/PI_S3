@@ -73,7 +73,8 @@
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
                 <h6 class="p-3 mb-0">Messages</h6>
                 <?php
-                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud;");
+                
+                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud   ;");
                 while ($row2 = mysqli_fetch_array($req2)) {
                   ?>
                 <div class="dropdown-divider"></div>
@@ -83,6 +84,8 @@
                     <p class="text-gray mb-0">  </p>
                   </div>
                 </a>
+                <div class="dropdown-divider"></div>
+                <a href="messages.php" class="dropdown-item preview-item "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
                 <?php 
                 }
                 ?>

@@ -10,13 +10,11 @@ include_once "../connexion.php";
 ?>
 
 <?php
-include "nav_bar.php";
 
 if(!empty($_GET['id_sous'])){
     $id_sous = $_GET['id_sous'];
 }else{
     $id_sous= $_SESSION['id_sous'];
-
 }
 
 ?>
@@ -24,7 +22,7 @@ if(!empty($_GET['id_sous'])){
 
 
 <?php
-    $sql = "select * from reponses where id_sous = ' $id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
+$sql = "select * from reponses where id_sous = ' $id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
 $req = mysqli_query($conn,$sql);
 
 if (mysqli_num_rows($req) == 0) { 
@@ -84,39 +82,40 @@ if (isset($_POST['button'])) {
     }
 }
 }
+include "nav_bar.php";
 
 ?>
 
-    
-            <div class="form-horizontal">
-                <br />
-                <p class="erreur_message">
-                        <?php 
-                        if(isset($message)){
-                            echo $message;
-                        }
-                        ?>
 
-                    </p>
-            </div>
+<div class="form-horizontal">
+    <br />
+    <p class="erreur_message">
+            <?php 
+            if(isset($message)){
+                echo $message;
+            }
+            ?>
 
-            
-            <div class="col-md-5 grid-margin">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="exampleInputUsername1" class="col-md-4">Description : </label>
-                                <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ></textarea>
-                            </div>
-                                <div class="form-group ">
-                                <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
-                                        <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
-                                </div>
-                        </form>
-                    </div>
+        </p>
+</div>
+
+
+<div class="col-md-5 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputUsername1" class="col-md-4">Description : </label>
+                    <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ></textarea>
                 </div>
-            </div>
+                    <div class="form-group ">
+                    <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
+                            <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <?php
@@ -183,7 +182,8 @@ if (isset($_POST['button'])) {
     $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";
     $req1 = mysqli_query($conn , $sql);
     $row = mysqli_fetch_assoc($req1);
-      
+  
+include "nav_bar.php";
 ?>
 <div class="content-wrapper">
     <div class="container">
@@ -196,13 +196,12 @@ if (isset($_POST['button'])) {
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="exampleInputUsername1" class="col-md-4">Description : </label>
-                                    <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
+                                    <textarea id="exampleInputUsername1" name="description_sous"  class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
                                 </div>
                                     <div class="form-group ">
                                     <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
                                             <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
                                     </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -266,10 +265,13 @@ if (isset($_POST['button'])) {
                     </div>
                 </div>
             </div>
-  
+            </form>
+
          </div>
     </div>
 </div>  
+
+
 
 
 <?php
@@ -287,8 +289,8 @@ if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] ==
     // Supprimer l'indicateur de succès de la session
     unset($_SESSION['suppression_reussi']);
   }
+ 
 }
-  
 ?>
 
 
