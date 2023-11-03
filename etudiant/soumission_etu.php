@@ -39,6 +39,7 @@
             <h4>
             <p><?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?></p>
             <p><?php echo "<strong>Description : </strong>". $row['description_sous'];  ?></p>
+            <p><?php echo "<strong>Pour plus des informations   : </strong>". $row['person_contact'];  ?></p>
             <p><?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
             <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
             </h4>
@@ -110,52 +111,64 @@
         </div>
     </div>
     <?php  
-    $req_detail = "SELECT `status`   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)    ";
+    $req_detail = "SELECT `status`, `date_fin`   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)    ";
     $req11 = mysqli_query($conn , $req_detail);
     $row12=mysqli_fetch_assoc($req11);
+    $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+    $req3 = mysqli_query($conn , $req_detail3);
     $sql = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
     $req = mysqli_query($conn,$sql);
     $req_detail2 = "SELECT  `autoriser`  FROM soumission , demande  WHERE soumission.id_sous = $id_sous and (status=0 or status=1)  and soumission.id_sous = demande.id_sous and demande.id_etud = (select id_etud from etudiant where email = '$email') and autoriser = 1 ";
     $req2 = mysqli_query($conn , $req_detail2);
     $row2=mysqli_fetch_assoc($req2);
-    if( $req2 == false){
-    if (mysqli_num_rows($req) == 0 and $row12['status'] == 0   ) {
-        ?>
-        <p>
-            <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
-        </p>
-        <?php
+      if(  $row12['status']==0 and mysqli_num_rows($req3) > 0){
+        if (mysqli_num_rows($req) == 0   ) {
+            ?>
+            <p>
+                <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
+            </p>
+            <?php
         }
-        if(mysqli_num_rows($req) != 0 and $row12['status']==0  ){
-        ?>
-        <p>
-            <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
-        </p>
-        <?php
+        if(mysqli_num_rows($req) != 0  ){
+            ?>
+            <p>
+                <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
+            </p>
+            <?php
         }
-    }elseif(    $req2 == true     ) {
-    if (mysqli_num_rows($req) == 0 and $row12['status'] == 0   ) {
-    ?>
-    <p>
-        <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
-    </p>
-    <?php
-    }
-    if(mysqli_num_rows($req) != 0 and $row12['status']==0  ){
-    ?>
-    <p>
-        <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
-    </p>
-    <?php
-    }
-    }else{
-    ?>
-    <p>
-        <a href="demande_modifier.php?id_sous=<?=$id_sous?>" class="btn btn-primary">demande de faire une modification</a>
-    </p>
-    <?php
-    }
-    ?> 
+        }elseif(mysqli_num_rows($req2) > 0){
+            if($row2['autoriser'] == 1){
+            if (mysqli_num_rows($req) == 0    ) {
+                ?>
+                <p>
+                    <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
+                </p>
+                <?php
+            }
+            if(mysqli_num_rows($req) != 0   ){
+                ?>
+                <p>
+                    <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
+                </p>
+            <?php
+            }
+            }else{
+                ?>
+                    <p>
+                        <a href="demande_modifier.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Demande de faire une modification</a>
+                    </p>
+                <?php
+            }
+        }else{
+            ?>
+                <p>
+                    <a href="demande_modifier.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Demande de faire une modification</a>
+                </p>
+            <?php
+        }
+
+
+  ?>
 </div>
 <?php
 if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {

@@ -29,13 +29,11 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
          <h3 class="page-title">
            <span class="page-title-icon bg-gradient-primary text-white me-2">
              <i class="mdi mdi-home"></i>
-           </span>   Les matières inscrites par l'étudiant &nbsp;&nbsp;<a> <?php echo $row_etud['nom']." ".$row_etud['prenom'] ?> </a>
          </h3>
        </div>
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                  
                     <li></li>
                 </ol>
             </div>

@@ -87,7 +87,8 @@ CREATE TABLE `type_soumission`(
 CREATE TABLE `soumission` (
 `id_sous` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `titre_sous` varchar(50),
-`description_sous` varchar(50),
+`description_sous` varchar(50) ,
+`person_contact` varchar(100) DEFAULT NULL,
 `id_ens` int(10) ,
 `date_debut` datetime NOT NULL,
 `date_fin` datetime NOT NULL,
@@ -191,7 +192,9 @@ CREATE TABLE `demande` (
   `id_sous` int(10) DEFAULT NULL,
   `id_etud` int(10) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
-  `autoriser` int(1) DEFAULT 0 COMMENT '1=Autoriser | 0= Non Autoriser'
+  `autoriser` int(1) DEFAULT 0 COMMENT '1=Autoriser | 0= Non Autoriser',
+  FOREIGN KEY (id_sous) REFERENCES soumission(id_sous),
+  FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
 

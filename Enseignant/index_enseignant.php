@@ -21,14 +21,9 @@ include "nav_bar.php";
         background-color: aliceblue;
     }
 </style>
+
 <div class="container">
-    <div class="row">
-        <div class="col-lg-12"> 
-            <ol class="breadcrumb">
-                <li><a>Les matières enseignées par l'enseignant <?php echo $row_ens['nom'] ." ".$row_ens['prenom'] ?> </a></li>     
-            </ol>
-        </div>
-    </div>
+
 <div style="overflow-x:auto;"  >
     <div class="row">
             

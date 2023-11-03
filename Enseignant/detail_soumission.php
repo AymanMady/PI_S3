@@ -49,6 +49,7 @@ if($_SESSION["role"]!="ens"){
                   <div class="card-body">
                     <p> <?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?></p>
                     <p><?php echo "<strong>Description : </strong>". $row['description_sous'];  ?></p>
+                    <p><?php echo "<strong>Pour plus des informations   : </strong>". $row['person_contact'];  ?></p>
                     <p><?php echo "<strong>Code de la matière : </strong>". $row['code']; ?></p>
                     <p> <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
                     <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
