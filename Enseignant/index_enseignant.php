@@ -30,8 +30,6 @@ include "nav_bar.php";
         </div>
     </div>
 <div style="overflow-x:auto;"  >
-
-
     <div class="row">
             
           <?php 
@@ -39,7 +37,7 @@ include "nav_bar.php";
               $req_ens_mail =  "SELECT matiere.*,semestre.* FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
               $i = 0;
               $list_colors = array("success","info","secondary","primary");
-              $list_colors_hover = array("#24b2d016","#dfe9f7","#dfe9f7","rgba(163, 93, 255, 0.15)");
+              $list_colors_hover = array("#24b2d016","#dfe9f7","#dfe9f7","#A35DFF0.15");
 
               $req = mysqli_query($conn , $req_ens_mail);
 
@@ -53,7 +51,7 @@ include "nav_bar.php";
                     <div class="col-md-4 stretch-card grid-margin">
                         <div class="card bg-gradient-<?php echo $list_colors[$i]?> card-img-holder text-white">
  <!--                       l'id ma kan ymchi m3a le lien ga3          -->
-                            <a href="soumission_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $list_colors[$i] ?>&color_hover=<?php echo $list_colors_hover[$i]?>" style="text-decoration: none;" class="text-white">
+                                <a href="soumission_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $list_colors[$i] ?>&color_hover=<?php echo urlencode($list_colors_hover[$i])?>" style="text-decoration: none;" class="text-white">
                                 <div class="card-body">
                                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                     <h4 class="mb-5" onclick="redirectToDetails(<?php echo $row['id_matiere']; ?>)">
@@ -67,7 +65,7 @@ include "nav_bar.php";
                         
                     <?php
                     if($i== 3){
-                        $i = 0;
+                        $i = -1;
                       }
                     $i++;
 

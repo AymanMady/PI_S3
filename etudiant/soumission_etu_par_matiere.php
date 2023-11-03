@@ -13,6 +13,8 @@ $sql1="select * from matiere where id_matiere=$id_matiere";
 $sql2 = mysqli_query($conn , $sql1);
 $row1 =  mysqli_fetch_assoc($sql2);
 
+$color = $_GET['color'];
+
 ?>
 
 <head>
@@ -57,7 +59,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
           <div class="page-header">
             <div class="row">
               <div class="col-md-3.5 stretch-card grid-margin" >
-                <div class="card bg-gradient-danger card-img-holder text-white" >
+                <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white" >
                   <div class="card-body" >
                     <h4 class="mb-5">Les soumission sur le matiere  <?php echo "". $row1['libelle'].""." " ?></h4>
                     <h6 class="card-text"></h6>
@@ -80,7 +82,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
               <div class="col-md-14 stretch-card grid-margin" >
                 <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                   <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
-                    <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                    <div class="btn-gradient-<?php echo $color ?>"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
                       <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
                     </div>
                     <div >

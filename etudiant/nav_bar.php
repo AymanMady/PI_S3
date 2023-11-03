@@ -29,7 +29,6 @@
            width: 200px;
            margin-top: 10px;
        }
-      
        </style>
   </head>
   <body>
@@ -61,6 +60,12 @@
     </form>
   </div>
   <ul class="navbar-nav navbar-nav-right">
+    <li class="nav-item d-none d-lg-block full-screen-link">
+        <a class="nav-link">
+          <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+        </a>
+    </li>
+
   <li class="nav-item nav-profile dropdown">
     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
     <div class="nav-profile-img">
@@ -72,10 +77,6 @@
     </div>
     </a>
     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                                    
-        <!-- <div class="container mt-12"> </div> -->
-
-
         <div class="logo">
             
                     <img title="<?=$row['nom']." ".$row['prenom']?>" 
@@ -88,10 +89,10 @@
                     <p><?=$row['email']?></p>
             </a>
             </div>
-    <a class="dropdown-item" href="#">
+    <a class="dropdown-item text-black btn-fw" href="#">
         Gérer votre compte
     </a>
-    <a class="dropdown-item" href="../supprimer_session.php">
+    <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
         <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
     </a>
     </div>

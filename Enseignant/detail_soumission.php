@@ -6,7 +6,6 @@ if($_SESSION["role"]!="ens"){
     header("location:authentification.php");
     
 }
-
 ?>
 <?php
     include "nav_bar.php";
@@ -109,10 +108,23 @@ if($_SESSION["role"]!="ens"){
             ?>
         </div>
   
-
+<?php
+    if(isset($_GET['color']) && isset($_GET['id_matiere'])){
+        $color = $_GET['color'];
+        $id_matiere = $_GET['id_matiere']
+        ?>
+        <p>
+            <a href="soumission_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $color ?>" class="btn btn-primary">Retour</a>
+        </p>
+        <?php
+    }else{
+        ?>
         <p>
             <a href="soumission_en_ligne.php" class="btn btn-primary">Retour</a>
         </p>
+        <?php
+    }
+?>
 
     </div>
 </div>

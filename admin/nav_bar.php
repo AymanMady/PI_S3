@@ -52,7 +52,7 @@
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="../supprimer_session.php">
+                <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
                   <i class="mdi mdi-logout me-2 text-primary"></i> Déconnexion </a>
               </div>
             </li>

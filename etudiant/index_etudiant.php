@@ -12,26 +12,19 @@ $etud_qry = mysqli_query($conn, $sql_etud);
 $row_etud = mysqli_fetch_assoc($etud_qry);
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <style>
         .card-body:hover {
             cursor: pointer;
         }
-
-       
     </style>
 </head>
 
 <body>
   
  
+<div class="content-wrapper">
+    <div class="content">
 
-   <!-- partiel -->
-   <div class="main-panel">
-     <div class="content-wrapper">
        <div class="page-header">
          <h3 class="page-title">
            <span class="page-title-icon bg-gradient-primary text-white me-2">
@@ -47,45 +40,43 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
                 </ol>
             </div>
         </div>
-        <div class="container">
-<div class="b-example-divider"></div>
-    <div style="overflow-x:auto;">
-        <div class="row">
-                <?php
-                $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'";
-                $req = mysqli_query($conn, $req_ens_mail);
-                if (mysqli_num_rows($req) == 0) {
-                    echo "Il n'y a pas encore de matières ajoutées !";
-                } else {
-                  $i=0;
-                  $list_colors = array('primary', 'info', 'success', 'warning');        
-                  while ($row = mysqli_fetch_assoc($req)) {
-              ?>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-<?php echo $list_colors[$i] ?> card-img-holder text-white">
-                  <div class="card-body"  onclick="redirectToDetails(<?php echo $row['id_matiere'] ?>)" >
-                    <h3 class="mb-5"><?= $row['libelle'] ?>            <?= $row['code'] ?></h3>
-                    <h6 class="card-text"> filiere : <?= $row['specialite'] ?></h6>
-                  </div>
-                  <footer class="footer">
-              <div class="container-fluid d-flex justify-content-between">
-            </div>
+        <div class="content">
+                <div class="row">
+                        <?php
+                        $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'";
+                        $req = mysqli_query($conn, $req_ens_mail);
+                        if (mysqli_num_rows($req) == 0) {
+                            echo "Il n'y a pas encore de matières ajoutées !";
+                        } else {
+                          $i=0;
+                          $list_colors = array('primary', 'info', 'success', 'secondary');        
+                          while ($row = mysqli_fetch_assoc($req)) {
+                      ?>
+                      <div class="col-md-4 stretch-card grid-margin">
+                        <div class="card bg-gradient-<?php echo $list_colors[$i] ?> card-img-holder text-white">
+                            <a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $list_colors[$i] ?>" style="text-decoration: none;" class="text-white">
+                              <div class="card-body"  onclick="redirectToDetails(<?php echo $row['id_matiere'] ?>)" >
+                              <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                                <h3 class="mb-5"><?= $row['libelle'] ?> <?= $row['code'] ?></h3>
+                                <h6 class="card-text"> filiere : <?= $row['specialite'] ?></h6>
+                              </div>
+                            </a>
+                        </div>
+                     </div>
+              <?php
+          if ($i ==3){
+              $i=-1;
+              }
+            $i++;  
+            }
+          }
+          ?>
         </div>
-    </div>
-    <?php
-if ($i ==3){
-    $i=-1;
-    }
-  $i++;  
-  }
-}
-?>
+     </div>
 </div>
- </div>
 </div>
-       
-  <br>
 
+       
   
     <script>
         function redirectToDetails(id_matiere,test) {

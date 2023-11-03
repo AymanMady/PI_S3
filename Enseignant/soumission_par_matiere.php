@@ -4,12 +4,7 @@
 // echo $color_hover;
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
     <style>
            tr:hover {
             cursor: pointer;
@@ -17,8 +12,7 @@
         }
         .div-hover:hover {
           background-color: #dfe9f7;
-          background-color: <?php echo $color_hover; ?>;
-           /* background-color: #24b2d016; */
+          background-color: <?php $color_hover; ?>;           /* background-color: #24b2d016; */
           cursor: pointer; /* Changer le curseur de la souris */
         }
         .div-hover{
@@ -29,9 +23,6 @@
 
         
     </style>
-
-</head>
-<body>
     
 
 
@@ -51,6 +42,7 @@ else{
  }
  $color = $_GET["color"];
  $color_hover = $_GET["color_hover"];
+ 
 
  include_once "../connexion.php";
  include "nav_bar.php";
@@ -223,8 +215,6 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
 
 
     <?php 
-         
-
 
             ?>
 
@@ -237,7 +227,7 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="mb-5" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['libelle_matiere']." ".$row['titre_sous']?></h4>
+                    <h4 class="mb-5"><?=$row['libelle_matiere']." ".$row['titre_sous']?></h4>
                     <h6 class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['nom']." ".$row['prenom']?></h6>
                     <div class="md-2">
                     </div>
@@ -261,7 +251,7 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                     <div col-md-12>
  
                         <div class="btn-group ">
-                        <h5 class="" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['nom']." ".$row['prenom']?> a publié un nouveau support de cours &nbsp;: <?=$row['titre_sous']?>
+                        <h5 class="" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['nom']." ".$row['prenom']?> a publié un nouveau support de cours &nbsp;: <?=$row['titre_sous']?>&nbsp; 
                         
                         </h5>
                         </div>
@@ -279,7 +269,7 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                             <i class="mdi mdi-dots-vertical"  style="font-size: 35px; margin-right:30px;"></i>
                         </div>
                         <h5 class="dropdown-menu">
-                          <a class="dropdown-item" href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a>
+                          <a class="dropdown-item" href="detail_soumission.php?id_sous=<?=$row['id_sous']?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Detaille</a>
                           <a class="dropdown-item" href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a>
                           <a class="dropdown-item" href="archiver_soumission_en_ligne.php?id_sous=<?=$row['id_sous']?>" id="archiver">Archiver</a>
                         </h5>
@@ -332,15 +322,6 @@ liensArchiver.forEach(function(lien) {
       confirmButtonText: "Archiver"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: "Archive réussie !",
-        //   text: "La soumission a été archiver avec succès.",
-        //   icon: "success",
-        //   confirmButtonColor: "#3099d6",
-        //   confirmButtonText: "OK",
-        //   showConfirmButton: true
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
             window.location.href = this.href; 
           }
         });
