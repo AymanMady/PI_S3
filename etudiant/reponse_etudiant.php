@@ -6,6 +6,8 @@
      header("location:../authentification.php");
  }
 
+
+
 include_once "../connexion.php";
 ?>
 
@@ -17,6 +19,11 @@ if(!empty($_GET['id_sous'])){
     $id_sous= $_SESSION['id_sous'];
 }
 
+
+if(!isset($_SESSION['autorisation']) && $_SESSION['autorisation'] != true){
+    $_SESSION['id_sous'] = $id_sous;
+    header("location:soumission_etu.php");
+ }
 ?>
  
 
@@ -25,7 +32,7 @@ if(!empty($_GET['id_sous'])){
 $sql = "select * from reponses where id_sous = ' $id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
 $req = mysqli_query($conn,$sql);
 
-if (mysqli_num_rows($req) == 0) { 
+if (mysqli_num_rows($req) == 0 ) { 
 
 function test_input($data)
 {
@@ -76,19 +83,23 @@ if (isset($_POST['button'])) {
             if($req1 and $req2){
                 $_SESSION['id_sous'] = $id_sous;
                 $_SESSION['ajout_reussi'] = true;
-                header("location:soumission_etu.php");
+                header("location:reponse_etudiant.php");
             }
         }
     }
 }
 }
+
+
 include "nav_bar.php";
 
 ?>
 
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
 
 <div class="form-horizontal">
-    <br />
     <p class="erreur_message">
             <?php 
             if(isset($message)){
@@ -100,24 +111,36 @@ include "nav_bar.php";
 </div>
 
 
-<div class="col-md-5 grid-margin">
+<div class="col-md-12 grid-margin">
     <div class="card">
         <div class="card-body">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="exampleInputUsername1" class="col-md-4">Description : </label>
+                    <label >Description : </label>
+                    <div class="col-md-6" >
                     <textarea id="exampleInputUsername1" name="description_sous" id="" class = "form-control" cols="30" rows="10" ></textarea>
-                </div>
-                    <div class="form-group ">
-                    <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
-                            <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
                     </div>
+                </div>
+                <div class="form-group ">
+                    <label   >Sélectionnez un fichier : </label>
+                    <div class="col-md-6" >
+                    <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                    </div> 
+                </div>
+                <div class="form-group" >
+                    <div class="col-md-6" >
+                        <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />  
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
 
+        </div>
+    </div>
+</div>
 <?php
 }else{
     function test_input($data){
@@ -128,7 +151,7 @@ include "nav_bar.php";
         return $data;
     }
  
-    if (isset($_POST['button'])) {
+if (isset($_POST['button'])) {
         $descri=test_input($_POST['description_sous']);
         $files = $_FILES['file'];
         if( !empty($descri) or !empty($files) ){
@@ -168,9 +191,10 @@ include "nav_bar.php";
 
                 
                 if($req1 && $req2){
+                    unset($_SESSION['autorisation']);   
                     $_SESSION['id_sous'] = $id_sous;
                     $_SESSION['ajout_reussi'] = true;
-                    header("location:soumission_etu.php");
+                    header("location:reponse_etudiant.php");
                 }else{
                     mysqli_connect_error();
                 }
@@ -178,118 +202,142 @@ include "nav_bar.php";
             }
         }
     }
+}
+
+if (isset($_POST['confirmer'])) {
+
+    $sql="UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
+
+    $req1 = mysqli_query($conn,$sql);
+
+    if($req1 ){
+        $_SESSION['autorisation'] = false;
+        unset($_SESSION['autorisation']);
+        $_SESSION['id_sous'] = $id_sous;
+        $_SESSION['ajout_reussi'] = true;
+        header("location:soumission_etu.php");
+    }else{
+        echo "il y'a un erreur ! ";
     }
+}
+
+include "nav_bar.php";
+
     $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";
     $req1 = mysqli_query($conn , $sql);
     $row = mysqli_fetch_assoc($req1);
   
-include "nav_bar.php";
 ?>
 <div class="content-wrapper">
     <div class="container">
         <div class="row">
-        
 
-                <div class="col-md-5 grid-margin">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1" class="col-md-4">Description : </label>
-                                    <textarea id="exampleInputUsername1" name="description_sous"  class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
-                                </div>
-                                    <div class="form-group ">
-                                    <label for="exampleInputUsername1"  >Sélectionnez un fichier : </label>
-                                            <input type="file" id="fichier" name="file[]" class="form-control" multiple> 
-                                    </div>
+            <div class="col-md-5 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="exampleInputUsername1" class="col-md-4">Description : </label>
+                                <textarea id="exampleInputUsername1" name="description_sous" class="form-control" cols="30" rows="10"><?=$row['description_rep']?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Sélectionnez un fichier : </label>
+                                <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-
                 <div class="col-md-7 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Le(s) liste(s) de Fichier(s)</p>
+                            <p class="card-title">La liste des Fichiers</p>
                             <?php
-                                
-                                $sql2 = "select * from fichiers_reponses,reponses,etudiant where fichiers_reponses.id_rep=reponses.id_rep and reponses.id_etud=etudiant.id_etud AND email='$email' And reponses.id_sous= '$id_sous';";
-                                $req2 = mysqli_query($conn,$sql2);
-                                if(mysqli_num_rows($req2) == 0){
+                                $sql2 = "SELECT * FROM fichiers_reponses, reponses, etudiant WHERE fichiers_reponses.id_rep = reponses.id_rep AND reponses.id_etud = etudiant.id_etud AND email = '$email' AND reponses.id_sous = '$id_sous';";
+                                $req2 = mysqli_query($conn, $sql2);
+                                if (mysqli_num_rows($req2) == 0) {
                             ?>
                                 <?php
-                                    echo "Il n'y a pas des fichier ajouter !" ;
-                                 ?>
+                                    echo "Il n'y a pas de fichier ajouté !";
+                                ?>
                                 <ul style="list-style: none;">
-                                <?php
-                                }else {
-                                    while($row2=mysqli_fetch_assoc($req2)){
-                                        ?>
-                                        <?php 
-                                        $file_name = $row2['nom_fichiere']; 
+                            <?php
+                            } else {
+                                while ($row2 = mysqli_fetch_assoc($req2)) {
+                            ?>
+                                    <?php
+                                        $file_name = $row2['nom_fichiere'];
                                         $id_rep = $row2['id_rep'];
-                                        ?>
-                                          <li style="list-style: none;">
-                                          <?=$row2['nom_fichiere']?>
-                                        <?php 
-                                        $test=explode(".",$file_name);
-                                        if( $test[1]=="pdf"){
-                                        ?>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>"> Voir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <?php 
-                                        }
-                                        else{
-                                            ?>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a >Voir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <?php 
-                                            }
-                                        
-                                        ?>
-                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
-                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>"><img style="width: 18px; margin-left:110px; " title="Supprimer" src="images/close.png" alt=""></a>
-                                        </li>
-                                        <br>
-
+                                    ?>
+                                    <li style="list-style: none;">
+                                        <?=$row2['nom_fichiere']?>
                                         <?php
-                                    }
+                                            $test = explode(".", $file_name);
+                                            if ($test[1] == "pdf") {
+                                        ?>
+                                            &nbsp;<a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Voir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <?php
+                                            } else {
+                                        ?>
+                                            &nbsp;<a>Voir</a>&nbsp;
+                                        <?php
+                                            }
+                                        ?>
+                                        &nbsp;<a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Télécharger</a>&nbsp;&nbsp;
+                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>"><img style="width: 18px;" title="Supprimer" src="../images/close.png" alt=""></a>
+                                    </li>
+                                    <br>
+                            <?php
                                 }
-                            ?> 
+                            }
+                            ?>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group" >
-                    <div class="col-md-6" >
-                        <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />  
+                <div class="form-group">
+                    <div class="col-md-12" style="display: flex; justify-content: space-between;">
+                        <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />
+                        <button type="submit" name="confirmer" class="btn btn-gradient-danger btn-icon-text"><i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail</button>
                     </div>
                 </div>
+
             </div>
             </form>
-
-         </div>
+        </div>
     </div>
-</div>  
-
-
-
+</div>
 
 <?php
 if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
     echo "<script>
     Swal.fire({
-        title: 'clôture réussi !',
-        text: 'Le fichier a été supprimer avec succès.',
+        title: 'Suppression réussie !',
+        text: 'Le fichier a été supprimé avec succès.',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
     });
     </script>";
-  
+
     // Supprimer l'indicateur de succès de la session
     unset($_SESSION['suppression_reussi']);
-  }
- 
+}
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'L'enregistrement réussi !',
+        text: 'La réponse a été ajoutée avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+}
+
 }
 ?>
 

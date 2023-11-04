@@ -13,8 +13,6 @@ $sql1="select * from matiere where id_matiere=$id_matiere";
 $sql2 = mysqli_query($conn , $sql1);
 $row1 =  mysqli_fetch_assoc($sql2);
 
-$color = $_GET['color'];
-
 ?>
 
 <head>
@@ -44,6 +42,9 @@ $color = $_GET['color'];
       border: 1px solid rgb(209, 206, 206);
       border-radius: 5px;
     }
+    #statu :hover{
+      background-color: red;
+    }
 
     </style>
 
@@ -52,37 +53,74 @@ $color = $_GET['color'];
  
       <!-- partial:partials/_navbar.html -->
       
- 
+ <?php
+$enline="outline-primary";
+$cloture="outline-primary";
+
+$req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  (status=0  status=1) and date_debut <= Now()";
+$req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  (status=0 or status=1) and date_debut <= Now()";
+
+if(isset($_POST['cloture'])){
+  $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  status=1 and date_debut <= Now()";
+  $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and   status=1 and date_debut <= Now()";
+  $enline="outline-primary";
+  $cloture="primary";
+  
+}
+else if(isset($_POST['enline'])){
+$req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  status=0 and date_debut <= Now()";
+$req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and status=0   and date_debut <= Now()";
+
+
+
+$enline="primary";
+$cloture="outline-primary";
+}
+
+
+?>
   
         <div class="main-panel">
           <div class="content-wrapper">
           <div class="page-header">
             <div class="row">
               <div class="col-md-3.5 stretch-card grid-margin" >
-                <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white" >
+                <div class="card bg-gradient-danger card-img-holder text-white" >
                   <div class="card-body" >
                     <h4 class="mb-5">Les soumission sur le matiere  <?php echo "". $row1['libelle'].""." " ?></h4>
-                    <h6 class="card-text"></h6>
+                    <form method="post">
+                    <input type="submit"id="statu" class="btn btn-<?php echo $enline ;?> p-2" name="enline" value="Les soumissions en ligne">
+                    
+                    <!-- <button type="button" class="btn btn-outline-primary p-2">Primary</button> -->
+
+                      <input type="submit"id="statu" class="btn btn-<?php echo $cloture ;?> p-2 " name="cloture" value="Les soumissions cloturer">
+                    </form>
+
+                    
                   </div>
                 </div>
               </div>
            
-    <?php
-
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and ( status=0  or status=1) and date_debut <= Now()";
+<?php
     $req = mysqli_query($conn , $req_detail);
     if (mysqli_num_rows($req) > 0) {
 
     while($row=mysqli_fetch_assoc($req)){
         ?>
+        
         <tr >
         
        
            
-              <div class="col-md-14 stretch-card grid-margin" >
+             
+  
+<?php
+      
+            ?>
+        <div class="col-md-14 stretch-card grid-margin" >
                 <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                   <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
-                    <div class="btn-gradient-<?php echo $color ?>"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                    <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
                       <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
                     </div>
                     <div >
@@ -93,12 +131,33 @@ $color = $_GET['color'];
                 </div>
               </div>
               </div>
-  
-<?php
-   
+              <?PHP
+
+      }
+      
     }
-    
-}
+    else{
+
+      ?>
+
+<div class="col-md-14 stretch-card grid-margin" >
+                <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
+                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
+                    <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
+                    </div>
+                    <div >
+                      
+                      <p class="m-0"> il n'ya  pas des soumissions  </p> 
+                    </div>
+                </div>
+              </div>
+              </div>
+
+      <?php
+    }
+   
+
     ?>
     </div>
     </div>
@@ -122,4 +181,7 @@ $color = $_GET['color'];
       function redirectToDetails(id_sous) {
             window.location.href = "soumission_etu.php?id_sous=" + id_sous;
         }
+
+
+        
 </script>
