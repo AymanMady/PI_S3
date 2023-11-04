@@ -23,6 +23,11 @@
     <!-- Fin des styles de mise en page -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
 
+    <!-- css for table-data -->
+    <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="CSS/data_table.css">
+    <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
+    <!-- end css for table-data -->
     <style>
        
        .logo{
@@ -73,9 +78,12 @@
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
                 <h6 class="p-3 mb-0">Messages</h6>
                 <?php
-                
-                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud   ;");
+                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule,date_fin, NOW() as time_now FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud;");
                 while ($row2 = mysqli_fetch_array($req2)) {
+                  if($row2['date_fin'] < $row2['time_now']){
+                    $req3 = mysqli_query($conn, "delete from demande");
+                  }
+
                   ?>
                 <div class="btn btn-outline-light text-black btn-fw"></div>
                 <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item text-black btn-fw ">
@@ -197,5 +205,20 @@
             
           }
      ?>
+
+
+
+    <!-- JS for table-data -->
+    <script src="JS/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+
+    <!-- end JS for table-data -->
   </body>
 </html>

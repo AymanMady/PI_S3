@@ -172,6 +172,7 @@ CREATE TABLE reponses(
   description_rep varchar(200),
   date datetime DEFAULT NOW(), 
   render bool DEFAULT 0,
+  confirmer bool DEFAULT 0,
   note float(10) DEFAULT 0,
   id_sous INT(10) not NULL,
   id_etud INT(10) not NULL,
