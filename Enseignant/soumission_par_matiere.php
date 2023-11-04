@@ -18,10 +18,7 @@
         .div-hover{
           border: 1px solid rgb(209, 206, 206);
           border-radius: 5px;
-        }
-
-
-        
+        } 
     </style>
     
 
@@ -195,7 +192,7 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="mb-5" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row_mat['libelle']?></h4>
+                    <h4 class="mb-5" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?= $row_mat['libelle'] ?></h4>
                     <h6 ></h6>
                     <div class="md-2">
                     </div>

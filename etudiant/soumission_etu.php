@@ -13,6 +13,8 @@
 <title>Detailler matiere par enseignant </title>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="../JS/sweetalert2.js"></script>
+
 
 <div class="content-wrapper">
 
@@ -184,6 +186,26 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
     // Supprimer l'indicateur de succès de la session
     unset($_SESSION['ajout_reussi']);
   }
+?>
+
+
+<?php
+if (isset($_SESSION['demande_reussi']) && $_SESSION['demande_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Démande réussi !',
+        text: 'La démande a été envoyer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+  
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['demande_reussi']);
+  }
+  
+
 ?>
          </div>
       </div>

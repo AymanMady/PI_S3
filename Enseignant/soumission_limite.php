@@ -191,7 +191,7 @@ if (isset($_SESSION['prolongement_reussi']) && $_SESSION['prolongement_reussi'] 
   </script>";
 
   // Supprimer l'indicateur de succès de la session
-  unset($_SESSION['prolongement_reussi']);
+  unset($_SESSION['prolongement_reussi']); 
 }
 
 ?>

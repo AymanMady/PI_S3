@@ -110,12 +110,12 @@ if($_SESSION["role"]!="ens"){
         </div>
   
 <?php
-    if(isset($_GET['color']) && isset($_GET['id_matiere'])){
+    if(isset($_GET['color']) ){
         $color = $_GET['color'];
-        $id_matiere = $_GET['id_matiere']
+        $id_matiere=$_GET['id_matiere'];
         ?>
         <p>
-            <a href="soumission_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $color ?>" class="btn btn-primary">Retour</a>
+            <a href="soumission_par_matiere.php?id_matiere=<?php echo "$id_matiere"; ?>&color=<?php echo $color ?>" class="btn btn-primary">Retour</a>
         </p>
         <?php
     }else{

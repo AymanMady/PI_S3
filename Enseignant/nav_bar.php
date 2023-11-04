@@ -66,7 +66,7 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link count-indicator dropdown-toggle " id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-email-outline"></i>
                 <span class="count-symbol bg-warning"></span>
               </a>
@@ -78,14 +78,14 @@
                 while ($row2 = mysqli_fetch_array($req2)) {
                   ?>
                 <div class="btn btn-outline-light text-black btn-fw"></div>
-                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item preview-item ">
+                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item text-black btn-fw ">
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                     <p ><?php echo $row2['nom'] . ' ' . $row2['prenom']. '(' .$row2['matricule'].')'; ?><br> demande de faire une modification <br> sur la soumission <?php echo $row2['titre_sous'] ; ?> </p>
                     <p class="text-gray mb-0">  </p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="messages.php" class="dropdown-item preview-item "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
+                <a href="messages.php" class="dropdown-item text-black btn-fw "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
                 <?php 
                 }
                 ?>

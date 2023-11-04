@@ -15,6 +15,9 @@ $semestre_qry = mysqli_query($conn, $semestre);
 $type_sous = "SELECT * FROM type_soumission";
 $type_sous_qry = mysqli_query($conn, $type_sous);
 
+$persone_contact = "SELECT * FROM enseignant";
+$persone_contact_qry = mysqli_query($conn, $persone_contact);
+
 
 function test_input($data)
 {
@@ -36,73 +39,81 @@ if (isset($_POST['button'])) {
     $titre = test_input($_POST['titre_sous']);
     $descri = test_input($_POST['description_sous']);
 
-    $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`,`person_contact`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`,`id_type_sous`) VALUES 
-    ('$titre', '$descri','$personC',(SELECT id_ens FROM enseignant
-     WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere,'$type')";
-    $req1 = mysqli_query($conn, $sql1);
 
-    $id_sous = mysqli_insert_id($conn);
-    foreach ($files['tmp_name'] as $key => $tmp_name) {
-        $file_name = $files['name'][$key];
-        $file_tmp = $files['tmp_name'][$key];
-        $file_size = $files['size'][$key];
-        $file_error = $files['error'][$key];
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    // Vérifiez si la date de début est supérieure ou égale à la date de fin
+    if (strtotime($date_debut) >= strtotime($date_fin)) {
+        $message = "La date de début doit être antérieure à la date de fin. Veuillez corriger les dates.";
+    } else {
 
-        if ($file_error === 0) {
-            $new_file_name = uniqid('', true) . '.' . $file_ext;
+        $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`,`person_contact`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`,`id_type_sous`) VALUES 
+        ('$titre', '$descri','$personC',(SELECT id_ens FROM enseignant
+        WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere,'$type')";
+        $req1 = mysqli_query($conn, $sql1);
 
-			$sql3 = "SELECT code FROM matiere WHERE matiere.id_matiere = '$id_matiere'";
-			$code_matiere_result = mysqli_query($conn, $sql3);
-			$row = mysqli_fetch_assoc($code_matiere_result);
-			$code_matire = $row['code'];
-            $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
+        $id_sous = mysqli_insert_id($conn);
+        foreach ($files['tmp_name'] as $key => $tmp_name) {
+            $file_name = $files['name'][$key];
+            $file_tmp = $files['tmp_name'][$key];
+            $file_size = $files['size'][$key];
+            $file_error = $files['error'][$key];
+            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-            // Créer le dossier s'il n'exist pas
-            if (!is_dir($matiere_directory)) {
-                mkdir($matiere_directory, 0777, true);
-            }
+            if ($file_error === 0) {
+                $new_file_name = uniqid('', true) . '.' . $file_ext;
 
-            // Chemin complet 
-            $destination = $matiere_directory . '/' . $new_file_name;
-            move_uploaded_file($file_tmp, $destination);
+                $sql3 = "SELECT code FROM matiere WHERE matiere.id_matiere = '$id_matiere'";
+                $code_matiere_result = mysqli_query($conn, $sql3);
+                $row = mysqli_fetch_assoc($code_matiere_result);
+                $code_matire = $row['code'];
+                $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
 
-            // Insérer les info dans la base de donnéez
-            $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
-            $req2 = mysqli_query($conn, $sql2);
-            if($req1 and $req2){
-                $sql_tou="SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
-                $req_tou=mysqli_query($conn,$sql_tou);
-                // while($row_tou=mysqli_fetch_assoc($req_tou)){
-                //     $id_etud=$row_tou['id_etud'];
-                //     $sql_tout="SELECT * FROM `etudiant` where id_etud=$id_etud";
-                //     $req_tout=mysqli_query($conn,$sql_tout);
-                //     $row_tout=mysqli_fetch_assoc( $req_tout);
-                //     $subject = "il ya une soumission  ";
-                //     $message = "date de debus de test est $date_debut   
-                //     alors que date de fin est $date_debut ";
-                //     //  $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
-                //         // $ch = curl_init($url);
-                // curl_setopt_array($ch, [
-                //    CURLOPT_RETURNTRANSFER => true,
-                //    CURLOPT_FOLLOWLOCATION => true,
-                //    CURLOPT_POSTFIELDS => http_build_query([
-                //       "recipient" =>$row_tout['matricule'],
-                //       "subject"   =>$subject,
-                //       "body"      =>$message
-                //    ])
-                // ]); 
-                //    $result = curl_exec($ch);
-                  
+                // Créer le dossier s'il n'exist pas
+                if (!is_dir($matiere_directory)) {
+                    mkdir($matiere_directory, 0777, true);
+                }
 
-                // }
-                // if ($result) {
-                header("location:soumission_en_ligne.php");
-                $_SESSION['ajout_reussi'] = true;
-                // }
+                // Chemin complet 
+                $destination = $matiere_directory . '/' . $new_file_name;
+                move_uploaded_file($file_tmp, $destination);
+
+                // Insérer les info dans la base de donnéez
+                $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
+                $req2 = mysqli_query($conn, $sql2);
+                if($req1 and $req2){
+                    $sql_tou="SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                    $req_tou=mysqli_query($conn,$sql_tou);
+                    // while($row_tou=mysqli_fetch_assoc($req_tou)){
+                    //     $id_etud=$row_tou['id_etud'];
+                    //     $sql_tout="SELECT * FROM `etudiant` where id_etud=$id_etud";
+                    //     $req_tout=mysqli_query($conn,$sql_tout);
+                    //     $row_tout=mysqli_fetch_assoc( $req_tout);
+                    //     $subject = "il ya une soumission  ";
+                    //     $message = "date de debus de test est $date_debut   
+                    //     alors que date de fin est $date_debut ";
+                    //     //  $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
+                    //         // $ch = curl_init($url);
+                    // curl_setopt_array($ch, [
+                    //    CURLOPT_RETURNTRANSFER => true,
+                    //    CURLOPT_FOLLOWLOCATION => true,
+                    //    CURLOPT_POSTFIELDS => http_build_query([
+                    //       "recipient" =>$row_tout['matricule'],
+                    //       "subject"   =>$subject,
+                    //       "body"      =>$message
+                    //    ])
+                    // ]); 
+                    //    $result = curl_exec($ch);
+                    
+
+                    // }
+                    // if ($result) {
+                    header("location:soumission_en_ligne.php");
+                    $_SESSION['ajout_reussi'] = true;
+                    // }
+                }
             }
         }
     }
+
 }
 
 include "nav_bar.php";
@@ -116,7 +127,6 @@ include "nav_bar.php";
     }
 </script>
 
-<div class="main-panel">
 <div class="content-wrapper">
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
@@ -127,7 +137,13 @@ include "nav_bar.php";
                     <p class="erreur_message">
                         <?php
                         if (isset($message)) {
-                            echo $message;
+                            ?>
+                            <div class="alert alert-danger" id="success-alert" >
+                                <!-- <span aria-hidden="true">&times;</span> -->
+                                <?php echo $message; ?>
+                            </div>
+
+                        <?php
                         }
                         ?>
                     </p>
@@ -175,8 +191,13 @@ include "nav_bar.php";
                 </div>
                 <div class="form-group">
                     <label >Personne à contacter</label>
-                    <div class="col-md-6">
-                        <input type="test" name="personC" value="<?php echo $email;?>" class="form-control">
+                    <div class="col-md-12">
+                        <select class="form-control" id="academic" value="<?php echo $email;?>" name="personC">
+                            <option selected > <?php echo $email;?> </option>
+                            <?php while ($row_persone_contact = mysqli_fetch_assoc($persone_contact_qry)) : ?>
+                                <option value="<?= $row_persone_contact['id_ens']; ?>"> <?= $row_persone_contact['email']; ?> </option>
+                            <?php endwhile; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -204,5 +225,4 @@ include "nav_bar.php";
               </div>
         </div>
     </div>
-    </div>
-</div>
+
