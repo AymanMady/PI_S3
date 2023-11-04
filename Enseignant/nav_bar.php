@@ -23,11 +23,6 @@
     <!-- Fin des styles de mise en page -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
 
-    <!-- css for table-data -->
-    <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="CSS/data_table.css">
-    <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
-    <!-- end css for table-data -->
     <style>
        
        .logo{
@@ -71,38 +66,32 @@
               </a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle " id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="mdi mdi-email-outline"></i>
                 <span class="count-symbol bg-warning"></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
                 <h6 class="p-3 mb-0">Messages</h6>
                 <?php
-                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule,date_fin, NOW() as time_now FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud;");
+                
+                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud   ;");
                 while ($row2 = mysqli_fetch_array($req2)) {
-                  if($row2['date_fin'] < $row2['time_now']){
-                    $req3 = mysqli_query($conn, "delete from demande");
-                  }
-
                   ?>
-                <div class="btn btn-outline-light text-black btn-fw"></div>
-                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item text-black btn-fw ">
+                <div class="dropdown-divider"></div>
+                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item preview-item ">
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                     <p ><?php echo $row2['nom'] . ' ' . $row2['prenom']. '(' .$row2['matricule'].')'; ?><br> demande de faire une modification <br> sur la soumission <?php echo $row2['titre_sous'] ; ?> </p>
                     <p class="text-gray mb-0">  </p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="messages.php" class="dropdown-item text-black btn-fw "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
+                <a href="messages.php" class="dropdown-item preview-item "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
                 <?php 
                 }
                 ?>
                 <div class="dropdown-divider"></div>
               </div>
             </li>
-
-
-
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
@@ -114,6 +103,10 @@
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                                               
+                  <!-- <div class="container mt-12"> </div> -->
+
+
                   <div class="logo">
                      
                              <img title="<?=$row['nom']." ".$row['prenom']?>" 
@@ -126,12 +119,12 @@
                               <p><?=$row['email']?></p>
                         </a>
                       </div>
-                      <a class="dropdown-item text-black btn-fw" href="#">
-                          Gérer votre compte
-                      </a>
-                      <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
-                        <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
-                      </a>
+                <a class="dropdown-item" href="#">
+                    Gérer votre compte
+                </a>
+                <a class="dropdown-item" href="../supprimer_session.php">
+                  <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
+                </a>
               </div>
             </li>
           </ul>
@@ -145,7 +138,7 @@
           <ul class="nav">
 
             <li class="nav-item">
-              <a class="nav-link" href="index_enseignant.php">
+              <a class="nav-link" href="choix_semester.php">
                 <span class="menu-title">Accueil</span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
@@ -164,13 +157,6 @@
                   <li class="nav-item"> <a class="nav-link" href="soumission_archiver.php"> Soumission archifer </a></li>
                 </ul>
               </div>
-            </li>
-           
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="menu-title">Notes</span>
-                <i class="mdi mdi-clipboard-text menu-icon"></i>
-              </a>
             </li>
           </ul>
         </nav>
@@ -205,20 +191,5 @@
             
           }
      ?>
-
-
-
-    <!-- JS for table-data -->
-    <script src="JS/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
-    </script>
-
-    <!-- end JS for table-data -->
   </body>
 </html>
