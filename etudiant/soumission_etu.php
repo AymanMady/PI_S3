@@ -34,7 +34,35 @@
     $req = mysqli_query($conn , $req_detail);
     mysqli_num_rows($req);
 
+
+    if (isset($_SESSION['temp_fin']) && ($_SESSION['temp_fin'] === true)) {
+        echo "<div class='alert alert-danger' id='success-alert' >
+        L'heure spécifiée pour l'examen est déjà écoulée.
+                        </div>";
+      
+        // Supprimer l'indicateur de succès de la session
+        unset($_SESSION['temp_fin']); 
+      } 
+      if (isset($_SESSION['temp_finni']) && ($_SESSION['temp_finni'] === true)) {
+        echo "<div class='alert alert-danger' id='success-alert' >
+        L'enregistrement précédent n'a pas été pris en compte car le temps imparti était écoulé.
+                        </div>";
+      
+        // Supprimer l'indicateur de succès de la session
+        unset($_SESSION['temp_finni']);
+      } 
+      if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === true)) {
+        echo "<div class='alert alert-danger' id='success-alert' >
+        L'envoi du message a échoué car le temps a expiré.
+                        </div>";
+      
+        // Supprimer l'indicateur de succès de la session
+        unset($_SESSION['modification_fin']);
+      } 
+
     while($row=mysqli_fetch_assoc($req)){
+
+
     ?>     
     <div class="col-md-5 grid-margin">
     <div class="card">
@@ -133,7 +161,7 @@
                 $_SESSION['autorisation'] = true;
                 ?>
                 <p>
-                    <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
+                    <a href="automatisation.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
                 </p>
                 <?php
             }else{
@@ -159,7 +187,7 @@
                 $_SESSION['autorisation'] = true;
                 ?>
                 <p>
-                    <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
+                    <a href="automatisation.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
                 </p>
                 <?php
             }else{

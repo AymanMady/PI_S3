@@ -128,7 +128,6 @@ soumission ,matiere,enseignant,enseigner,type_soumission
 
 
 $req1 = mysqli_query($conn , $req_sous1);
-$row = mysqli_fetch_array($req1);
 
 
 $req_sous2 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM
@@ -214,7 +213,6 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
             <ol class="breadcrumb">
                     
                 </li>
-                <li><h4>Les soumissions en ligne dans la matière <?php echo $row_mat['libelle']; ?></h4></li>
                    
             </ol>
         </div>
@@ -234,8 +232,8 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="mb-5"><?=$row['libelle_matiere']." ".$row['titre_sous']?></h4>
-                    <h6 class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['nom']." ".$row['prenom']?></h6>
+                    <h4 class="mb-5"><?=$row_mat['libelle']." "?></h4>
+                    <h6 class="click" ></h6>
                     <div class="md-2">
                     </div>
                     
