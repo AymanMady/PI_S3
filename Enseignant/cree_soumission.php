@@ -209,7 +209,7 @@ include "nav_bar.php";
                 <div class="form-group">
                     <label >Sélectionnez un ou plusieurs fichier(s) : </label>
                     <div class="col-md-12">
-                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                        <input type="file" id="fichier" name="file[]" class="form-control" multiple required>
                     </div>
                 </div>
                 <div id="newElementId"></div>

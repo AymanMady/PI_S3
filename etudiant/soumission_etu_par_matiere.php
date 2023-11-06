@@ -125,8 +125,8 @@ $cloture="outline-primary";
                     </div>
                     <div >
                       
-                      <p class="m-0"> il ya  une nouveau soumission <?= $row['titre_sous'] ?> </p> 
-                      <p style="margin: 0%;"><?= $row['date_debut'] ?> jousqua  <?= $row['date_fin']  ?> </p> 
+                      <p class="m-0"> Il ya  une nouveau soumission <?= $row['titre_sous'] ?> </p> 
+                      <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp;  <?= $row['date_fin']  ?> </p> 
                     </div>
                 </div>
               </div>
