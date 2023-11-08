@@ -147,8 +147,7 @@ ORDER BY date_debut DESC";
 $req2 = mysqli_query($conn , $req_sous2);
 }
 
-$ens = "SELECT DISTINCT matiere.* FROM matiere 
-INNER JOIN soumission ON soumission.id_matiere = matiere.id_matiere  ";
+$ens = "SELECT DISTINCT matiere.* FROM matiere where id_matiere= $id_matiere";
 $matiere_filtre_qry = mysqli_query($conn, $ens);
 $row_mat = mysqli_fetch_array($matiere_filtre_qry);
 
@@ -163,16 +162,10 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
 if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
  
     ?>
+<div class="container">
 
 <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Accueil
-              </h3>
-            </div>
+        
 
      <div class="row">
         <div class="col-lg-12"> 
@@ -180,18 +173,18 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
                 
                     
                 </li>
-                <li>Les soumissions en ligne dans la matière <?php echo $row_mat['libelle'] ?></li>
+                <li>Les soumissions en ligne dans la matière :</li>
                    
             </ol>
 
         </div>
     </div>
-      
+   
           <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="mb-5" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?= $row_mat['libelle'] ?></h4>
+                    <h4 class="mb-5" class="click" ><b><?= $row_mat['libelle'] ?></b></h4>
                     <h6 ></h6>
                     <div class="md-2">
                     </div>
@@ -200,14 +193,36 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
                 </div>
               </div>
     <?php 
-       echo "Il n'y a pas encore des soumissions dans cette matière !" ;
+    ?>
+      <div class="col-md-12 stretch-card grid-margin">
+                <div class="card bg-gradient card-img-holder text-black">
+                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: space-between;padding: 15px;">
+                    <div style="display: flex;justify-content: space-between;padding: 15px;" >
+                    <div class="btn-gradient-<?php echo $color ?>"  style="width: 40px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
 
+                    </div>
+                    <div col-md-12>
+ 
+                        <div class="btn-group ">
+                        
+                        </h5>
+                        </div>
+      <!-- #region -->        <p> Il n'y a pas encore des soumissions dans cette matière !
+                        
+                        </p> 
+                      </div>
+                    </div>
+                   
+                </div>
+              </div>
+            </div>
+<?php
     
 }
 else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
       ?>
       
-<div class="container">
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">

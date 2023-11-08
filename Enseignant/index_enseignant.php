@@ -12,6 +12,7 @@ $req_ens = mysqli_query($conn , $sql_ens);
 $row_ens = mysqli_fetch_assoc($req_ens);
 
 include "nav_bar.php";
+$id_sem=$_GET["id_semestre"];
 ?>
 
 <style>
@@ -29,7 +30,7 @@ include "nav_bar.php";
             
           <?php 
           
-              $req_ens_mail =  "SELECT matiere.*,semestre.* FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
+              $req_ens_mail =  "SELECT matiere.*,semestre.* FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'and matiere.id_semestre=$id_sem";
               $i = 0;
               $list_colors = array("success","info","secondary","primary");
               $list_colors_hover = array("#24b2d016","#dfe9f7","#dfe9f7","#A35DFF0.15");
