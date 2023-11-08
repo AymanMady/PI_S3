@@ -221,7 +221,7 @@ $alert = "";
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['role'] = "ens";
-                    header("location:Enseignant/index_enseignant.php");
+                    header("location:Enseignant/choix_semester.php");
                 } elseif ($row['id_role'] == 3) {
                     session_start();
                     $_SESSION['email'] = $email;

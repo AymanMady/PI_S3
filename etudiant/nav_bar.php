@@ -29,6 +29,7 @@
            width: 200px;
            margin-top: 10px;
        }
+      
        </style>
   </head>
   <body>
@@ -60,12 +61,6 @@
     </form>
   </div>
   <ul class="navbar-nav navbar-nav-right">
-    <li class="nav-item d-none d-lg-block full-screen-link">
-        <a class="nav-link">
-          <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
-        </a>
-    </li>
-
   <li class="nav-item nav-profile dropdown">
     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
     <div class="nav-profile-img">
@@ -74,9 +69,14 @@
     </div>
     <div class= "nav-profile-text">
         <p class="mb-1 text-black"><?php echo $row['nom'] ." ".$row['prenom'] ?></p>
+        <center><b>(Etudiant)</b></center>
     </div>
     </a>
     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                                    
+        <!-- <div class="container mt-12"> </div> -->
+
+
         <div class="logo">
             
                     <img title="<?=$row['nom']." ".$row['prenom']?>" 
@@ -89,10 +89,10 @@
                     <p><?=$row['email']?></p>
             </a>
             </div>
-    <a class="dropdown-item text-black btn-fw" href="#">
+    <a class="dropdown-item" href="#">
         Gérer votre compte
     </a>
-    <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
+    <a class="dropdown-item" href="../supprimer_session.php">
         <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
     </a>
     </div>
@@ -114,7 +114,14 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-  
+      
+    <li class="nav-item">
+              <a class="nav-link" href="notes.php">
+                <span class="menu-title">Notes</span>
+                <p  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <i class="mdi mdi-clipboard-text menu-icon"></i>
+              </a>
+            </li>
   
   </ul>
 </nav>

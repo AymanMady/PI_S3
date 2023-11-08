@@ -44,6 +44,10 @@ function test_input($data)
 }
 
 if (isset($_POST['button'])) {
+
+    $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+ $req3 = mysqli_query($conn , $req_detail3);
+ if(   mysqli_num_rows($req3) > 0 ){
     $descri=test_input($_POST['description_sous']);
     $files = $_FILES['file'];
     if( !empty($descri) or !empty($files) ){
@@ -88,6 +92,12 @@ if (isset($_POST['button'])) {
         }
     }
 }
+}
+else{
+    $_SESSION['id_sous'] = $id_sous;
+    header("location:soumission_etu.php");
+    $_SESSION['temp_finni'] = true;
+ }
 }
 
 
@@ -152,6 +162,10 @@ include "nav_bar.php";
     }
  
 if (isset($_POST['button'])) {
+    
+    $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+ $req3 = mysqli_query($conn , $req_detail3);
+ if(   mysqli_num_rows($req3) > 0 ){
         $descri=test_input($_POST['description_sous']);
         $files = $_FILES['file'];
         if( !empty($descri) or !empty($files) ){
@@ -203,9 +217,19 @@ if (isset($_POST['button'])) {
         }
     }
 }
+else{
+    $_SESSION['id_sous'] = $id_sous;
+    header("location:soumission_etu.php");
+    $_SESSION['temp_finni'] = true;
+ }
+
+ 
+}
 
 if (isset($_POST['confirmer'])) {
-
+$req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+ $req3 = mysqli_query($conn , $req_detail3);
+ if(   mysqli_num_rows($req3) > 0 ){
     $sql="UPDATE reponses set   `date` = NOW() ,confirmer = 1 where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
 
     $req1 = mysqli_query($conn,$sql);
@@ -219,6 +243,12 @@ if (isset($_POST['confirmer'])) {
     }else{
         echo "il y'a un erreur ! ";
     }
+}
+else{
+    $_SESSION['id_sous'] = $id_sous;
+    header("location:soumission_etu.php");
+    $_SESSION['temp_finni'] = true;
+ }
 }
 
 include "nav_bar.php";
