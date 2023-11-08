@@ -24,7 +24,7 @@ include "nav_bar.php";
                             }
                             ?>
                         </p>
-                      <form action="" method="POST" class="forms-sample">
+                      <form action="" method="POST" class="forms-sample" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="exampleInputName1">Sélectionner un fichier Excel :</label>
 						<input type="file" name="excel" class = "form-control" accept=".xlsx" required>
@@ -87,7 +87,7 @@ if (isset($_POST["import"])) {
 
             if (mysqli_num_rows($req_condition) == 0) {
                 if (mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES($id_etudiant, $id_matiere, $id_semestre)")) {
-                    header('location:inscription.php');
+                    echo "<script>window.location.href = 'inscription.php';</script>";
                     $_SESSION['import_reussi'] = true;
                 }
             } else {

@@ -11,6 +11,7 @@ $sql_ens = "SELECT * FROM enseignant WHERE enseignant.email ='$email'";
 $req_ens = mysqli_query($conn , $sql_ens);
 $row_ens = mysqli_fetch_assoc($req_ens);
 include "nav_bar.php";
+$id_sem=$_GET["id_semestre"];
 ?>
 <style>
     /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
