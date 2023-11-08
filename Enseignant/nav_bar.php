@@ -22,7 +22,11 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- Fin des styles de mise en page -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
-
+    <!-- css for table-data -->
+    <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="CSS/data_table.css">
+    <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
+    <!-- end css for table-data -->
     <style>
        
        .logo{
@@ -43,6 +47,7 @@
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <!-- <a class="navbar-brand brand-logo" href="index.html"><img src="" alt="logo" /></a> -->
+          <strong><p>SupNum</p></strong>
           <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo" /></a> -->
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -171,7 +176,18 @@
               </h3>
             </div>
 
+    <!-- JS for table-data -->
+    <script src="JS/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+
+    <!-- end JS for table-data -->
     <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js pour cette page -->

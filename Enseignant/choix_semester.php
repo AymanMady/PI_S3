@@ -38,10 +38,11 @@ $n=1;
                             <a href="index_enseignant.php?id_semestre=<?php echo $n; ?>" style="text-decoration: none;" class="text-white">
                                 <div class="card-body" onclick="redirectToDetails(<?php echo $n; ?>)">
                                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                    <h4 class="mb-5" onclick="redirectToDetails(<?php echo $n; ?>)">
-                                     La Soumissions du Semestre  :
-                                    </h4>
+                                    
                                     <h1 class="card-text" onclick="redirectToDetails(<?php echo $n ?>)"><?="S"."$n"?></h1>
+                                    <h4 class="mb-5" onclick="redirectToDetails(<?php echo $n; ?>)">
+                                     
+                                    </h4>
                                 </div>
                             </a>
                          </div>

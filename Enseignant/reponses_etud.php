@@ -120,29 +120,16 @@
             </div>
 
 
-<?php 
-    if(mysqli_num_rows($req_affichage) > 0){
+<?php     if(mysqli_num_rows($req_affichage) > 0){
 ?>
     <div class="card-body" style="display: flex ; justify-content: space-between;">
     <div>
     <a href="list_etudiant.php?id_matiere=<?=$row['id_matiere']?>" class = "btn btn-gradient-primary" >List des etudiant s'inscrire</a>
     </div>
     <div>
-    <?php
-    $reqqq="SELECT * FROM `reponses` WHERE id_sous='$id_sous'";
-   $sqllll= mysqli_query($conn,$reqqq);
-    $rowww=mysqli_fetch_assoc($sqllll);
-    if($rowww['render']==1){
-    ?>
-    
-    <form action="" method="POST">
-        <input type="submit" class="btn btn-gradient-primary ml-25" value="les Notes deja envoie" name="sou">
-    </form>
-    <?php }  else {?>
     <form action="" method="POST">
         <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoie les Notes" name="sou">
     </form>
-    <?php } ?>
     </div>
     </div>
 <?php }

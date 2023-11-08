@@ -69,6 +69,7 @@
     </div>
     <div class= "nav-profile-text">
         <p class="mb-1 text-black"><?php echo $row['nom'] ." ".$row['prenom'] ?></p>
+        <center><b>(Etudiant)</b></center>
     </div>
     </a>
     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
