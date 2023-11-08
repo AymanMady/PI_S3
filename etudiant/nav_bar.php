@@ -89,10 +89,10 @@
                     <p><?=$row['email']?></p>
             </a>
             </div>
-    <a class="dropdown-item" href="#">
+    <a class="dropdown-item text-black btn-fw" href="#">
         Gérer votre compte
     </a>
-    <a class="dropdown-item" href="../supprimer_session.php">
+    <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
         <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
     </a>
     </div>

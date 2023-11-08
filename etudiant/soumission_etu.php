@@ -65,28 +65,15 @@
     ?>     
     <div class="col-md-5 grid-margin">
         <div class="card">
-            <div class="card-body"> 
+            <div class="card-body mb-4"> 
+                <h2 class="card-title" >L'annonce jointe pour la soumission.</h2>
                 <h4>
                 <p><?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?></p>
                 <p><?php echo "<strong>Description : </strong>". $row['description_sous'];  ?></p>
                 <p><?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
                 <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
                 <p><?php echo "<strong>Pour plus des informations : </strong>". $row['person_contact'];?></p>
-                </h4> 
-                <?php
-                   if (strtotime(gmdate("Y-m-d H:i:s")) >= strtotime($row['date_fin'])) {
-                   echo ' <div class="alert alert-danger mt-3" id="success-alert">
-                                <strong>La date spécifiée pour cette soumission à été terminé.</strong>
-                                </div>';
-                }
-                ?>   
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 grid-margin stretch-card ">
-        <div class="card ">
-            <div class="card-body ">
-                    <h4 class="card-title" >L'annonce jointe pour la soumission.</h4>
+                </h4>   
                 <?php
                     $sql2 = "select * from fichiers_soumission where id_sous='$id_sous' ";
                     $req2 = mysqli_query($conn,$sql2);
@@ -121,6 +108,11 @@
                         </blockquote>
                         <br>
                         <?php
+                            if (strtotime(gmdate("Y-m-d H:i:s")) >= strtotime($row['date_fin'])) {
+                                    echo ' <div class="alert alert-danger mt-3" id="success-alert">
+                                            <strong>La date spécifiée pour cette soumission à été terminé.</strong>
+                                            </div>';
+                                }
                             }
                         }
                     }
@@ -201,41 +193,37 @@
 
   ?>
 </div>
-<?php
-if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
-    echo "<script>
-    Swal.fire({
-        title: 'Ajout réussi !',
-        text: 'La réponse a été ajouté avec succès.',
-        icon: 'success',
-        confirmButtonColor: '#3099d6',
-        confirmButtonText: 'OK'
-    });
-    </script>";
-    // Supprimer l'indicateur de succès de la session
-    unset($_SESSION['ajout_reussi']);
-  }
-?>
-
-
-<?php
-if (isset($_SESSION['demande_reussi']) && $_SESSION['demande_reussi'] === true) {
-    echo "<script>
-    Swal.fire({
-        title: 'Démande réussi !',
-        text: 'La démande a été envoyer avec succès.',
-        icon: 'success',
-        confirmButtonColor: '#3099d6',
-        confirmButtonText: 'OK'
-    });
-    </script>";
-  
-    // Supprimer l'indicateur de succès de la session
-    unset($_SESSION['demande_reussi']);
-  }
-  
-
-?>
+                <?php
+                if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+                    echo "<script>
+                    Swal.fire({
+                        title: 'Ajout réussi !',
+                        text: 'La réponse a été ajouté avec succès.',
+                        icon: 'success',
+                        confirmButtonColor: '#3099d6',
+                        confirmButtonText: 'OK'
+                    });
+                    </script>";
+                    // Supprimer l'indicateur de succès de la session
+                    unset($_SESSION['ajout_reussi']);
+                }
+                ?>
+                <?php
+                if (isset($_SESSION['demande_reussi']) && $_SESSION['demande_reussi'] === true) {
+                    echo "<script>
+                    Swal.fire({
+                        title: 'Démande réussi !',
+                        text: 'La démande a été envoyer avec succès.',
+                        icon: 'success',
+                        confirmButtonColor: '#3099d6',
+                        confirmButtonText: 'OK'
+                    });
+                    </script>";
+                
+                    // Supprimer l'indicateur de succès de la session
+                    unset($_SESSION['demande_reussi']);
+                }
+                ?>
          </div>
       </div>
     </div>

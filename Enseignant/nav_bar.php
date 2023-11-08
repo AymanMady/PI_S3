@@ -83,14 +83,14 @@
                 while ($row2 = mysqli_fetch_array($req2)) {
                   ?>
                 <div class="dropdown-divider"></div>
-                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item preview-item ">
+                <a href="detail_message.php?id_sous=<?=$row2['id_sous']?>&id_etud=<?=$row2['id_etud']?>"   class="dropdown-item text-black btn-fw ">
                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                     <p ><?php echo $row2['nom'] . ' ' . $row2['prenom']. '(' .$row2['matricule'].')'; ?><br> demande de faire une modification <br> sur la soumission <?php echo $row2['titre_sous'] ; ?> </p>
                     <p class="text-gray mb-0">  </p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="messages.php" class="dropdown-item preview-item "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
+                <a href="messages.php" class="dropdown-item text-black btn-fw "><h6 class="p-3 mb-0 text-center">Voir tous les messages</h6></a>
                 <?php 
                 }
                 ?>
@@ -124,10 +124,10 @@
                               <p><?=$row['email']?></p>
                         </a>
                       </div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item text-black btn-fw" href="#">
                     Gérer votre compte
                 </a>
-                <a class="dropdown-item" href="../supprimer_session.php">
+                <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
                   <i class="mdi mdi-logout me-2 text-primary"></i>Se déconnecte 
                 </a>
               </div>
