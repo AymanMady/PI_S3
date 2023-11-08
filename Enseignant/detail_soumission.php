@@ -54,7 +54,9 @@ if($_SESSION["role"]!="ens"){
                     <p> <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
                     <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
                     <p><?php echo "<strong>Nom et prénom de l'enseignant  : </strong>" . $row['nom']." ".$row['prenom']; ?></p>
-                    
+                    <?php
+                        
+                    ?>
                   </div>
                 </div>
               </div>

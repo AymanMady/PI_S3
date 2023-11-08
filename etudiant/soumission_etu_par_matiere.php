@@ -90,13 +90,9 @@ $cloture="outline-primary";
                     <h4 class="mb-5">Les soumission sur le matiere  <?php echo "". $row1['libelle'].""." " ?></h4>
                     <form method="post">
                     <input type="submit"id="statu" class="btn btn-<?php echo $enline ;?> p-2" name="enline" value="Les soumissions en ligne">
-                    
-                    <!-- <button type="button" class="btn btn-outline-primary p-2">Primary</button> -->
-
+                      <!--<button type="button" class="btn btn-outline-primary p-2">Primary</button>-->
                       <input type="submit"id="statu" class="btn btn-<?php echo $cloture ;?> p-2 " name="cloture" value="Les soumissions cloturer">
-                    </form>
-
-                    
+                    </form>   
                   </div>
                 </div>
               </div>
@@ -108,12 +104,7 @@ $cloture="outline-primary";
     while($row=mysqli_fetch_assoc($req)){
         ?>
         
-        <tr >
-        
-       
-           
-             
-  
+        <tr>  
 <?php
       
             ?>
@@ -132,14 +123,11 @@ $cloture="outline-primary";
               </div>
               </div>
               <?PHP
-
       }
       
     }
-    else{
-
+  else{
       ?>
-
 <div class="col-md-14 stretch-card grid-margin" >
                 <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                   <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
@@ -153,11 +141,8 @@ $cloture="outline-primary";
                 </div>
               </div>
               </div>
-
       <?php
     }
-   
-
     ?>
     </div>
     </div>
@@ -180,8 +165,5 @@ $cloture="outline-primary";
 <script>
       function redirectToDetails(id_sous) {
             window.location.href = "soumission_etu.php?id_sous=" + id_sous;
-        }
-
-
-        
+        }        
 </script>

@@ -11,7 +11,6 @@
     
 ?>
 
-
 <title>Detailler matiere par enseignant </title>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -37,79 +36,67 @@
     while($row=mysqli_fetch_assoc($req)){
     ?>     
     <div class="col-md-5 grid-margin">
-    <div class="card">
-        <div class="card-body">
-            
-            <h4>
-            <p><?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?></p>
-            <p><?php echo "<strong>Description : </strong>". $row['description_sous'];  ?></p>
-            <p><?php echo "<strong>Pour plus des informations   : </strong>". $row['person_contact'];  ?></p>
-            <p><?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
-            <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
-            </h4>
-                
+        <div class="card">
+            <div class="card-body"> 
+                <h4>
+                <p><?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?></p>
+                <p><?php echo "<strong>Description : </strong>". $row['description_sous'];  ?></p>
+                <p><?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?></p>
+                <p><?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?></p>
+                <p><?php echo "<strong>Pour plus des informations : </strong>". $row['person_contact'];?></p>
+                </h4> 
+                <?php
+                   if (strtotime(gmdate("Y-m-d H:i:s")) >= strtotime($row['date_fin'])) {
+                   echo ' <div class="alert alert-danger mt-3" id="success-alert">
+                                <strong>La date spécifiée pour cette soumission à été terminé.</strong>
+                                </div>';
+                }
+                ?>   
+            </div>
         </div>
     </div>
-    </div>
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-description">Le(s) Fichier(s) : </h4>
+    <div class="col-md-6 grid-margin stretch-card ">
+        <div class="card ">
+            <div class="card-body ">
+                    <h4 class="card-title" >L'annonce jointe pour la soumission.</h4>
                 <?php
                     $sql2 = "select * from fichiers_soumission where id_sous='$id_sous' ";
                     $req2 = mysqli_query($conn,$sql2);
                     if(mysqli_num_rows($req2) == 0){
                     ?>
-                    <ul style="list-style: none;">
                     <?php
                     echo "Il n'y a pas des fichier ajouter !" ;
                     ?>
-                <?php
-                }else {
-                    while($row2=mysqli_fetch_assoc($req2)){
+                    <?php
+                    }else {
+                        while($row2=mysqli_fetch_assoc($req2)){
                         $file_name=$row2['nom_fichier'];
                         ?>
-                            <li  style="list-style: none;">
-                        <strong><?= $file_name ?> </strong>
+                        <blockquote class="blockquote blockquote-info" style="border-radius:10px;">
+                        <p><strong><?= $file_name ?> </strong></p>
                         
                         <?php 
                         $test=explode(".",$file_name);
                         if( $test[1]=="pdf"){
                         ?>
-                        <a href="open_file.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>" style="text-decoration: none;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Voir</a>
+                        <a  class="btn btn-inverse-info btn-sm " href="open_file.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>" style="text-decoration: none;" >Visualiser</a>
                         <?php 
                         }
                         else{
                             ?>
-                            <a >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Voir&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                            <a class="btn btn-inverse-info btn-sm" title="Les fichiers d'extension pdf sont les seuls que vous pouvez visualiser." >Visualiser</a>
                             <?php 
                             }
                         
                         ?>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>" style="text-decoration: none;">Telecharger</a>
-                        </li>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-inverse-info btn-sm " href="telecharger_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>" style="text-decoration: none;">Télécharger</a>
+                        </blockquote>
                         <br>
                         <?php
+                            }
+                        }
                     }
-                }
-            ?>
-            </ul>
-            <?php
-            $id_sous= $row['id_sous'];
-                }
-                $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') AND render = 1 ";
-                $req17 = mysqli_query($conn,$sql17);
-                if(mysqli_num_rows($req17)){
-                $row17=mysqli_fetch_assoc($req17)
-                ?>
-                <h3> 
-                    Note =  <?php echo $row17['note']     ?> 
-                </h3>
-                <?php if( $row17['note'] > 0 ){    ?>
-                <a href= "reclemation.php" class="btn btn-primary">Reclemation</a>
-                <?php  
-                }
-                }
+
                 ?>
             </div>
         </div>
@@ -200,8 +187,6 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
     // Supprimer l'indicateur de succès de la session
     unset($_SESSION['ajout_reussi']);
   }
-
-
 ?>
 
 
