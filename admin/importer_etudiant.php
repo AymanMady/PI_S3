@@ -23,12 +23,12 @@ include_once "nav_bar.php";
                             }
                             ?>
                         </p>
-                      <form action="" method="POST" class="forms-sample">
+                      <form action="" method="POST" class="forms-sample" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="exampleInputName1">Sélectionner un fichier Excel :</label>
-						<input type="file" name="excel" class = "form-control" accept=".xlsx" required>
+						<input type="file" name="excel" class="form-control" accept=".xlsx" required>
                       </div>
-					  <input type="submit" name="import" value=Importer class="btn btn-gradient-primary me-2"  />
+					  <input type="submit" name="import" value="Importer" class="btn btn-gradient-primary me-2"  />
                       <a href="etudiant.php" class="btn btn-light">Annuler</a>
                     </form>
                   </div>
@@ -63,26 +63,22 @@ if (isset($_POST["import"])) {
 	foreach ($reader as $key => $row) {
 
 
-			$matricule = $row[0];
-			$nom = $row[1];
-			$prenom = $row[2];
-			$lieu_naiss = $row[3];
-			$Date_naiss = $row[4];
-			$semestre = $row[5];
-			$annee = $row[6];
-			$email = $row[7];
-			$groupe = $row[8];
+		$matricule = $row[0];
+		$nom = $row[1];
+		$prenom = $row[2];
+		$lieu_naiss = $row[3];
+		$Date_naiss = $row[4];
+		$semestre = $row[5];
+		$annee = $row[6];
+		$email = $row[7];
+		$groupe = $row[8];
 
 		if(mysqli_query($conn, "INSERT INTO etudiant
 		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
 		(select id_semestre from semestre where nom_semestre = '$semestre'  LIMIT 1), '$annee','$email',3,
 		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe'  LIMIT 1) )")){
-			//header("location:etudiant.php");
-			echo "	<script>
-				window.location.href = 'etudiant.php';
-					</script>";		
-			
+			echo "<script>window.location.href = 'etudiant.php';</script>";
 		}	
 		}
 

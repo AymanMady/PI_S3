@@ -4,7 +4,6 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
-
 include "nav_bar.php";
  ?>
 
@@ -24,7 +23,7 @@ include "nav_bar.php";
                             }
                             ?>
                         </p>
-                      <form action="" method="POST" class="forms-sample">
+                      <form action="" method="POST" class="forms-sample" enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="exampleInputName1">Sélectionner un fichier Excel :</label>
 						<input type="file" name="excel" class = "form-control" accept=".xlsx" required>
@@ -70,14 +69,7 @@ if (isset($_POST["import"])) {
 				
                
 			}
-
-			echo
-			"
-			<script>
-			alert('Succesfully Imported');
-			document.location.href = '';
-			</script>
-			";
+			echo "<script>window.location.href = 'groupe.php';</script>";
 		}
 
 		?>
