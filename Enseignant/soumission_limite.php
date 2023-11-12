@@ -1,11 +1,11 @@
 <?php
- session_start() ;
- $email = $_SESSION['email'];
- if($_SESSION["role"]!="ens"){
-     header("location:../authentification.php");
- }
+session_start();
+$email = $_SESSION['email'];
+if ($_SESSION["role"] != "ens") {
+    header("location:../authentification.php");
+}
 ?>
-
+<title>Les Soumissions terminées</title>
 <style>
     /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
     tr:hover {
@@ -17,70 +17,68 @@
 <?php 
 include "nav_bar.php";
 
-    $ens = "SELECT DISTINCT matiere.* FROM matiere 
-    INNER JOIN soumission ON soumission.id_matiere = matiere.id_matiere ";
-    $matiere_filtre_qry = mysqli_query($conn, $ens);
-    
-    $type_sous = "SELECT * FROM type_soumission";
-    $type_sous_qry = mysqli_query($conn, $type_sous);
+$ens = "SELECT DISTINCT matiere.* FROM matiere 
+INNER JOIN soumission ON soumission.id_matiere = matiere.id_matiere ";
+$matiere_filtre_qry = mysqli_query($conn, $ens);
 
-    $req_sous =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant WHERE  soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and  status = 1  and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')  ORDER BY date_fin DESC  ";
-    $req = mysqli_query($conn , $req_sous);
+$type_sous = "SELECT * FROM type_soumission";
+$type_sous_qry = mysqli_query($conn, $type_sous);
+
+$req_sous =  "SELECT DISTINCT soumission.*, matiere.* FROM soumission , matiere, enseignant WHERE  soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and  status = 1  and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner, enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')  ORDER BY date_fin DESC  ";
+$req = mysqli_query($conn, $req_sous);
 ?>
 
-
-            <div class="row">
-                <div class="col-lg-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Soumission en Ligne :</h4>
-                            <br>
-                            <table id="example" class="table table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Titre de soumission</th>
-                                        <th>Date de debut </th>
-                                        <th>Date de fin </th>
-                                        <th></th>
-                                        <th>Actions</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                   while($row=mysqli_fetch_assoc($req)){
-                                    ?>
-                
-                                      <tr>
-                                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)" ><?php echo $row['code']?></td>
-                                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?php echo $row['titre_sous']?></td>
-                                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)" ><?php echo $row['date_debut']?></td>
-                                          <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
-                                            <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
-                                          </td>                          
-                                          <td><a href="detail_soumission.php?id_sous=<?php echo $row['id_sous']?>">Detaille</a></td>
-                                          <td><a href="archiver_soumission_terminer.php?id_sous=<?php echo $row['id_sous']?>" id="archiver" >Archiver</a></td>
-                                          <td><a href="prolonger_soumission.php?id_sous=<?php echo $row['id_sous']?>" id="prolonger" >Prolonger</a></td>
-                                      </tr>
-                                    <?php
-                                  }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Les Soumissions terminées :</h4>
+                <br>
+                <table id="example" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Titre </th>
+                            <th>Date de début </th>
+                            <th>Date de fin </th>
+                            <th></th>
+                            <th>Actions</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($row = mysqli_fetch_assoc($req)) {
+                        ?>
+                            <tr>
+                                <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)" ><?php echo $row['code']?></td>
+                                <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?php echo $row['titre_sous']?></td>
+                                <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)" ><?php echo $row['date_debut']?></td>
+                                <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
+                                    <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
+                                </td>                          
+                                <td><a href="detail_soumission.php?id_sous=<?php echo $row['id_sous']?>">Détail</a></td>
+                                <td><a href="archiver_soumission_terminer.php?id_sous=<?php echo $row['id_sous']?>" id="archiver" >Archiver</a></td>
+                                <td><a href="prolonger_soumission.php?id_sous=<?php echo $row['id_sous']?>" id="prolonger" >Prolonger</a></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
+        </div>
+    </div>
+</div>
+
 <script src="../JS/sweetalert2.js"></script>
 
 <?php
-
 if (isset($_SESSION['archive_reussi']) && $_SESSION['archive_reussi'] === true) {
   echo "<script>
   Swal.fire({
-      title: 'Archive réussi !',
-      text: 'La soumission a été archiver avec succès.',
+      title: 'Archivage réussi !',
+      text: 'La soumission a été archivée avec succès.',
       icon: 'success',
       confirmButtonColor: '#3099d6',
       confirmButtonText: 'OK'
@@ -94,8 +92,8 @@ if (isset($_SESSION['archive_reussi']) && $_SESSION['archive_reussi'] === true) 
 if (isset($_SESSION['prolongement_reussi']) && $_SESSION['prolongement_reussi'] === true) {
   echo "<script>
   Swal.fire({
-      title: 'prolongement réussi !',
-      text: 'La soumission a été prolonger avec succès.',
+      title: 'Prolongement réussi !',
+      text: 'La soumission a été prolongée avec succès.',
       icon: 'success',
       confirmButtonColor: '#3099d6',
       confirmButtonText: 'OK'
@@ -105,12 +103,9 @@ if (isset($_SESSION['prolongement_reussi']) && $_SESSION['prolongement_reussi'] 
   // Supprimer l'indicateur de succès de la session
   unset($_SESSION['prolongement_reussi']); 
 }
-
 ?>
 
 <script> 
-
-
 var liensArchiver = document.querySelectorAll("#archiver");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
@@ -127,16 +122,12 @@ liensArchiver.forEach(function(lien) {
       cancelButtonText: "Annuler",
       confirmButtonText: "Archiver"
     }).then((result) => {
-      
-          if (result.isConfirmed) {
-            window.location.href = this.href; 
-          }
-        });
-      });
+      if (result.isConfirmed) {
+        window.location.href = this.href; 
+      }
     });
-
-
-
+  });
+});
 
 // Fonction pour modifier la date de fin
 function modifierDateFin(id_sous, nouvelle_date_fin) {
@@ -176,17 +167,14 @@ function modifierDateFin(id_sous, nouvelle_date_fin) {
   });
 }
 
+function redirectToDetails(id_sous) {
+    window.location.href = "reponses_etud.php?id_sous=" + id_sous;
+}
 
+var liensProlonger = document.querySelectorAll("#prolonger");
 
-
-        function redirectToDetails(id_matiere) {
-            window.location.href = "reponses_etud.php?id_sous=" + id_matiere;
-        }
-
-var liensArchiver = document.querySelectorAll("#prolonger");
-
-// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
-liensArchiver.forEach(function(lien) {
+// Parcourir chaque lien de prolongation et ajouter un écouteur d'événements
+liensProlonger.forEach(function(lien) {
   lien.addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
@@ -197,17 +185,12 @@ liensArchiver.forEach(function(lien) {
       confirmButtonColor: "#3099d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "Annuler",
-      confirmButtonText: "prolonger"
+      confirmButtonText: "Prolonger"
     }).then((result) => {
-      
-          if (result.isConfirmed) {
-            window.location.href = this.href; 
-          }
-        });
-      });
+      if (result.isConfirmed) {
+        window.location.href = this.href; 
+      }
     });
-
-
-
-
+  });
+});
 </script>
