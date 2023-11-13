@@ -15,10 +15,16 @@ include "nav_bar.php";
         background-color: aliceblue;
     }
 </style>
-
+<div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Accueil
+              </h3>
+            </div>
 <div class="container">
 
-<div style="overflow-x:auto;"  >
+<div>
 
 
     <div class="row">
@@ -39,8 +45,8 @@ if ($query ) {
 
     while($row=mysqli_fetch_assoc($query)){
                    
-                              $list_colors = array("success","info","secondary","primary");
-                              $list_colors_hover = array("#24b2d016","#dfe9f7","#dfe9f7","rgba(163, 93, 255, 0.15)");
+                $list_colors = array("success","info","secondary","primary");
+                $list_colors_hover = array("#24b2d016","#dfe9f7","#dfe9f7","rgba(163, 93, 255, 0.15)");
                     ?>
                        
                     <div class="col-md-4 stretch-card grid-margin">
@@ -49,10 +55,10 @@ if ($query ) {
                             <a href="index_enseignant.php?id_semestre=<?php echo $row['id_semestre']; ?>" style="text-decoration: none;" class="text-white">
                                 <div class="card-body" onclick="redirectToDetails(<?php echo $row['id_semestre']; ?>)">
                                     <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                                    <h4 class="mb-5" onclick="redirectToDetails(<?php echo $row['id_semestre']; ?>)">
-                                     La Soumissions du Semestre  :
-                                    </h4>
-                                    <h1 class="card-text" onclick="redirectToDetails(<?php echo $row['id_semestre'] ?>)"><?="S".$row['id_semestre']?></h1>
+                                    <h1 class="mb-5" onclick="redirectToDetails(<?php echo $row['id_semestre']; ?>)">
+                                    <?="S".$row['id_semestre']?>
+                                    </h1>
+                                    
                                 </div>
                             </a>
                          </div>
