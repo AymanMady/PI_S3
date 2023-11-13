@@ -130,7 +130,7 @@ soumission ,matiere,enseignant,enseigner,type_soumission
 $req1 = mysqli_query($conn , $req_sous1);
 
 
-$req_sous2 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM
+$req_sous2 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.*, nom, prenom FROM
  soumission ,matiere,enseignant,enseigner,type_soumission WHERE 
  matiere.id_matiere=$id_matiere and
   soumission.id_type_sous=type_soumission.id_type_sous and 
@@ -294,6 +294,42 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                           <a class="dropdown-item" href="archiver_soumission_en_ligne.php?id_sous=<?=$row['id_sous']?>" id="archiver">Archiver</a>
                         </h5>
                     </div>
+                </div>
+              </div>
+            </div>
+
+ 
+      <?php
+            }
+            while($row=mysqli_fetch_assoc($req2)){
+              ?>
+
+
+            <div class="col-md-12 stretch-card grid-margin">
+                <div class="card bg-gradient card-img-holder text-black">
+                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: space-between;padding: 15px;">
+                    <div style="display: flex;justify-content: space-between;padding: 15px;" >
+                    <div class="btn-gradient-<?php echo $color ?>"  style="width: 40px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
+
+                    </div>
+                    <div col-md-12>
+ 
+                        <div class="btn-group ">
+                        <h5 class="" class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['nom']." ".$row['prenom']?> a publié un nouveau support de cours &nbsp;: <?=$row['titre_sous']?>&nbsp; 
+                        
+                        </h5>
+                        </div>
+
+                        <p style="margin: 0%; " <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>> De&nbsp;<?=$row['date_debut']?>&nbsp;à&nbsp;
+                        <?php
+                          echo $row['date_fin'];
+                        ?>
+                        </p> 
+                      </div>
+                    </div>
+                    
+                   
                 </div>
               </div>
             </div>

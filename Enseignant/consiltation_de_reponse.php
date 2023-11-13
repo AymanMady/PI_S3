@@ -87,7 +87,7 @@ ul li{
             <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                  <h4 class="card-description">Le(s) Fichier(s)</h4>
+                  <h4 class="card-description">Le(s) Fichier(s) De Reponse </h4>
 
                   <?php
                         $sql2 = "select * from fichiers_reponses where id_rep='$id_rep' ";
@@ -133,34 +133,36 @@ ul li{
 
 
 
-              <div class="col-md-2 grid-margin">
+              <div class="col-md-4 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            
-                        <h4 class="text-center" style='font-size: 20px;'><strong>Note</strong></h4>
-                        <?php
-                        if($row['note']!=NULL){
-                        echo "<center><b style='font-size: 20px;'>".$row['note']." /20</b></center>" ;
-                        }
-                        ?>
-                        <?php
-                        $sql3 = "select * from reponses where id_rep='$id_rep' ";
-                        $req3 = mysqli_query($conn,$sql3);
-                        $row3= mysqli_fetch_assoc($req3);
-                        if($row3['note']>0){
-                        ?>
-                        <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary p-1 mt-2">Modifier</a>
-                        <?php
-                        }else{
-                        ?>
-                        <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary p-1 mt-2">Noter</a>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                                
-                                
+                                        
+                                    <h4 class="text-center" style='font-size: 20px;'><strong>Note</strong></h4>
+                                    <br>
+                                    <?php
+                                    if($row['note']!=NULL){
+                                    echo "<center><b style='font-size: 20px;'>".$row['note']." /20</b></center>" ;
+                                    }
+                                    ?>
+                                    <?php
+                                    $sql3 = "select * from reponses where id_rep='$id_rep' ";
+                                    $req3 = mysqli_query($conn,$sql3);
+                                    $row3= mysqli_fetch_assoc($req3);
+                                    if($row3['note']>0){
+                                    ?>
+                                    <br>
+                                    <center><a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary p-1 mt-2">Modifier</a></center>
+                                    <?php
+                                    }else{
+                                    ?>
+                                   <center> <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary p-1 mt-2">Noter</a></center>
+                                    <?php
+                                    }
+                                    ?>
                         </div>
+                                
+                                
+                    </div>
                 </div>
 
 

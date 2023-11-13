@@ -101,10 +101,12 @@
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
                   <img src="../images/supnum.jpg" alt="image" title="<?=$row['nom']." ".$row['prenom']?>">
+                 
                   <span class="availability-status online"></span>
                 </div>
                 <div class= "nav-profile-text">
                   <p class="mb-1 text-black"><?php echo $row['nom'] ." ".$row['prenom'] ?></p>
+                  <center><b>(Enseignant)</b></center>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
