@@ -79,7 +79,7 @@
                 <h6 class="p-3 mb-0">Messages</h6>
                 <?php
                 
-                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud   ;");
+                $req2 = mysqli_query($conn, "SELECT demande.id_sous,demande.id_etud,nom,prenom,titre_sous,matricule FROM demande ,soumission,etudiant where soumission.id_sous=demande.id_sous and etudiant.id_etud = demande.id_etud ORDER BY id_demande DESC LIMIT 1 ;");
                 while ($row2 = mysqli_fetch_array($req2)) {
                   ?>
                 <div class="dropdown-divider"></div>
@@ -152,16 +152,16 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-              <span class="menu-title">Soummissions</span>
+              <span class="menu-title">Soumissions</span>
                 <i class="mdi mdi-calendar-clock menu-icon"></i>
                 <!-- <i class="mdi mdi-medical-bag menu-icon"></i> -->
               </a>
               <div class="collapse" id="general-pages">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="cree_soumission.php"> Crée une soumission </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_en_ligne.php"> Soumission en ligne </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_limite.php"> Soumission terminer </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_archiver.php"> Soumission archifer </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="soumission_en_ligne.php"> Soumissions en ligne </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="soumission_limite.php"> Soumissions terminées </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="soumission_archiver.php"> Soumissions archivées </a></li>
                 </ul>
               </div>
             </li>
@@ -170,26 +170,10 @@
         <!-- partiel -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-home"></i>
-                </span> Accueil
-              </h3>
-            </div>
 
-    <!-- JS for table-data -->
-    <script src="JS/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
-    </script>
 
-    <!-- end JS for table-data -->
+
     <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js pour cette page -->
@@ -205,6 +189,19 @@
     <script src="../assets/js/dashboard.js"></script>
     <script src="../assets/js/todolist.js"></script>
     <!-- Fin du JS personnalisé pour cette page -->
+
+    <!-- JS for table-data -->
+    <script src="JS/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="JS/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+
+    <!-- end JS for table-data -->
     <?php
             
           }

@@ -1,5 +1,7 @@
 <?php
 session_start();
+$id_matiere = $_GET['id_matiere'];
+$color = $_GET['color'];
 $email = $_SESSION['email'];
 if ($_SESSION["role"] != "etudiant") {
     header("location:../authentification.php");
@@ -8,19 +10,20 @@ if ($_SESSION["role"] != "etudiant") {
 $id_sous = $_GET['id_sous'];
 ?>
 <?php
+   // Bibléotheque PHPMailer pour l'envoi de email
+
    use PHPMailer\PHPMailer\PHPMailer;
    use PHPMailer\PHPMailer\SMTP;
    use PHPMailer\PHPMailer\Exception;
    require './PHPMailer/src/Exception.php';
    require './PHPMailer/src/PHPMailer.php';
    require './PHPMailer/src/SMTP.php';
+
+
         include_once "../connexion.php";
         $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
         $req3 = mysqli_query($conn , $req_detail3);
         if(   mysqli_num_rows($req3) > 0 ){
-        
-     
-
 
         $email = $_SESSION['email'];
         $req = mysqli_query($conn, "SELECT * FROM etudiant WHERE email = '$email'");
@@ -40,53 +43,77 @@ $id_sous = $_GET['id_sous'];
             $data = stripcslashes($data);
             return $data;
         }
-    if(isset($_POST['button'])){
-    $description = test_input($_POST['description']);
+        $mail = new PHPMailer(true);
 
-        if( !empty($description)  ){
-            $req = mysqli_query($conn , "INSERT INTO `demande` (`id_sous`,`id_etud`,`description`) VALUES($id_sous, $id_etud,'$description')");
-            if($req){
+    try {
+        if(isset($_POST['button'])){
+        $description = test_input($_POST['description']);
 
-                    $mail = new PHPMailer(true);
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'nodenodeemail@gmail.com';
-                    $mail->Password = 'dczxmfqzwjqjeuzp';
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->Port = 465;
-                    $mail->setFrom('nodenodeemail@gmail.com');
-                    $mail->addAddress($_POST['email']);
-                    $mail->isHTML(true);
-                    $mail->Subject = $_POST['subject'];
-                    $mail->Body = $_POST['description']; 
-                    $mail->send();
-                                
-                    header("location:soumission_etu.php?id_sous=$id_sous");
-                    $_SESSION['demande_reussi'] = true;
-
+            if( !empty($description)  ){
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'nodenodeemail@gmail.com';
+                $mail->Password = 'dczxmfqzwjqjeuzp';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+                $mail->setFrom('nodenodeemail@gmail.com');
+                $mail->addAddress($_POST['email']);
+                $mail->isHTML(true);
+                $mail->Subject = $_POST['subject'];
+                $mail->Body = $_POST['description']; 
+                $mail->send();
+                if ($mail->send()) {
+                    $req = mysqli_query($conn , "INSERT INTO `demande` (`id_sous`,`id_etud`,`description`) VALUES($id_sous, $id_etud,'$description')");
+                    if($req){
+                            $id_matiere = $_GET['id_matiere'];
+                            $color = $_GET['color'];
+                            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+                            $_SESSION['demande_reussi'] = true; 
+                    }else {
+                        $message = "Démande n'est pas envoyé";
+                    }
+                } else {
+                    $message =  'Une erreur est survenue lors de l\'envoi du courriel, peut être probléme de connexion.  ';
+                }
             }else {
-                $message = "Démande n'est pas envoyé";
+                $message = "Veuillez remplir tous les champs !";
             }
 
-        }else {
-            $message = "Veuillez remplir tous les champs !";
-        }
     }
+} catch (Exception $e) {
+    $message =  'Une erreur est survenue lors de l\'envoi du courriel  , peut être probléme de connexion.';
+}
+
+ 
     include "nav_bar.php";
 
 ?>
 <div class="main-panel">
 <div class="content-wrapper">
+            <h3 class="page-title"> Demande d'autorisation de modifier le travail en question.</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Démande</li>
+                </ol>
+              </nav>
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Demande de modification : </h4>
                         <p class="erreur_message">
                             <?php 
                             if(isset($message)){
-                                echo $message;
+                            ?>
+                                <div class="alert alert-danger " id="success-alert">
+                                    <?php
+                                    echo $message;
+                                    ?>
+                                </div>
+                            <?php
                             }
                             ?>
                         </p>
@@ -100,7 +127,7 @@ $id_sous = $_GET['id_sous'];
                                 </div>
                         </div>
                       <button type="submit" name="button" class="btn btn-gradient-primary me-2">Envoyer</button>
-                      <a href="groupe.php" class="btn btn-light">Annuler</a>
+                      <a href="soumission_etu.php?id_sous=<?=$id_sous?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-light">Annuler</a>
                     </form>
                   </div>
                 </div>
