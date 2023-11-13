@@ -1,12 +1,11 @@
-
 <?php 
  session_start() ;
+ $id_matiere = $_GET['id_matiere'];
+ $color = $_GET['color'];
  $email = $_SESSION['email'];
  if($_SESSION["role"]!="etudiant"){
      header("location:../authentification.php");
  }
-
-
 
 include_once "../connexion.php";
 ?>
@@ -85,9 +84,11 @@ if (isset($_POST['button'])) {
             $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ($id_rep, '$file_name', '$destination')";
             $req2 = mysqli_query($conn, $sql2);
             if($req1 and $req2){
+                $id_matiere = $_GET['id_matiere'];
+                $color = $_GET['color'];
                 $_SESSION['id_sous'] = $id_sous;
                 $_SESSION['ajout_reussi'] = true;
-                header("location:reponse_etudiant.php");
+                header("location:reponse_etudiant.php?id_matiere=$id_matiere&color=$color");
             }
         }
     }
@@ -95,7 +96,7 @@ if (isset($_POST['button'])) {
 }
 else{
     $_SESSION['id_sous'] = $id_sous;
-    header("location:soumission_etu.php");
+    header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
     $_SESSION['temp_finni'] = true;
  }
 }
@@ -107,6 +108,16 @@ include "nav_bar.php";
 
 <div class="content-wrapper">
     <div class="container">
+
+            <h3 class="page-title"> Mettez votre réponse ici </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Réponse</li>
+                </ol>
+              </nav>
         <div class="row">
 
 <div class="form-horizontal">
@@ -163,9 +174,9 @@ include "nav_bar.php";
  
 if (isset($_POST['button'])) {
     
-    $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+ $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
  $req3 = mysqli_query($conn , $req_detail3);
- if(   mysqli_num_rows($req3) > 0 ){
+ if(mysqli_num_rows($req3) > 0 ){
         $descri=test_input($_POST['description_sous']);
         $files = $_FILES['file'];
         if( !empty($descri) or !empty($files) ){
@@ -208,7 +219,9 @@ if (isset($_POST['button'])) {
                     unset($_SESSION['autorisation']);   
                     $_SESSION['id_sous'] = $id_sous;
                     $_SESSION['ajout_reussi'] = true;
-                    header("location:reponse_etudiant.php");
+                    $id_matiere = $_GET['id_matiere'];
+                    $color = $_GET['color'];
+                    header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
                 }else{
                     mysqli_connect_error();
                 }
@@ -219,7 +232,7 @@ if (isset($_POST['button'])) {
 }
 else{
     $_SESSION['id_sous'] = $id_sous;
-    header("location:soumission_etu.php");
+    header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
     $_SESSION['temp_finni'] = true;
  }
 
@@ -227,6 +240,20 @@ else{
 }
 
 if (isset($_POST['confirmer'])) {
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
 $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
  $req3 = mysqli_query($conn , $req_detail3);
  if(   mysqli_num_rows($req3) > 0 ){
@@ -235,18 +262,27 @@ $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (stat
     $req1 = mysqli_query($conn,$sql);
 
     if($req1 ){
+
+
+
+
+
         $_SESSION['autorisation'] = false;
         unset($_SESSION['autorisation']);
+        $id_matiere = $_GET['id_matiere'];
+        $color = $_GET['color'];
         $_SESSION['id_sous'] = $id_sous;
         $_SESSION['ajout_reussi'] = true;
-        header("location:soumission_etu.php");
+        header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
     }else{
         echo "il y'a un erreur ! ";
     }
 }
 else{
+    $id_matiere = $_GET['id_matiere'];
+    $color = $_GET['color'];
     $_SESSION['id_sous'] = $id_sous;
-    header("location:soumission_etu.php");
+    header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
     $_SESSION['temp_finni'] = true;
  }
 }
@@ -260,6 +296,15 @@ include "nav_bar.php";
 ?>
 <div class="content-wrapper">
     <div class="container">
+            <h3 class="page-title"> Modifier votre réponse  </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Réponse</li>
+                </ol>
+              </nav>
         <div class="row">
 
             <div class="col-md-5 grid-margin">

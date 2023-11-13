@@ -45,13 +45,8 @@ ul li{
     <div class="row">
             <ol class="breadcrumb">
                 </li>
-                 
                 <li>Consultation de réponse de l'etudiant  <b><a> <?php echo $row_nom['nom']." " .$row_nom['prenom']?> </a></b></li> 
-                
             </ol>
-        
-    
-           
                 <?php
                 $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
                 $req = mysqli_query($conn , $req_detail);
@@ -61,14 +56,12 @@ ul li{
                 <div class="col-md-5 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            
                                 <h4>
                                     <p><?php echo "<strong>Matricule : </strong>". $row['matricule']; ?></p>
                                     <p><?php echo "<strong>Nom et prenom de l'etudiant  : </strong>" . $row['nom']." ".$row['prenom']; ?></p>
                                     <p><?php echo "<strong>Description : </strong>". $row['description_rep'];  ?></p>
                                     <p><?php echo "<strong>Date : </strong>". $row['date']; ?></p>
-                                </h4>
-                                
+                                </h4> 
                         </div>
                     </div>
                 </div>
@@ -81,9 +74,6 @@ ul li{
                 $req = mysqli_query($conn , $req_detail);
                 $row=mysqli_fetch_assoc($req)
             ?>
-
-                                <!--                         $sql2 = "select * from fichiers_reponses where id_rep='$id_rep' ";
- -->
             <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">

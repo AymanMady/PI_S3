@@ -24,6 +24,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
         #tou:hover {
             cursor: pointer;
             background-color: aliceblue;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -54,6 +55,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
       <!-- partial:partials/_navbar.html -->
       
  <?php
+ $color = $_GET['color'];
 $enline="outline-primary";
 $cloture="outline-primary";
 
@@ -82,15 +84,21 @@ $cloture="outline-primary";
   
         <div class="main-panel">
           <div class="content-wrapper">
+          <h3 class="page-title"> Les soumissions dans le matière <?php echo "". $row1['libelle'].""." " ?></h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Soumission par matière</li>
+                </ol>
+          </nav>
           <div class="page-header">
             <div class="row">
               <div class="col-md-3.5 stretch-card grid-margin" >
-                <div class="card bg-gradient-danger card-img-holder text-white" >
+                <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white" >
                   <div class="card-body" >
-                    <h4 class="mb-5">Les soumission sur le matiere  <?php echo "". $row1['libelle'].""." " ?></h4>
+                    <h4 class="mb-5">  <?php echo " ". $row1['libelle'].""." " ?></h4>
                     <form method="post">
                     <input type="submit"id="statu" class="btn btn-<?php echo $enline ;?> p-2" name="enline" value="Les soumissions en ligne">
-                      <!--<button type="button" class="btn btn-outline-primary p-2">Primary</button>-->
                       <input type="submit"id="statu" class="btn btn-<?php echo $cloture ;?> p-2 " name="cloture" value="Les soumissions cloturer">
                     </form>   
                   </div>
@@ -108,39 +116,41 @@ $cloture="outline-primary";
 <?php
       
             ?>
-        <div class="col-md-14 stretch-card grid-margin" >
-                <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
-                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
-                    <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
-                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
-                    </div>
-                    <div >
-                      
-                      <p class="m-0"> Il ya  une nouveau soumission <?= $row['titre_sous'] ?> </p> 
-                      <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp;  <?= $row['date_fin']  ?> </p> 
-                    </div>
+            <a href="soumission_etu.php?id_sous=<?php echo $row['id_sous']; ?>&id_matiere=<?php echo $id_matiere; ?>&color=<?php echo $color; ?>" style=" text-decoration: none;">
+              <div class="col-md-14 stretch-card grid-margin" >
+                  <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>, <?php echo $id_matiere; ?>, <?php echo $color; ?>)">
+                    <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
+                      <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                        <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
+                      </div>
+                      <div >
+                        
+                        <p class="m-0"> Il ya  une nouveau soumission <?= $row['titre_sous'] ?> </p> 
+                        <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp;  <?= $row['date_fin']  ?> </p> 
+                      </div>
+                  </div>
                 </div>
               </div>
-              </div>
-              <?PHP
+            </a>
+
+              <?php
       }
       
     }
   else{
       ?>
-<div class="col-md-14 stretch-card grid-margin" >
-                <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
-                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
-                    <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
-                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
-                    </div>
-                    <div >
-                      
-                      <p class="m-0"> il n'ya  pas des soumissions  </p> 
-                    </div>
+        <div class="col-md-14 stretch-card grid-margin" >
+            <div class="card bg-gradient card-img-holder text-black" id="tou" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
+              <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
+                <div class="btn-gradient-info"  style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
+                  <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
                 </div>
-              </div>
-              </div>
+                <div >
+                  <p class="m-0"> il n'ya  pas des soumissions  </p> 
+                </div>
+            </div>
+          </div>
+          </div>
       <?php
     }
     ?>
@@ -163,7 +173,7 @@ $cloture="outline-primary";
     <!-- plugins:js -->
 
 <script>
-      function redirectToDetails(id_sous) {
-            window.location.href = "soumission_etu.php?id_sous=" + id_sous;
+      function redirectToDetails(id_sous,id_matiere, color) {
+            window.location.href = "soumission_etu.php?id_sous=" + id_sous+"&id_matiere="+id_matiere+"&color="+color;
         }        
 </script>
