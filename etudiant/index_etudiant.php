@@ -7,9 +7,18 @@ if ($_SESSION["role"] != "etudiant") {
 }
 include_once "../connexion.php";
 include_once "nav_bar.php";
+if(isset($_GET['id_semestre'])){
+$id_semestre =$_GET['id_semestre'];
+$_SESSION['id_sem']=$_GET['id_semestre'];
+}
+else{
+    $id_semestre = $_SESSION['id_sem'];
+
+}
 $sql_etud = "SELECT * FROM etudiant WHERE email = '$email' ;";
 $etud_qry = mysqli_query($conn, $sql_etud);
 $row_etud = mysqli_fetch_assoc($etud_qry);
+
 ?>
 
     <style>
@@ -21,7 +30,6 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
 
 <body>
   
- 
 <div class="content-wrapper">
     <div class="content">
 
@@ -41,7 +49,7 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
         <div class="content">
                 <div class="row">
                         <?php
-                        $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'";
+                        $req_ens_mail =  "SELECT matiere.id_matiere,inscription.id_semestre,matiere.libelle,matiere.code,matiere.specialite FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'and inscription.id_semestre=$id_semestre";
                         $req = mysqli_query($conn, $req_ens_mail);
                         if (mysqli_num_rows($req) == 0) {
                             echo "Il n'y a pas encore de matières ajoutées !";
@@ -57,6 +65,7 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
                               <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                 <h3 class="mb-5"><?= $row['libelle'] ?> <?= $row['code'] ?></h3>
                                 <h6 class="card-text"> filiere : <?= $row['specialite'] ?></h6>
+                                <h3 class="card-text"> S<?= $row['id_semestre'] ?></h3>
                               </div>
                             </a>
                         </div>

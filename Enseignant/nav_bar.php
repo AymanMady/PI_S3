@@ -167,7 +167,7 @@
         </nav>
         <!-- partiel -->
         <div class="main-panel">
-          <div class="content-wrapper">
+          <div class="content-wrapper p-0">
 
 
 

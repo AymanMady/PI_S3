@@ -226,7 +226,7 @@ $alert = "";
                     session_start();
                     $_SESSION['email'] = $email;
                     $_SESSION['role'] = "etudiant";
-                    header("location:etudiant/index_etudiant.php");
+                    header("location:etudiant/choix_semestre.php");
                 }
             } else {
                 $errors['email'] = '<div class="alert alert-danger row-md-15" id="success-alert">

@@ -108,7 +108,7 @@
   <ul class="nav">
 
     <li class="nav-item">
-      <a class="nav-link" href="index_etudiant.php">
+      <a class="nav-link" href="choix_semestre.php">
         <span class="menu-title">Accueil</span>
         <p  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         <i class="mdi mdi-home menu-icon"></i>

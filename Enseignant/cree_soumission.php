@@ -4,6 +4,7 @@ $email = $_SESSION['email'];
 if ($_SESSION["role"] != "ens") {
     header("location:authentification.php");
 }
+$verif_dat="veuillez verifier les dates !";
 
 include_once "../connexion.php";
 
@@ -37,53 +38,62 @@ if (isset($_POST['button'])) {
 
     $titre = test_input($_POST['titre_sous']);
     $descri = test_input($_POST['description_sous']);
+    if($date_debut<mysqli_query($conn,"select now()") || $date_fin<mysqli_query($conn,"select now()")){
+     $verif_dat=" 
+     <div class='alert alert-danger' id='success-alert'>
+     veuillez verifier les dates !
+         </div>";
+        
+    }
+    else{
 
-    // Vérifiez si la date de début est supérieure ou égale à la date de fin
-    if (strtotime($date_debut) >= strtotime($date_fin)) {
-        $message = "La date de début doit être antérieure à la date de fin. Veuillez corriger les dates.";
-    } else {
-        $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`,`person_contact`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`,`id_type_sous`) VALUES 
-        ('$titre', '$descri','$personC',(SELECT id_ens FROM enseignant
-        WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere,'$type')";
-        $req1 = mysqli_query($conn, $sql1);
+            // Vérifiez si la date de début est supérieure ou égale à la date de fin
+            if (strtotime($date_debut) >= strtotime($date_fin)) {
+                $message = "La date de début doit être antérieure à la date de fin. Veuillez corriger les dates.";
+            } else {
+                $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`,`person_contact`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`,`id_type_sous`) VALUES 
+                ('$titre', '$descri','$personC',(SELECT id_ens FROM enseignant
+                WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere,'$type')";
+                $req1 = mysqli_query($conn, $sql1);
 
-        $id_sous = mysqli_insert_id($conn);
-        foreach ($files['tmp_name'] as $key => $tmp_name) {
-            $file_name = $files['name'][$key];
-            $file_tmp = $files['tmp_name'][$key];
-            $file_size = $files['size'][$key];
-            $file_error = $files['error'][$key];
-            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                $id_sous = mysqli_insert_id($conn);
+                foreach ($files['tmp_name'] as $key => $tmp_name) {
+                    $file_name = $files['name'][$key];
+                    $file_tmp = $files['tmp_name'][$key];
+                    $file_size = $files['size'][$key];
+                    $file_error = $files['error'][$key];
+                    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-            if ($file_error === 0) {
-                $new_file_name = uniqid('', true) . '.' . $file_ext;
+                    if ($file_error === 0) {
+                        $new_file_name = uniqid('', true) . '.' . $file_ext;
 
-                $sql3 = "SELECT code FROM matiere WHERE matiere.id_matiere = '$id_matiere'";
-                $code_matiere_result = mysqli_query($conn, $sql3);
-                $row = mysqli_fetch_assoc($code_matiere_result);
-                $code_matire = $row['code'];
-                $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
+                        $sql3 = "SELECT code FROM matiere WHERE matiere.id_matiere = '$id_matiere'";
+                        $code_matiere_result = mysqli_query($conn, $sql3);
+                        $row = mysqli_fetch_assoc($code_matiere_result);
+                        $code_matire = $row['code'];
+                        $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
 
-                // Créer le dossier s'il n'existe pas
-                if (!is_dir($matiere_directory)) {
-                    mkdir($matiere_directory, 0777, true);
-                }
+                        // Créer le dossier s'il n'existe pas
+                        if (!is_dir($matiere_directory)) {
+                            mkdir($matiere_directory, 0777, true);
+                        }
 
-                // Chemin complet 
-                $destination = $matiere_directory . '/' . $new_file_name;
-                move_uploaded_file($file_tmp, $destination);
+                        // Chemin complet 
+                        $destination = $matiere_directory . '/' . $new_file_name;
+                        move_uploaded_file($file_tmp, $destination);
 
-                // Insérer les infos dans la base de données
-                $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
-                $req2 = mysqli_query($conn, $sql2);
-                if ($req1 and $req2) {
-                    $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
-                    $req_tou = mysqli_query($conn, $sql_tou);
-                    header("location:soumission_en_ligne.php");
-                    $_SESSION['ajout_reussi'] = true;
+                        // Insérer les infos dans la base de données
+                        $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
+                        $req2 = mysqli_query($conn, $sql2);
+                        if ($req1 and $req2) {
+                            $sql_tou = "SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                            $req_tou = mysqli_query($conn, $sql_tou);
+                            header("location:soumission_en_ligne.php");
+                            $_SESSION['ajout_reussi'] = true;
+                        }
+                    }
                 }
             }
-        }
     }
 }
 
@@ -97,13 +107,16 @@ include "nav_bar.php";
         window.location.href = url;
     }
 </script>
-
+<?php
+ 
+?>
 <div class="content-wrapper">
     <div class="row">
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Créer une soumission : </h4>
+                      <?php echo $verif_dat ?>
 
                     <p class="erreur_message">
                         <?php

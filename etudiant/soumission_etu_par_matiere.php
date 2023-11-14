@@ -48,16 +48,15 @@ $row1 =  mysqli_fetch_assoc($sql2);
     }
 
     </style>
-
-  </head>
-  <body>
+<div class="main-panel">
+          <div class="content-wrapper">
  
       <!-- partial:partials/_navbar.html -->
       
  <?php
  $color = $_GET['color'];
-$enline="outline-primary";
-$cloture="outline-primary";
+$enline="outline-dark";
+$cloture="outline-dark";
 
 $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  (status=0  status=1) and date_debut <= Now()";
 $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  (status=0 or status=1) and date_debut <= Now()";
@@ -65,8 +64,8 @@ $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHE
 if(isset($_POST['cloture'])){
   $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and  status=1 and date_debut <= Now()";
   $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and   status=1 and date_debut <= Now()";
-  $enline="outline-primary";
-  $cloture="primary";
+  $enline="outline-dark";
+  $cloture="dark";
   
 }
 else if(isset($_POST['enline'])){
@@ -75,28 +74,26 @@ $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHE
 
 
 
-$enline="primary";
-$cloture="outline-primary";
+$enline="dark";
+$cloture="outline-dark";
 }
 
 
 ?>
   
-        <div class="main-panel">
-          <div class="content-wrapper">
+        
           <h3 class="page-title"> Les soumissions dans le matière <?php echo "". $row1['libelle'].""." " ?></h3>
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Soumission par matière</li>
+                  <li class="breadcrumb-item active" aria-current="page"><?php echo "". $row1['libelle'].""." " ?></li>
                 </ol>
           </nav>
-          <div class="page-header">
             <div class="row">
               <div class="col-md-3.5 stretch-card grid-margin" >
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white" >
                   <div class="card-body" >
-                    <h4 class="mb-5">  <?php echo " ". $row1['libelle'].""." " ?></h4>
+                    <h4 class="mb-5">  <?php echo " ". $row1['libelle'].""." ";$_SESSION['nom_mat']=$row1['libelle']; ?></h4>
                     <form method="post">
                     <input type="submit"id="statu" class="btn btn-<?php echo $enline ;?> p-2" name="enline" value="Les soumissions en ligne">
                       <input type="submit"id="statu" class="btn btn-<?php echo $cloture ;?> p-2 " name="cloture" value="Les soumissions cloturer">
@@ -104,6 +101,7 @@ $cloture="outline-primary";
                   </div>
                 </div>
               </div>
+            </div>
            
 <?php
     $req = mysqli_query($conn , $req_detail);
@@ -159,10 +157,7 @@ $cloture="outline-primary";
     </div>
     </div>
         <!-- partial:partials/_footer.html -->
-        <footer class="footer">
-            <div class="container-fluid d-flex justify-content-between">
-            </div>
-          </footer>
+      \
           <!-- partial -->
         </div>
         <!-- main-panel ends -->
