@@ -28,53 +28,9 @@ $sql2 = "SELECT COUNT(*) as num_insc FROM inscription, matiere, soumission WHERE
 $req2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($req2);
 ?>
-<style>
-    .submission-div {
-        display: flex;
-        align-items: center;
-        height: 200px;
-    }
 
-    .description {
-        flex: 1;
-        padding-right: 100px;
-        background-color: aliceblue;
-        min-height: 100%;
-    }
 
-    .response-count {
-        width: 200px;
-        margin-left: 10px;
-        background-color: #f1f1f1;
-        padding: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 5px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .nbr_etud {
-        font-size: 50px;
-    }
-
-    .descri {
-        text-align: center;
-        font-size: 25px;
-        font-weight: bold;
-    }
-
-    .descri_contenu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-left: 15px;
-    }
-</style>
-
-<div class="container">
+<div class="container pt-4">
     <div class="row">
 
         <div class="col-md-9 grid-margin">
@@ -103,7 +59,7 @@ $row2 = mysqli_fetch_assoc($req2);
                     <h4 class="card-description">Nombre d'étudiants ayant répondu</h4>
                     <div class="media">
                         <div class="media-body">
-                            <p class="card-text display-2"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p>
+                            <center><p class="card-text display-3"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p></center>
                         </div>
                     </div>
                 </div>
