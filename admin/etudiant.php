@@ -10,7 +10,11 @@ include_once 'nav_bar.php';
 $req = mysqli_query($conn, "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) ORDER by matricule asc;");
 ?>
 
+  <!-- end css for table-data -->
+  <script src="../JS/sweetalert2.js"></script>
 
+
+  
     <title>Gestion des étudiants</title>
 
 <div class="main-panel">
@@ -64,6 +68,8 @@ $req = mysqli_query($conn, "SELECT * FROM etudiant INNER JOIN semestre USING(id_
         </div>
     </div>
 </div>
+
+
 
 <?php
 // Afficher des messages en français

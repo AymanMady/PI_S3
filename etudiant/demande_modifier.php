@@ -10,46 +10,48 @@ if ($_SESSION["role"] != "etudiant") {
 $id_sous = $_GET['id_sous'];
 ?>
 <?php
-   // Bibléotheque PHPMailer pour l'envoi de email
+// Bibléotheque PHPMailer pour l'envoi de email
 
-   use PHPMailer\PHPMailer\PHPMailer;
-   use PHPMailer\PHPMailer\SMTP;
-   use PHPMailer\PHPMailer\Exception;
-   require './PHPMailer/src/Exception.php';
-   require './PHPMailer/src/PHPMailer.php';
-   require './PHPMailer/src/SMTP.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
 
 
-        include_once "../connexion.php";
-        $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
-        $req3 = mysqli_query($conn , $req_detail3);
-        if(   mysqli_num_rows($req3) > 0 ){
+include_once "../connexion.php";
+$req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
+$req3 = mysqli_query($conn, $req_detail3);
+if (mysqli_num_rows($req3) > 0) {
 
-        $email = $_SESSION['email'];
-        $req = mysqli_query($conn, "SELECT * FROM etudiant WHERE email = '$email'");
-        $row = mysqli_fetch_assoc($req);
-      
-        $id_etud = $row['id_etud'];
-     
+    $email = $_SESSION['email'];
+    $req = mysqli_query($conn, "SELECT * FROM etudiant WHERE email = '$email'");
+    $row = mysqli_fetch_assoc($req);
 
-        //Rêquete de personne de contacte
-        $req_personne_contacte = mysqli_query($conn, "SELECT * FROM soumission WHERE id_sous = $id_sous");
-        $row_personne_contacte = mysqli_fetch_assoc($req_personne_contacte);
+    $id_etud = $row['id_etud'];
 
-    function test_input($data){
-            $data = htmlspecialchars($data);
-            $data = trim($data);
-            $data = htmlentities($data);
-            $data = stripcslashes($data);
-            return $data;
-        }
-        $mail = new PHPMailer(true);
+
+    //Rêquete de personne de contacte
+    $req_personne_contacte = mysqli_query($conn, "SELECT * FROM soumission WHERE id_sous = $id_sous");
+    $row_personne_contacte = mysqli_fetch_assoc($req_personne_contacte);
+
+    function test_input($data)
+    {
+        $data = htmlspecialchars($data);
+        $data = trim($data);
+        $data = htmlentities($data);
+        $data = stripcslashes($data);
+        return $data;
+    }
+    $mail = new PHPMailer(true);
 
     try {
-        if(isset($_POST['button'])){
-        $description = test_input($_POST['description']);
+        if (isset($_POST['button'])) {
+            $description = test_input($_POST['description']);
 
-            if( !empty($description)  ){
+            if (!empty($description)) {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
@@ -61,86 +63,84 @@ $id_sous = $_GET['id_sous'];
                 $mail->addAddress($_POST['email']);
                 $mail->isHTML(true);
                 $mail->Subject = $_POST['subject'];
-                $mail->Body = $_POST['description']; 
+                $mail->Body = $_POST['description'];
                 $mail->send();
                 if ($mail->send()) {
-                    $req = mysqli_query($conn , "INSERT INTO `demande` (`id_sous`,`id_etud`,`description`) VALUES($id_sous, $id_etud,'$description')");
-                    if($req){
-                            $id_matiere = $_GET['id_matiere'];
-                            $color = $_GET['color'];
-                            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
-                            $_SESSION['demande_reussi'] = true; 
-                    }else {
+                    $req = mysqli_query($conn, "INSERT INTO `demande` (`id_sous`,`id_etud`,`description`) VALUES($id_sous, $id_etud,'$description')");
+                    if ($req) {
+                        $id_matiere = $_GET['id_matiere'];
+                        $color = $_GET['color'];
+                        header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+                        $_SESSION['demande_reussi'] = true;
+                    } else {
                         $message = "Démande n'est pas envoyé";
                     }
                 } else {
                     $message =  'Une erreur est survenue lors de l\'envoi du courriel, peut être probléme de connexion.  ';
                 }
-            }else {
+            } else {
                 $message = "Veuillez remplir tous les champs !";
             }
-
+        }
+    } catch (Exception $e) {
+        $message =  'Une erreur est survenue lors de l\'envoi du courriel  , peut être probléme de connexion.';
     }
-} catch (Exception $e) {
-    $message =  'Une erreur est survenue lors de l\'envoi du courriel  , peut être probléme de connexion.';
-}
 
- 
+
     include "nav_bar.php";
 
 ?>
-<div class="main-panel">
-<div class="content-wrapper">
+    <div class="main-panel">
+        <div class="content-wrapper">
             <h3 class="page-title"> Demande d'autorisation de modifier le travail en question.</h3>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
-                  <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Démande</li>
+                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                    <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
+                    <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Démande</li>
                 </ol>
-              </nav>
-        <div class="row">
-            <div class="col-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                        <p class="erreur_message">
-                            <?php 
-                            if(isset($message)){
-                            ?>
-                                <div class="alert alert-danger " id="success-alert">
-                                    <?php
+            </nav>
+            <div class="row">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="erreur_message">
+                                <?php
+                                if (isset($message)) {
+                                ?>
+                            <div class="alert alert-danger " id="success-alert">
+                                <?php
                                     echo $message;
-                                    ?>
-                                </div>
-                            <?php
-                            }
-                            ?>
+                                ?>
+                            </div>
+                        <?php
+                                }
+                        ?>
                         </p>
-                      <form action="" method="POST" class="forms-sample">
-                        <input type="hidden" name="email" value="<?php echo $row_personne_contacte['person_contact'] ?>" class="form-control">
-                        <input type="hidden" name="subject" value="<?php echo $row['matricule']." "."demander des modifications " ?>">
-                        <div class="form-group">
+                        <form action="" method="POST" class="forms-sample">
+                            <input type="hidden" name="email" value="<?php echo $row_personne_contacte['person_contact'] ?>" class="form-control">
+                            <input type="hidden" name="subject" value="<?php echo $row['matricule'] . " " . "demander des modifications " ?>">
+                            <div class="form-group">
                                 <label>Justification : </label>
                                 <div class="col-md-12">
                                     <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
                                 </div>
+                            </div>
+                            <button type="submit" name="button" class="btn btn-gradient-primary me-2">Envoyer</button>
+                            <a href="soumission_etu.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-light">Annuler</a>
+                        </form>
                         </div>
-                      <button type="submit" name="button" class="btn btn-gradient-primary me-2">Envoyer</button>
-                      <a href="soumission_etu.php?id_sous=<?=$id_sous?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-light">Annuler</a>
-                    </form>
-                  </div>
+                    </div>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
     </div>
-</div>
 
 <?php
-        }else{
-            $_SESSION['id_sous'] = $id_sous;
-            header("location:soumission_etu.php");
-            $_SESSION['modification_fin'] = true;
-        
-         }
+} else {
+    $_SESSION['id_sous'] = $id_sous;
+    header("location:soumission_etu.php");
+    $_SESSION['modification_fin'] = true;
+}

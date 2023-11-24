@@ -45,36 +45,28 @@ $row_tou=mysqli_fetch_assoc($req_tou);
                         <th>Libellè de la matiére</th>
                         <th>Titre de la soumission</th>
                         <th>Note</th>
-                        </tr>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <?php 
-                        if(mysqli_num_rows($req) == 0){
-                            echo "Il n'y a pas encore de dustribtion de note !" ;
-                            
-                        }else {
-                            while($row=mysqli_fetch_assoc($req)){
-                                ?>
-                                <tr>
-                                    <td><?= $row['code'] ?></td>
-                                    <td><?= $row['libelle'] ?></td>
-                                    <td><?= $row['titre_sous'] ?></td>
-                                    <td><?= $row['note'] ?></td>
-                            </tr>
-                                <?php
-                            }
-                        }
+                    </tr>
+                    <?php
+                    if (mysqli_num_rows($req) == 0) {
+                        echo "Il n'y a pas encore de dustribtion de note !";
+                    } else {
+                        while ($row = mysqli_fetch_assoc($req)) {
                     ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+                            <tr>
+                                <td>
+                                    <?= $row['code'] ?></td>
+                                <td><?= $row['libelle'] ?></td>
+                                <td><?= $row['titre_sous'] ?></td>
+                                <td><?= $row['note'] ?></td>
+                            </tr>
+                    <?php
+                        }
+                    }
+                    ?>
+
+                </table>
             </div>
         </div>
     </div>
 </div>
-
-    
-
+</body>

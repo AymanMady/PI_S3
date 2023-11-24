@@ -33,7 +33,9 @@ $id_sous = $row["id_sous"];
     <div class="row">
         <div class="col-md-12" style="display:flex;justify-content:space-around">
             <ol class="breadcrumb">
-                <li><h4>Consultation de réponse de l'étudiant <a> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> )</a></h4></li>
+                <li>
+                    <h4>Consultation de réponse de l'étudiant <a> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> )</a></h4>
+                </li>
             </ol>
             <blockquote class="blockquote blockquote-info" style="border-radius:10px;width:130px;padding:10px 0px 10px 0px;height:120;">
                 <h4 class="text-center" style='font-size: 20px;'><strong>Note</strong></h4>
@@ -79,7 +81,7 @@ $id_sous = $row["id_sous"];
                         <?php
                         echo "Il n'y a pas de fichiers ajoutés !";
                         ?>
-                    <?php
+                        <?php
                     } else {
                         while ($row2 = mysqli_fetch_assoc($req2)) {
                             $file_name = $row2['nom_fichier'];
@@ -94,7 +96,7 @@ $id_sous = $row["id_sous"];
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn-inverse-info btn-sm" title="Les fichiers d'extension pdf sont les seuls que vous pouvez visualiser 😒😒." >Visualiser</a>
+                                    <a class="btn btn-inverse-info btn-sm" title="Les fichiers d'extension pdf sont les seuls que vous pouvez visualiser 😒😒.">Visualiser</a>
                                 <?php
                                 }
                                 ?>
@@ -127,7 +129,7 @@ $id_sous = $row["id_sous"];
                         <?php
                         echo "Il n'y a pas de fichier ajouté !";
                         ?>
-                    <?php
+                        <?php
                     } else {
                         while ($row2 = mysqli_fetch_assoc($req2)) {
                         ?>
@@ -145,7 +147,7 @@ $id_sous = $row["id_sous"];
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn-inverse-info btn-sm" title="Les fichiers d'extension pdf sont les seuls que vous pouvez visualiser 😒😒." >Visualiser</a>
+                                    <a class="btn btn-inverse-info btn-sm" title="Les fichiers d'extension pdf sont les seuls que vous pouvez visualiser 😒😒.">Visualiser</a>
                                 <?php
                                 }
                                 ?>
