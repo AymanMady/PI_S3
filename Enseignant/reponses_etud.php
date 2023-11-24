@@ -132,7 +132,7 @@ $row2 = mysqli_fetch_assoc($req2);
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Les étudiants ayant répondu et qui ne sont pas encore :</h4>
+                        <h4 class="card-title">Les réponses des étudiants  :</h4>
                         <table id="example" class="table table-bordered" style="width:100%">
                             <tr>
                                 <th>Matricule</th>

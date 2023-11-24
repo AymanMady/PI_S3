@@ -35,14 +35,15 @@ $req2 = mysqli_query($conn , $req_sous2);
 
 if (mysqli_num_rows($req1) > 0 or mysqli_num_rows($req2) > 0) {
 ?>
+
     <div class="page-header">
         <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-md-7 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Les Soumissions en Ligne :</h4>
-                        <br>
-                        <table id="example" class="table table-bordered" style="width:100%">
+                        <div class="table-responsive">
+                        <table  class="table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Code</th>
@@ -78,14 +79,17 @@ if (mysqli_num_rows($req1) > 0 or mysqli_num_rows($req2) > 0) {
                             ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+  </div>
 <?php
 }
 ?>
+ 
 
 <?php
 if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
