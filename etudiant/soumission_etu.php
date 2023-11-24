@@ -13,7 +13,7 @@
 
 ?>
 
-<title>Detailler matiere par enseignant </title>
+<title>Detaille de la soumission</title>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="../JS/sweetalert2.js"></script>

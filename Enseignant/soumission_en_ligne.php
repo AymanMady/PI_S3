@@ -46,8 +46,7 @@ include "nav_bar.php";
 if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                   
 ?>
-        <div class="page-header">
-            <div class="row">
+            <div class="row p-4">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
