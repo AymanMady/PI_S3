@@ -117,7 +117,7 @@ if ($req_num_rep && $req_num_insc){
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
+                  <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>"><?php echo $_SESSION['nom_mat']?></a></li>
                   <li class="breadcrumb-item active" aria-current="page">Dètails</li>
                 </ol>
               </nav>

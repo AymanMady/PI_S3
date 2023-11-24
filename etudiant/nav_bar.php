@@ -2,7 +2,8 @@
 <html lang="fr">
   <head>
     <!-- Balises meta requises -->
-    <meta charset="utf-8">
+       <!-- Balises meta requises -->
+       <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
@@ -108,7 +109,7 @@
   <ul class="nav">
 
     <li class="nav-item">
-      <a class="nav-link" href="index_etudiant.php">
+      <a class="nav-link" href="choix_semestre.php">
         <span class="menu-title">Accueil</span>
         <p  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
         <i class="mdi mdi-home menu-icon"></i>
