@@ -126,7 +126,7 @@ $cloture="outline-dark";
                     </div>
                     <div onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                       
-                      <p class="m-0"><?= $rot['nom']." ".$rot['prenom'] ?> a publié un nouveau support de <?= $row['titre_sous'] ?> </p> 
+                      <p class="m-0"><?= $rot['nom']." ".$rot['prenom'] ?> a publié un nouveau  <?= $row['titre_sous'] ?> </p> 
                       <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp;  <?= $row['date_fin']  ?> </p> 
                     </div>
                    

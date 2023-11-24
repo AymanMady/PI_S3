@@ -28,7 +28,9 @@ $req_sous =  "SELECT DISTINCT soumission.*, matiere.* FROM soumission , matiere,
 $req = mysqli_query($conn, $req_sous);
 ?>
 
-<div class="row">
+
+
+<div class="row p-4">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -70,7 +72,7 @@ $req = mysqli_query($conn, $req_sous);
         </div>
     </div>
 </div>
-
+</div>
 <script src="../JS/sweetalert2.js"></script>
 
 <?php

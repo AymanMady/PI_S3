@@ -49,7 +49,9 @@ $row_etud = mysqli_fetch_assoc($etud_qry);
         <div class="content">
                 <div class="row">
                         <?php
-                        $req_ens_mail =  "SELECT matiere.id_matiere,inscription.id_semestre,matiere.libelle,matiere.code,matiere.specialite FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'and inscription.id_semestre=$id_semestre";
+                        $req_ens_mail =  "SELECT matiere.id_matiere,inscription.id_semestre,matiere.libelle,matiere.code,matiere.specialite
+                         FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere 
+                         AND email = '$email'and inscription.id_semestre=$id_semestre";
                         $req = mysqli_query($conn, $req_ens_mail);
                         if (mysqli_num_rows($req) == 0) {
                             echo "Il n'y a pas encore de matières ajoutées !";
