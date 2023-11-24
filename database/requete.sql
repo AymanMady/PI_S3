@@ -126,7 +126,9 @@ CREATE TABLE `etudiant` (
 `id_role` int(11) NOT NULL,
 `id_groupe` int(10) DEFAULT NULL,
 `id_sous` int(10) DEFAULT NULL,
+`id_dep` int(10) DEFAULT NULL,
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
+FOREIGN KEY (id_dep) REFERENCES departement(id),
 FOREIGN KEY (id_role) REFERENCES role(id_role),
 FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe),
 FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
@@ -286,7 +288,7 @@ INSERT INTO `departement` ( `code`, `nom`) VALUES
 ('DSI', 'Devellopement'),
 ('RSS', 'Réseaux'),
 ('CNM', 'Multimedia'),
-('TC', 'Trancommun');
+('TC', 'Troncommun');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------

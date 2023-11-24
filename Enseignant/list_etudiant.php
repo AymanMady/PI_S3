@@ -44,11 +44,12 @@ if($_SESSION["role"]!="ens"){
     <tr>
     <th>Matricule</th>
     <th>Nom et Prénom</th>
+    <th>Filière</th>
     <th>Semestre</th>
     <th>E-mail</th>
     </tr>
     <?php 
-    $req = mysqli_query($conn , "SELECT * FROM etudiant,semestre,inscription where etudiant.id_semestre=semestre.id_semestre and etudiant.id_etud=inscription.id_etud and id_matiere=$id_matiere  ORDER by matricule asc;");
+    $req = mysqli_query($conn , "SELECT etudiant.*,departement.code ,semestre.* ,inscription.* FROM etudiant,semestre,inscription,departement where etudiant.id_semestre=semestre.id_semestre and etudiant.id_etud=inscription.id_etud and etudiant.id_dep=departement.id and id_matiere=$id_matiere  ORDER by matricule asc;");
 
 
     if(mysqli_num_rows($req) == 0){
@@ -63,6 +64,7 @@ if($_SESSION["role"]!="ens"){
                 <?=$row['prenom']?></td>
                 <?php $row['lieu_naiss']?>
                 <?php $row['Date_naiss']?>
+                <td><?=$row['code']?></td>
                 <td><?=$row['nom_semestre']?></td>
                 <?php $row['annee']?>
                 <td><?=$row['email']?></td>

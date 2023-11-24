@@ -47,7 +47,6 @@
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <!-- <a class="navbar-brand brand-logo" href="index.html"><img src="" alt="logo" /></a> -->
-          <strong><p>SupNum</p></strong>
           <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo" /></a> -->
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -101,10 +100,12 @@
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
                   <img src="../images/supnum.jpg" alt="image" title="<?=$row['nom']." ".$row['prenom']?>">
+                 
                   <span class="availability-status online"></span>
                 </div>
                 <div class= "nav-profile-text">
                   <p class="mb-1 text-black"><?php echo $row['nom'] ." ".$row['prenom'] ?></p>
+                  <center><b>(Enseignant)</b></center>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -167,7 +168,7 @@
         </nav>
         <!-- partiel -->
         <div class="main-panel">
-          <div class="content-wrapper">
+        <div class="content-wrapper p-0">
 
 
 
