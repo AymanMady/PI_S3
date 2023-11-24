@@ -97,6 +97,7 @@ if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
 <?php
 }
 ?>
+ 
 
 <?php
 if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
