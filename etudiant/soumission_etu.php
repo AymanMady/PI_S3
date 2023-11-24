@@ -10,7 +10,7 @@
 
     include "nav_bar.php";
 
-    
+
 ?>
 
 <title>Detailler matiere par enseignant </title>
@@ -25,6 +25,59 @@
     }else{
         $id_sous= $_SESSION['id_sous'];
     }
+// biblioteque de message email
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    require './PHPMailer/src/Exception.php';
+    require './PHPMailer/src/PHPMailer.php';
+    require './PHPMailer/src/SMTP.php';
+    
+   
+
+
+// ferification si touts les eturdient sont rapondu a le somission 
+
+
+
+$req_num_rep = mysqli_query($conn , "select count(*) as num_rep from reponses where id_sous = $id_sous ");
+    
+$req_num_insc = mysqli_query($conn , "select count(*) as num_insc from  inscription,matiere,soumission where inscription.id_matiere=matiere.id_matiere and matiere.id_matiere=soumission.id_matiere and  id_sous = $id_sous");
+if ($req_num_rep && $req_num_insc){
+
+    $row_num_rep=mysqli_fetch_assoc($req_num_rep);
+    $row_num_insc=mysqli_fetch_assoc($req_num_insc);
+
+    $ens_email=mysqli_query($conn,"select email from enseignant WHERE enseignant.id_ens=(SELECT soumission.id_ens FROM soumission WHERE id_sous =$id_sous)");
+    $email_ens=mysqli_fetch_assoc($ens_email);
+    if($row_num_insc['num_insc']== $row_num_rep['num_rep']){
+        $is_somission_valid=mysqli_fetch_assoc(mysqli_query($conn,"SELECT valide FROM `soumission` WHERE id_sous = $id_sous"));
+        if($is_somission_valid !=0){
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'nodenodeemail@gmail.com';
+                $mail->Password = 'dczxmfqzwjqjeuzp';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+                $mail->setFrom('nodenodeemail@gmail.com');
+                // $mail->addAddress("$email_ens");
+                $mail->addAddress("22086@supnum.mr");
+                $mail->isHTML(true);
+                $mail->Subject = "reponse des etudients";
+                $mail->Body = "tout les etudiants ont repondu a les soumission "; 
+                $mail->send();
+                if($mail->send()){
+                    mysqli_query($conn,"UPDATE `soumission` SET `valide`=1 WHERE id_sous =$id_sous");
+                }
+
+        }
+    }
+}
+
+// ******  
 
     $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and (status=0 or status=1)  ";
     $req = mysqli_query($conn , $req_detail);

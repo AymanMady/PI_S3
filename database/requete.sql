@@ -1,6 +1,6 @@
-DROP database pi;
-CREATE database pi;
-use pi;
+DROP database pse;
+CREATE database pse;
+use pse;
 
 CREATE TABLE `departement` (
   `id` int(10) AUTO_INCREMENT PRIMARY key,
@@ -190,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
 );
 
 CREATE TABLE `demande` (
+  id_demande int(10) AUTO_INCREMENT PRIMARY key ,
   `id_sous` int(10) DEFAULT NULL,
   `id_etud` int(10) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,

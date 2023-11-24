@@ -2,9 +2,9 @@
 include_once "../connexion.php";
 
     $file_name = $_GET['file_name'];
-   
+    $id_rep = $_GET['id_rep'];
+
     if(isset($id_rep)){
-        $id_rep = $_GET['id_rep'];
         $sql2 = "select * from fichiers_reponses where id_rep='$id_rep' and nom_fichiere='$file_name'";
         $req2 = mysqli_query($conn,$sql2);
         $row2=mysqli_fetch_assoc($req2);

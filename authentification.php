@@ -18,7 +18,7 @@ include_once("controller.php");
                             <h4>Institut supérieur du numérique</h4>
                             <h6 class="font-weight-light">Plateforme de soumission des évaluations</h6>
                         </center>
-                        <form action="" method="POST" >
+                        <form action="" method="POST">
                             <?php
                             if (count($errors) > 0) {
                                 foreach ($errors as $displayErrors) {

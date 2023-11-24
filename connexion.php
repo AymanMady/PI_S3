@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pi";
+$dbname = "pse";
 
 // Connexion
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -11,4 +11,3 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     die("La connexion a échoué : " . mysqli_connect_error());
 }
-?>
