@@ -41,7 +41,7 @@ include_once("controller.php");
                             </div>
                             <div class="text-center mt-4 font-weight-light">Créer un compte <a href="verification.php" class="text-primary">S'inscrire</a></div>
                             <div class="my-2 d-flex justify-content-between align-items-center">
-                                <a href="forgot.php" class="auth-link text-black">Mot de passe oublié ?</a>
+                                <a href="forgot.php" class="text-center auth-link text-black">Mot de passe oublié ?</a>
                             </div>
                         </form>
                     </div>
