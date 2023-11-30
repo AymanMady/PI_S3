@@ -8,7 +8,21 @@ if ($_SESSION["role"] != "etudiant") {
 
 include_once "nav_bar.php";
 include_once "../connexion.php";
-$id_matiere = $_GET['id_matiere'];
+
+if(isset($_GET['id_matiere'])){
+    $_SESSION['id_mat']=$_GET['id_matiere'];
+    $id_matiere = $_GET['id_matiere'];
+}
+$id_matiere =$_SESSION['id_mat'];
+
+if(isset($_GET['color'])){
+    $_SESSION['color']=$_GET['color'];
+    $color = $_GET['color'];
+}
+$color = $_SESSION['color'];
+
+$id_matiere =$_SESSION['id_mat'];
+
 $sql1 = "select * from matiere where id_matiere=$id_matiere";
 $sql2 = mysqli_query($conn, $sql1);
 $row1 =  mysqli_fetch_assoc($sql2);
@@ -50,7 +64,6 @@ $row1 =  mysqli_fetch_assoc($sql2);
             <!-- partial:partials/_navbar.html -->
 
             <?php
-            $color = $_GET['color'];
             $enline = "outline-dark";
             $cloture = "outline-dark";
 
