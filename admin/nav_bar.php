@@ -16,7 +16,7 @@
   <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="CSS/data_table.css">
   <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
-  
+
   <!-- end css for table-data -->
   <script src="../JS/sweetalert2.js"></script>
 
@@ -56,7 +56,9 @@
           </a>
           <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
             <a class="dropdown-item text-black btn-fw" href="../supprimer_session.php">
-              <i class="mdi mdi-logout me-2 text-primary"></i> Déconnexion </a>
+              <i class="mdi mdi-logout me-2 text-primary"></i>
+              Déconnexion
+            </a>
           </div>
         </li>
       </ul>
@@ -110,10 +112,7 @@
       </ul>
     </nav>
     <!-- partiel -->
-
-
-
-
+    
     <!-- plugins:js -->
     <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
