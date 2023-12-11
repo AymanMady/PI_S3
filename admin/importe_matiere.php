@@ -61,14 +61,12 @@ include_once "nav_bar.php";
 
 			$code = $row[0];
 			$libelle = $row[1];
-			$semestre = $row[2];
-			$specialite = $row[3];
-			$module = $row[4];
-			$type_matiere = $row[5];
-			
-							
-		$sql = "INSERT INTO matiere( `code`, `libelle`,`id_semestre`,`specialite`, `id_module` , `id_type_matiere` ) VALUES('$code','$libelle',(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'), '$specialite', (SELECT id_module FROM module WHERE nom_module = '$module') ,(SELECT id_type_matiere FROM type_matiere WHERE libelle_type = '$type_matiere'))";
-
+			$specialite = $row[2];
+			$module = $row[3];
+			$semestre = $row[4];
+		
+					
+		$sql = "INSERT INTO matiere( `code`, `libelle`,`specialite`, `id_module`, `id_semestre` ) VALUES('$code','$libelle', '$specialite', (SELECT id_module FROM module WHERE nom_module = '$module') ,(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))";
 		if(mysqli_query($conn,$sql)){
 			echo "<script>window.location.href = 'matiere.php';</script>";
 		}	

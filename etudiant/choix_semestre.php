@@ -5,8 +5,10 @@ if ($_SESSION["role"] != "etudiant") {
     header("location:../authentification.php");
     exit;
 }
+include_once "../connexion.php";
 
 include "nav_bar.php";
+
 ?>
 
 <style>
@@ -30,7 +32,7 @@ $i = 0;
 
 
 $req="SELECT DISTINCT inscription.id_semestre FROM inscription WHERE inscription.id_etud=
-(SELECT etudiant.id_etud FROM etudiant WHERE etudiant.email='22053@supnum.mr')ORDER BY inscription.id_semestre";       
+(SELECT etudiant.id_etud FROM etudiant WHERE etudiant.email='$email')ORDER BY inscription.id_semestre";       
 
 
 
