@@ -29,7 +29,9 @@ $('#success-alert .close').click(function() {
   $(this).parent().hide();
 });
   </script>
-</head>
+<body>
+    
+
 <?php
 $alert = "";
     include_once("connexion.php");
@@ -345,3 +347,33 @@ if(isset($_POST['changePassword'])){
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <script src="assets/js/misc.js"></script>
+
+
+    <!-- ... Votre contenu existant ... -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Désactivez le comportement par défaut du formulaire
+        $('#monFormulaire').submit(function (event) {
+            event.preventDefault();
+
+            // Ajoutez ici vos conditions d'authentification
+            var email = $('#exampleInputEmail1').val();
+            var password = $('#exampleInputPassword1').val();
+
+            // Exemple de condition : si l'email et le mot de passe sont valides
+            if (email === 'email_valide@example.com' && password === 'mot_de_passe_valide') {
+                // Soumettez automatiquement le formulaire
+                $(this).unbind('submit').submit();
+            } else {
+                // Affichez un message d'erreur ou effectuez d'autres actions en cas d'échec de l'authentification
+                alert('Authentification échouée. Veuillez vérifier vos informations.');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
