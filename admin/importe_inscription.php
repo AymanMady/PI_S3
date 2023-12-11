@@ -67,26 +67,12 @@ if (isset($_POST["import"])) {
             $code_matiere = $row[1];
             $semestre = $row[2];
 
-            $sql_etudiant = "SELECT id_etud FROM etudiant WHERE matricule = '$matricule'";
-            $req_etudiant = mysqli_query($conn, $sql_etudiant);
-            $row_etudiant = mysqli_fetch_assoc($req_etudiant);
-            $id_etudiant = $row_etudiant['id_etud'];
 
-            $sql_matiere = "SELECT id_matiere FROM matiere WHERE code='$code_matiere'";
-            $req_matiere = mysqli_query($conn, $sql_matiere);
-            $row_matiere = mysqli_fetch_assoc($req_matiere);
-            $id_matiere = $row_matiere['id_matiere'];
-
-            $sql_semestre = "SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'";
-            $req_semestre = mysqli_query($conn, $sql_semestre);
-            $row_semestre = mysqli_fetch_assoc($req_semestre);
-            $id_semestre = $row_semestre['id_semestre'];
-
-            $sql_condition = "SELECT * FROM inscription WHERE id_etud=$id_etudiant AND id_matiere=$id_matiere AND id_semestre=$id_semestre";
+            $sql_condition = "SELECT * FROM inscription WHERE id_etud=(SELECT id_etud FROM etudiant WHERE matricule = '$matricule') AND id_matiere=(SELECT id_matiere FROM matiere WHERE code='$code_matiere') AND id_semestre=(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre')";
             $req_condition = mysqli_query($conn, $sql_condition);
 
             if (mysqli_num_rows($req_condition) == 0) {
-                if (mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES($id_etudiant, $id_matiere, $id_semestre)")) {
+                if (mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES((SELECT id_etud FROM etudiant WHERE matricule = '$matricule'), (SELECT id_matiere FROM matiere WHERE code='$code_matiere'), (SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))")) {
                     echo "<script>window.location.href = 'inscription.php';</script>";
                     $_SESSION['import_reussi'] = true;
                 }
