@@ -1,4 +1,4 @@
-DROP database pse;
+DROP DATABASE IF EXISTS `pse`;
 CREATE database pse;
 use pse;
 
