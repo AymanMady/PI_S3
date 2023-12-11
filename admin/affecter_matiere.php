@@ -8,7 +8,7 @@ if($_SESSION["role"]!="admin"){
 
 <?php
 include_once "../connexion.php";
-$ens = "SELECT * FROM enseignant ";
+$ens = "SELECT * FROM enseignant ORDER BY nom, prenom DESC;";
 $ens_qry = mysqli_query($conn, $ens);
 $groupe = "SELECT DISTINCT groupe.* FROM groupe";
 $groupe_qry = mysqli_query($conn,$groupe);
@@ -75,8 +75,6 @@ include "nav_bar.php";
 ?>
 <script type="text/JavaScript">
     var i = 1;
-
-   
     function ToAction(url) {
         window.location.href = url;
     }
@@ -154,7 +152,7 @@ include "nav_bar.php";
                         <select  name="enseignant[]" id="modi" class = "form-control">
                             <option selected disabled> Enseignants </option>
                                     <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
-                                    <option value="<?= $row_ens['id_ens']; ?>"> <?= $row_ens['nom']." ".$row_ens['prenom']; ?> </option>  
+                                    <option value="<?= $row_ens['id_ens']; ?>"> <?= $row_ens['prenom']." ".$row_ens['nom']; ?> </option>  
                                 <?php endwhile;?>
                             </select>
                         </div>

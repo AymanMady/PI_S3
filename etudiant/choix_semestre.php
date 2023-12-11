@@ -5,8 +5,10 @@ if ($_SESSION["role"] != "etudiant") {
     header("location:../authentification.php");
     exit;
 }
+include_once "../connexion.php";
 
 include "nav_bar.php";
+
 ?>
 
 <style>

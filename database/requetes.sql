@@ -1,4 +1,4 @@
-DROP database pse;
+DROP DATABASE IF EXISTS `pse`;
 CREATE database pse;
 use pse;
 
@@ -289,11 +289,24 @@ INSERT INTO `departement` ( `code`, `nom`) VALUES
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
-INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'CM');
-INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TP');
-INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TD');
 
-
+INSERT INTO `type_matiere` (`id_type_matiere`, `libelle_type`) VALUES
+(1, 'CM'),
+(2, 'TP'),
+(3, 'TD'),
+(4, 'TP3'),
+(5, 'TP4'),
+(6, 'TP5'),
+(7, 'TP6'),
+(8, 'TP1'),
+(9, 'TP2'),
+(10, 'TD1'),
+(11, 'TD2'),
+(13, 'TD3'),
+(14, 'TD5'),
+(16, 'TD6'),
+(15, 'TP4'),
+(17, 'TD4');
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
@@ -456,6 +469,7 @@ INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
+
 INSERT INTO `enseignant` (`id_ens`, `nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `num_tel`, `num_whatsapp`, `diplome`, `grade`, `id_role`) VALUES
 (34, 'Moctar', 'Abderrahmane Sidi El', '0000-00-00', 'NKTT', 'abderrahmane.sidi-elmoctar@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
 (35, 'Cheikhna', 'Aboubecrine', '0000-00-00', 'NKTT', 'aboubacrine.cheikhna@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
@@ -488,11 +502,115 @@ INSERT INTO `enseignant` (`id_ens`, `nom`, `prenom`, `Date_naiss`, `lieu_naiss`,
 (62, 'Mohamed', 'Saghir', '0000-00-00', 'NKTT', 'saghir.mohamed@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
 (63, 'Maouloud', 'Mouhamed Sidi Mouhamed', '0000-00-00', 'NKTT', 'msidi.maouloud@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
 (64, 'vall', 'Moctar Med', '0000-00-00', 'NKTT', 'moctar.ahmedval@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
-(65, 'Sejad', 'Ahmed', '0000-00-00', 'NKTT', 'ahmed.sejad@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2);
+(65, 'Sejad', 'Ahmed', '0000-00-00', 'NKTT', 'ahmed.sejad@supnum.mr', 22420813, 22420813, 'Prof', 'Prof', 2),
+(66, 'Mohamed Lamine', 'Mohamed Lamine', '1984-09-02', 'nktt', 'm-lamine.ahmed-sidi@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(1, 'Cheikh', 'Dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', NULL, NULL, 'doctor', 'directeur', 2),
+(2, 'Moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', NULL, NULL, 'doctor', 'directeur adjoint', 2),
+(3, 'Meya', 'Haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(4, 'Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.med@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(7, 'sidi', 'soueina', '1983-01-22', 'nktt', 'sidi.souiena@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(80, 'Mohamed Lamine', 'Mohamed Lamine', '1984-09-02', 'nktt', 'm-lamine.ahmed-sidi@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(81, 'ElMamy ', 'Sidi Boubacar', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+(82, 'Fatimetou ', ' Abdou ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+(83, 'Rifaa ', '  Sadegh ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2),
+(84, 'EL Hacen', 'Elhadj ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2);
+
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
+
+INSERT INTO `enseigner` (`id_matiere`, `id_ens`, `id_groupe`, `id_type_matiere`) VALUES
+(13, 39, 2, 2),
+(13, 40, 1, 1),
+(13, 38, 1, 3),
+(17, 36, 2, 4),
+(17, 2, 1, 2),
+(17, 2, 2, 1),
+(17, 2, 1, 1),
+(18, 3, 2, 13),
+(13, 44, 1, 2),
+(23, 36, 2, 1),
+(23, 36, 2, 4),
+(23, 35, 2, 5),
+(23, 43, 1, 1),
+(23, 36, 2, 5),
+(23, 43, 1, 2),
+(23, 43, 1, 3),
+(23, 2, 3, 1),
+(23, 2, 3, 6),
+(18, 1, 1, 1),
+(18, 3, 2, 1),
+(18, 3, 3, 1),
+(18, 60, 1, 9),
+(17, 43, 2, 5),
+(17, 2, 1, 10),
+(17, 35, 2, 13),
+(17, 43, 2, 15),
+(21, 7, 1, 1),
+(21, 7, 1, 8),
+(21, 7, 2, 1),
+(21, 7, 2, 8),
+(21, 7, 3, 1),
+(13, 39, 2, 2),
+(13, 40, 1, 1),
+(13, 38, 1, 3),
+(17, 36, 2, 4),
+(17, 2, 1, 2),
+(17, 2, 2, 1),
+(17, 2, 1, 1),
+(18, 3, 2, 13),
+(13, 44, 1, 2),
+(23, 36, 2, 1),
+(23, 36, 2, 4),
+(23, 35, 2, 5),
+(23, 43, 1, 1),
+(23, 36, 2, 5),
+(23, 43, 1, 2),
+(23, 43, 1, 3),
+(23, 2, 3, 1),
+(23, 2, 3, 6),
+(18, 1, 1, 1),
+(18, 3, 2, 1),
+(18, 3, 3, 1),
+(18, 60, 1, 9),
+(17, 43, 2, 5),
+(17, 2, 1, 10),
+(17, 35, 2, 13),
+(17, 43, 2, 15),
+(21, 7, 1, 1),
+(21, 7, 1, 8),
+(21, 7, 2, 1),
+(21, 7, 2, 8),
+(21, 7, 3, 1),
+(21, 7, 3, 8),
+(20, 36, 1, 2),
+(20, 43, 2, 2),
+(20, 36, 1, 3),
+(20, 43, 2, 3),
+(20, 36, 1, 1),
+(20, 43, 2, 1),
+(20, 66, 3, 1),
+(20, 66, 3, 2),
+(20, 66, 3, 3),
+(21, 7, 3, 8),
+(13, 81, 1, 9),
+(13, 80, 1, 3),
+(13, 4, 2, 1),
+(17, 39, 1, 9),
+(17, 39, 3, 6),
+(17, 39, 1, 11),
+(17, 39, 3, 14),
+(18, 47, 1, 3),
+(18, 47, 1, 10),
+(18, 39, 1, 11),
+(18, 47, 2, 17),
+(19, 58, 1, 1);
+
+
+
+-- --------------------------------------------------------
+-- --------------------------------------------------------
 
 
 INSERT INTO `inscription` (`id_insc`, `id_etud`, `id_matiere`, `id_semestre`) VALUES
@@ -1630,5 +1748,3 @@ INSERT INTO `inscription` (`id_insc`, `id_etud`, `id_matiere`, `id_semestre`) VA
 (1132, 118, 22, 1),
 (1133, 119, 22, 1),
 (1134, 1, 23, 1);
-
-

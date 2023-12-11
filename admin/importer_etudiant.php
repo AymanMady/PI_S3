@@ -43,6 +43,17 @@ include_once "nav_bar.php";
 <?php
 include_once "../connexion.php";
 
+
+function test_input($data){
+	$data = htmlspecialchars($data);
+	$data = trim($data);
+	$data = htmlentities($data);
+	$data = stripcslashes($data);
+
+	return $data;
+}
+
+
 if (isset($_POST["import"])) {
 
 	$fileName = $_FILES["excel"]["name"];
@@ -75,6 +86,7 @@ if (isset($_POST["import"])) {
 		$dep = $row[9];
 		$groupe_td = $row[10];
 
+		
 		if(mysqli_query($conn, "INSERT INTO etudiant
 		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`,`id_dep`,`groupe_td`) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
