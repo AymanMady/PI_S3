@@ -84,13 +84,16 @@ if (isset($_POST["import"])) {
 		$email = test_input($row[7]);
 		$groupe = test_input($row[8]);
 		$departement = test_input($row[9]);
+		$groupe_td = test_input($row[10]);
 
+		
 		if(mysqli_query($conn, "INSERT INTO etudiant
-		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`, `id_dep` ) VALUES
+		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`, `id_dep`, `groupe_td` ) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
 		(select id_semestre from semestre where nom_semestre = '$semestre'  LIMIT 1), '$annee','$email',3,
 		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe'  LIMIT 1),
-		(SELECT id FROM departement WHERE code = '$departement'  LIMIT 1) )")){
+		(SELECT id FROM departement WHERE code = '$departement'  LIMIT 1),
+		 '$groupe_td' )")){
 			echo "<script>window.location.href = 'etudiant.php';</script>";
 		}	
 		}
