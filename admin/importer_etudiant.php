@@ -43,6 +43,17 @@ include_once "nav_bar.php";
 <?php
 include_once "../connexion.php";
 
+
+function test_input($data){
+	$data = htmlspecialchars($data);
+	$data = trim($data);
+	$data = htmlentities($data);
+	$data = stripcslashes($data);
+
+	return $data;
+}
+
+
 if (isset($_POST["import"])) {
 
 	$fileName = $_FILES["excel"]["name"];
@@ -63,21 +74,26 @@ if (isset($_POST["import"])) {
 	foreach ($reader as $key => $row) {
 
 
-		$matricule = $row[0];
-		$nom = $row[1];
-		$prenom = $row[2];
-		$lieu_naiss = $row[3];
-		$Date_naiss = $row[4];
-		$semestre = $row[5];
-		$annee = $row[6];
-		$email = $row[7];
-		$groupe = $row[8];
+		$matricule = test_input($row[0]);
+		$nom = test_input($row[1]);
+		$prenom = test_input($row[2]);
+		$lieu_naiss = test_input($row[3]);
+		$Date_naiss = test_input($row[4]);
+		$semestre = test_input($row[5]);
+		$annee = test_input($row[6]);
+		$email = test_input($row[7]);
+		$groupe = test_input($row[8]);
+		$departement = test_input($row[9]);
+		$groupe_td = test_input($row[10]);
 
+		
 		if(mysqli_query($conn, "INSERT INTO etudiant
-		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`) VALUES
+		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`, `id_dep`, `groupe_td` ) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
 		(select id_semestre from semestre where nom_semestre = '$semestre'  LIMIT 1), '$annee','$email',3,
-		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe'  LIMIT 1) )")){
+		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe'  LIMIT 1),
+		(SELECT id FROM departement WHERE code = '$departement'  LIMIT 1),
+		 '$groupe_td' )")){
 			echo "<script>window.location.href = 'etudiant.php';</script>";
 		}	
 		}
