@@ -342,6 +342,22 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`, `id_module
 -- --------------------------------------------------------
 
 
+INSERT INTO `matiere_semestre` (`id_matiere_semestre`, `id_matiere`, `id_semestre`) VALUES
+(1, 13, 1),
+(2, 17, 1),
+(3, 23, 1),
+(4, 19, 1),
+(5, 16, 1),
+(6, 21, 1),
+(7, 14, 1),
+(8, 15, 1),
+(9, 20, 1),
+(10, 18, 1),
+(11, 22, 1);
+
+
+-- --------------------------------------------------------
+-- --------------------------------------------------------
 
 
 INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_dep`, `groupe_td`) VALUES
