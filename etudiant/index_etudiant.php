@@ -35,13 +35,13 @@ if (isset($_GET['id_semestre'])) {
             </h3>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
+        <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li></li>
+                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="#"><?php echo"S".$id_semestre ?></a></li>
                 </ol>
-            </div>
-        </div>
+            </nav>
+        <br>
 
         <div class="content">
             <div class="row">

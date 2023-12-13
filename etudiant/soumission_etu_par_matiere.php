@@ -88,6 +88,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="index_etudiant.php?id_semestre=<?php echo $row['id_semestre']; ?>"><?php echo"S".$_SESSION['id_sem'] ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?php echo "" . $row1['libelle'] . "" . " " ?></li>
                 </ol>
             </nav>
