@@ -4,7 +4,7 @@ $email = $_SESSION['email'];
 if ($_SESSION["role"] != "ens") {
     header("location:authentification.php");
 }
-$verif_dat="veuillez verifier les dates !";
+// $verif_dat="";
 
 include_once "../connexion.php";
 
@@ -29,6 +29,7 @@ function test_input($data)
 }
 
 if (isset($_POST['button'])) {
+    $ali=mysqli_query($conn,"select now()");
     $id_matiere = test_input($_POST['matiere']);
     $date_debut = test_input($_POST['debut']);
     $date_fin = test_input($_POST['fin']);
@@ -38,11 +39,16 @@ if (isset($_POST['button'])) {
 
     $titre = test_input($_POST['titre_sous']);
     $descri = test_input($_POST['description_sous']);
-    if($date_debut<mysqli_query($conn,"select now()") || $date_fin<mysqli_query($conn,"select now()")){
-     $verif_dat=" 
-     <div class='alert alert-danger' id='success-alert'>
-     veuillez verifier les dates !
-         </div>";
+
+
+    $date = gmdate('Y-m-d H:i');
+    $dateTime = new DateTime($date_debut);
+    $date_debut_justifie = $dateTime->format('Y-m-d H:i:s');
+    $dateTime = new DateTime($date_fin);
+    $date_fin_justifie = $dateTime->format('Y-m-d H:i:s');
+
+    if(strtotime($date_fin_justifie) < strtotime($date) || strtotime($date_debut_justifie) < strtotime($date) ){
+        $message = "veuillez verifier les dates !";
         
     }
     else{
@@ -94,7 +100,7 @@ if (isset($_POST['button'])) {
                     }
                 }
             }
-    }
+        }
 }
 
 include "nav_bar.php";
@@ -116,7 +122,7 @@ include "nav_bar.php";
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Créer une soumission : </h4>
-                      <?php echo $verif_dat ?>
+
 
                     <p class="erreur_message">
                         <?php
