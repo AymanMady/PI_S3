@@ -7,10 +7,10 @@ if ($_SESSION["role"] != "ens") {
 // $verif_dat="";
 
 include_once "../connexion.php";
-
+$id_sem=$_SESSION['id_semestre'];
 $semestre = "SELECT matiere.*, enseigner.*, enseignant.* FROM matiere, enseigner, enseignant 
     WHERE matiere.id_matiere = enseigner.id_matiere AND
-    enseigner.id_ens = enseignant.id_ens AND email='$email'";
+    enseigner.id_ens = enseignant.id_ens AND email='$email' and matiere.id_semestre=$id_sem";
 $semestre_qry = mysqli_query($conn, $semestre);
 
 $type_sous = "SELECT * FROM type_soumission";
@@ -47,7 +47,7 @@ if (isset($_POST['button'])) {
     $dateTime = new DateTime($date_fin);
     $date_fin_justifie = $dateTime->format('Y-m-d H:i:s');
 
-    if(strtotime($date_fin_justifie) < strtotime($date) || strtotime($date_debut_justifie) < strtotime($date) ){
+    if(strtotime($date_fin_justifie) < strtotime($date) || strtotime($date_debut_justifie) > strtotime($date) ){
         $message = "veuillez verifier les dates !";
         
     }

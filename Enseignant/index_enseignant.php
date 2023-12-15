@@ -38,7 +38,6 @@ $id_sem = $_SESSION;
 
 <?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="#"><?php echo "S".$_SESSION['id_semestre'];?></a>
 
-
 </div><br>
         <div class="row">
             <?php

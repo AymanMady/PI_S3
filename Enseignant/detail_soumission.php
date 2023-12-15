@@ -35,6 +35,14 @@ while ($row = mysqli_fetch_assoc($req)) {
     </div>
 
     <div class="container">
+    <div><?php echo" "?>
+    <a href="choix_semester.php">Accuei</a>
+    <?php echo" / "?>
+    <a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a>
+    <?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $_SESSION['libelle']?></a>
+    <?php echo" / "?><a href="#"><?php echo $row['titre_sous']?></a>
+</div> 
+      <br>
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">

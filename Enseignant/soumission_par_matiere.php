@@ -27,18 +27,24 @@
 
 // $id_matiere=$_GET['id_matiere'];
 if (isset($_GET["id_matiere"])){
-  $id_matiere=$_GET["id_matiere"];
+  $_SESSION['id_matirer']=$_GET["id_matiere"];
 
 }
-else{
   $id_matiere=$_SESSION['id_matirer'];
-}
+
  $email = $_SESSION['email'];
  if($_SESSION["role"]!="ens"){
      header("location:authentification.php");
  }
- $color = $_GET["color"];
- $color_hover = $_GET["color_hover"];
+ if(isset($_GET["color"])){
+  $_SESSION['color']=$_GET["color"];
+ }
+ $color = $_SESSION['color'];
+
+ if(isset($_GET["color_hover"])){
+  $_SESSION['color_hover']=$_GET["color_hover"];
+ } 
+ $color_hover = $_SESSION["color_hover"];
  
 
  include_once "../connexion.php";
@@ -163,21 +169,11 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
  
     ?>
 <div class="container p-2">
+<div class="col-md-12 stretch-card grid-margin">
 
-        
-
-     <div class="row">
-        <div class="col-lg-12"> 
-            <ol class="breadcrumb">
-                
-                    
-                </li>
-                <li>Les soumissions en ligne dans la matière :</li>
-                   
-            </ol>
-
-        </div>
-    </div>
+</div>
+<div><?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a></div>
+<br>
    
           <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
@@ -232,8 +228,15 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
 
     </div>       
 
-          <div class="content-wrapper p-0">
-      <div class="container p-0">
+          <div class="content-wrapper ">
+      <div class="container ">
+        <?php 
+        
+        ?>
+      <div><?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a></div> 
+      <br>
+      <?php $_SESSION['libelle']=$row_mat['libelle'];?>
+
         <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
