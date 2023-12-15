@@ -162,9 +162,8 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
 if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
  
     ?>
-<div class="container">
+<div class="container p-2">
 
-<div class="main-panel">
         
 
      <div class="row">
@@ -223,15 +222,7 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
 else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
       ?>
       
-    <div class="row">
-        <div class="col-lg-12"> 
-            <ol class="breadcrumb">
-                    
-                </li>
-                   
-            </ol>
-        </div>
-    </div>
+ 
 
 
     <?php 
@@ -242,7 +233,7 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
     </div>       
 
           <div class="content-wrapper p-0">
-      <div class="container">
+      <div class="container p-0">
         <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">

@@ -5,7 +5,7 @@ if ($_SESSION["role"] != "ens") {
     header("location:../authentification.php");
 }
 
-include "nav_bar.php";
+include "nav_bar_2.php";
 ?>
 
 <style>
@@ -15,6 +15,7 @@ include "nav_bar.php";
         background-color: aliceblue;
     }
 </style>
+
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white me-2">
