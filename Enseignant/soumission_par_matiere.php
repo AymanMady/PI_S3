@@ -254,10 +254,10 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
               ?>
 
 
-            <div class="col-md-12 stretch-card grid-margin">
+            <div class="col lg-12-md-12 stretch-card grid-margin ">
                 <div class="card bg-gradient card-img-holder text-black">
                   <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: space-between;padding: 15px;">
-                    <div style="display: flex;justify-content: space-between;padding: 15px;" >
+                    <div style="display: flex;justify-content: space-between;padding: 1px;" >
                     <div class="btn-gradient-<?php echo $color ?>"  style="width: 40px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
                       <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
 

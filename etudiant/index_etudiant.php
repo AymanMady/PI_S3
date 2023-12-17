@@ -27,13 +27,7 @@ if (isset($_GET['id_semestre'])) {
 <div class="content-wrapper">
     <div class="content">
 
-        <div class="page-header">
-            <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-primary text-white me-2">
-                    <i class="mdi mdi-home"></i>
-                </span>
-            </h3>
-        </div>
+        
 
         <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -41,7 +35,6 @@ if (isset($_GET['id_semestre'])) {
                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><?php echo"S".$id_semestre ?></a></li>
                 </ol>
             </nav>
-        <br>
 
         <div class="content">
             <div class="row">
