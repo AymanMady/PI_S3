@@ -173,6 +173,7 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
 
 </div>
 <div><?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a></div>
+<?php $_SESSION['matiere']=$row_mat['libelle']?>
 <br>
    
           <div class="col-md-12 stretch-card grid-margin">
