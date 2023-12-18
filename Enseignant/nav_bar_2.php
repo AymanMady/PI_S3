@@ -39,7 +39,7 @@
            width: 200px;
            margin-top: 10px;
        }
-    
+      
        </style>
   </head>
   <body>
@@ -140,34 +140,16 @@
         </div>
       </nav>
       <div class="container-fluid page-body-wrapper">
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-
             <li class="nav-item" >
               <a class="nav-link" href="choix_semester.php">
                 <span class="menu-title"id="display">Accueil</span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
-            <li class="nav-item"class="display">
-              <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-              <span class="menu-title" >Soumissions</span>
-                <i class="mdi mdi-calendar-clock menu-icon"></i>
-                <!-- <i class="mdi mdi-medical-bag menu-icon"></i> -->
-              </a>
-              <div class="collapse" id="general-pages">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="cree_soumission.php"> Crée une soumission </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_en_ligne.php"> Soumissions en ligne </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_limite.php"> Soumissions terminées </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="soumission_archiver.php"> Soumissions archivées </a></li>
-                </ul>
-              </div>
-            </li>
           </ul>
         </nav>
-        <!-- partiel -->
-
 
 
 

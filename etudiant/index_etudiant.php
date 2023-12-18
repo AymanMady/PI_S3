@@ -20,10 +20,6 @@ if (isset($_GET['id_semestre'])) {
         cursor: pointer;
     }
 </style>
-</head>
-
-<body>
-
 <div class="content-wrapper">
     <div class="content">
 
@@ -31,17 +27,9 @@ if (isset($_GET['id_semestre'])) {
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                     <i class="mdi mdi-home"></i>
-                </span>
+                </span><a href="choix_semestre.php">Accueil</a>  / <a href="#"><?php echo"S".$id_semestre ?></a>
             </h3>
         </div>
-
-        <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><a href="#"><?php echo"S".$id_semestre ?></a></li>
-                </ol>
-            </nav>
-        <br>
 
         <div class="content">
             <div class="row">

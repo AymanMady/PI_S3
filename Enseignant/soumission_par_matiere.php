@@ -1,10 +1,4 @@
 
-<?php
-
-// echo $color_hover;
-
-?>
-
     <style>
            tr:hover {
             cursor: pointer;
@@ -27,89 +21,29 @@
 
 // $id_matiere=$_GET['id_matiere'];
 if (isset($_GET["id_matiere"])){
-  $id_matiere=$_GET["id_matiere"];
+  $_SESSION['id_matirer']=$_GET["id_matiere"];
 
 }
-else{
   $id_matiere=$_SESSION['id_matirer'];
-}
+
  $email = $_SESSION['email'];
  if($_SESSION["role"]!="ens"){
      header("location:authentification.php");
  }
- $color = $_GET["color"];
- $color_hover = $_GET["color_hover"];
+ if(isset($_GET["color"])){
+  $_SESSION['color']=$_GET["color"];
+ }
+ $color = $_SESSION['color'];
+
+ if(isset($_GET["color_hover"])){
+  $_SESSION['color_hover']=$_GET["color_hover"];
+ } 
+ $color_hover = $_SESSION["color_hover"];
  
 
  include_once "../connexion.php";
  include "nav_bar.php";
- if(isset($_POST['filtrer'])){
-            
-  if(!empty($_POST['soul'])){
-        $type=$_POST['soul'];
 
-        $req_sous1 =  "SELECT DISTINCT soumission.*,matiere.* 
-        FROM soumission ,matiere,enseignant,enseigner 
-        WHERE enseigner.id_matiere=soumission.id_matiere and
-         soumission.id_ens=enseignant.id_ens AND
-          soumission.id_matiere=matiere.id_matiere and 
-          enseignant.email='$email' AND
-           soumission.id_type_sous = $type and
-           matiere.id_matiere=$id_matiere  and
-            status = 0 and matiere.id_matiere 
-            IN (SELECT enseigner.id_matiere 
-            FROM enseigner,enseignant 
-            WHERE enseigner.id_ens=enseignant.id_ens and
-             enseignant.email='$email')   ORDER BY date_debut DESC ";
-        $req1 = mysqli_query($conn , $req_sous1);
-        $req_sous2 =  "SELECT DISTINCT soumission.*,matiere.* FROM
-         soumission ,matiere,enseignant,enseigner 
-         WHERE enseigner.id_matiere=soumission.id_matiere and
-          soumission.id_ens=enseignant.id_ens AND
-           soumission.id_matiere=matiere.id_matiere and
-            enseignant.email!='$email' and status = 0 AND
-             soumission.id_type_sous = $type and
-             matiere.id_matiere=$id_matiere  and
-              matiere.id_matiere 
-              IN (SELECT enseigner.id_matiere FROM enseigner,enseignant 
-              WHERE enseigner.id_ens=enseignant.id_ens and 
-              enseignant.email='$email') ORDER BY date_debut DESC ";
-
-        $req2 = mysqli_query($conn , $req_sous2);
-    }
-    elseif(!empty($_POST['soul'])){
-     
-        $type=$_POST['soul'];
-     
-        $req_sous1 =  "SELECT DISTINCT soumission.*,matiere.* FROM
-         soumission ,matiere,enseignant,enseigner WHERE 
-         enseigner.id_matiere=soumission.id_matiere and 
-         soumission.id_ens=enseignant.id_ens AND 
-         soumission.id_matiere=matiere.id_matiere and 
-         enseignant.email='$email' and matiere.id_matiere=$id_matiere  and 
-         soumission.id_type_sous = $type and  status = 0 and
-          matiere.id_matiere IN (SELECT enseigner.id_matiere FROM 
-          enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and
-           enseignant.email='$email')  ORDER BY date_fin DESC ";
-
-
-
-        $req1 = mysqli_query($conn , $req_sous1);
-        $req_sous2 =  "SELECT DISTINCT soumission.*,matiere.* FROM 
-        soumission ,matiere,enseignant,enseigner WHERE 
-        enseigner.id_matiere=soumission.id_matiere and 
-        soumission.id_ens=enseignant.id_ens AND
-         soumission.id_matiere=matiere.id_matiere and
-          enseignant.email!='$email' and status = 0
-           and soumission.id_type_sous = $type and
-            matiere.id_matiere IN (SELECT enseigner.id_matiere FROM
-             enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and
-              enseignant.email='$email')   ORDER BY date_fin DESC ";
-        $req2 = mysqli_query($conn , $req_sous2);
-
-      }
-    }
-      else{
 
 $req_sous1 = "SELECT DISTINCT soumission.*, type_soumission.libelle AS 'libelle_type', matiere.libelle AS 'libelle_matiere', nom, prenom FROM
 soumission ,matiere,enseignant,enseigner,type_soumission
@@ -145,7 +79,6 @@ ORDER BY date_debut DESC";
   
 
 $req2 = mysqli_query($conn , $req_sous2);
-}
 
 $ens = "SELECT DISTINCT matiere.* FROM matiere where id_matiere= $id_matiere";
 $matiere_filtre_qry = mysqli_query($conn, $ens);
@@ -158,91 +91,21 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
 
 
       
-
-if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
- 
-    ?>
-<div class="container">
-
-<div class="main-panel">
-        
-
-     <div class="row">
-        <div class="col-lg-12"> 
-            <ol class="breadcrumb">
-                
-                    
-                </li>
-                <li>Les soumissions en ligne dans la matière :</li>
-                   
-            </ol>
-
+?>      
+    <div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-home"></i>
+            </span> 
+            <a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a>  
+            <?php $_SESSION['libelle']=$row_mat['libelle'] ?>          
+          </h3>
         </div>
-    </div>
-   
-          <div class="col-md-12 stretch-card grid-margin">
-                <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
-                  <div class="card-body ">
-                    <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="mb-5" class="click" ><b><?= $row_mat['libelle'] ?></b></h4>
-                    <h6 ></h6>
-                    <div class="md-2">
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
-    <?php 
-    ?>
-      <div class="col-md-12 stretch-card grid-margin">
-                <div class="card bg-gradient card-img-holder text-black">
-                  <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: space-between;padding: 15px;">
-                    <div style="display: flex;justify-content: space-between;padding: 15px;" >
-                    <div class="btn-gradient-<?php echo $color ?>"  style="width: 40px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
-                      <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
 
-                    </div>
-                    <div col-md-12>
- 
-                        <div class="btn-group ">
-                        
-                        </h5>
-                        </div>
-      <!-- #region -->        <p> Il n'y a pas encore des soumissions dans cette matière !
-                        
-                        </p> 
-                      </div>
-                    </div>
-                   
-                </div>
-              </div>
-            </div>
-<?php
-    
-}
-else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
-      ?>
-      
-    <div class="row">
-        <div class="col-lg-12"> 
-            <ol class="breadcrumb">
-                    
-                </li>
-                   
-            </ol>
-        </div>
-    </div>
-
-
-    <?php 
-
-            ?>
-
-
-    </div>       
-
-          <div class="content-wrapper p-0">
-      <div class="container">
+    <div class="content">
+        <div class="row">
         <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">
@@ -260,10 +123,10 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
               ?>
 
 
-            <div class="col-md-12 stretch-card grid-margin">
+            <div class="col lg-12-md-12 stretch-card grid-margin ">
                 <div class="card bg-gradient card-img-holder text-black">
                   <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: space-between;padding: 15px;">
-                    <div style="display: flex;justify-content: space-between;padding: 15px;" >
+                    <div style="display: flex;justify-content: space-between;padding: 1px;" >
                     <div class="btn-gradient-<?php echo $color ?>"  style="width: 40px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;">
                       <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i> 
 
@@ -292,17 +155,14 @@ else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                           <a class="dropdown-item" href="detail_soumission.php?id_sous=<?=$row['id_sous']?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Detaille</a>
                           <a class="dropdown-item" href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a>
                           <a class="dropdown-item" href="archiver_soumission_en_ligne.php?id_sous=<?=$row['id_sous']?>" id="archiver">Archiver</a>
+                          <a class="dropdown-item" href="modifier_soumission.php?id_sous=<?=$row['id_sous']?>" >Modifier</a>
                         </h5>
                     </div>
                 </div>
               </div>
             </div>
-
- 
       <?php
             }
-        
-        }
         ?>
     <div>
   <div>

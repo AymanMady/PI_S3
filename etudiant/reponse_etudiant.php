@@ -1,5 +1,3 @@
-<script src="../JS/sweetalert2.js"></script>
-
 <?php
 session_start();
 $id_matiere = $_GET['id_matiere'];
@@ -91,7 +89,6 @@ if (mysqli_num_rows($req) == 0) {
                             $_SESSION['id_sous'] = $id_sous;
                             $_SESSION['ajout_reussi'] = true;
                             header("location:reponse_etudiant.php?id_matiere=$id_matiere&color=$color");
-                            echo '';
                         }
                     }
                 }
@@ -107,7 +104,6 @@ if (mysqli_num_rows($req) == 0) {
     include "nav_bar.php";
 
 ?>
-
 
     <div class="content-wrapper">
         <div class="container">
@@ -225,25 +221,6 @@ if (mysqli_num_rows($req) == 0) {
                             $_SESSION['ajout_reussi'] = true;
                             $id_matiere = $_GET['id_matiere'];
                             $color = $_GET['color'];
-                            echo " 
-                                <script>
-                                    const Toast = Swal.mixin({
-                                        toast: true,
-                                        position: 'top-end',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                        didOpen: (toast) => {
-                                            toast.onmouseenter = Swal.stopTimer;
-                                            toast.onmouseleave = Swal.resumeTimer;
-                                        }
-                                    });
-                                    Toast.fire({
-                                        icon: 'info',
-                                        title: 'Cliquer sur la button confirmer votre travail pour enregistree '
-                                    });
-                                </script>";
-
                             header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
                         } else {
                             mysqli_connect_error();
@@ -260,6 +237,19 @@ if (mysqli_num_rows($req) == 0) {
 
     if (isset($_POST['confirmer'])) {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
         $req3 = mysqli_query($conn, $req_detail3);
         if (mysqli_num_rows($req3) > 0) {
@@ -268,6 +258,10 @@ if (mysqli_num_rows($req) == 0) {
             $req1 = mysqli_query($conn, $sql);
 
             if ($req1) {
+
+
+
+
 
                 $_SESSION['autorisation'] = false;
                 unset($_SESSION['autorisation']);
@@ -376,9 +370,7 @@ if (mysqli_num_rows($req) == 0) {
 
                 <div class="form-group">
                     <div class="col-md-12" style="display: flex; justify-content: space-between;">
-                        <form action="" method="POST">
                         <input type="submit" name="button" value="Enregistrer" class="btn btn-primary" />
-                        </form>
                         <button type="submit" name="confirmer" class="btn btn-gradient-danger btn-icon-text"><i class="mdi mdi-upload btn-icon-prepend"></i> Envoyer ton travail</button>
                     </div>
                 </div>
@@ -419,27 +411,3 @@ if (mysqli_num_rows($req) == 0) {
     }
 }
 ?>
-
-<?php
-    if(isset($_POST['button'])){
-        echo " 
-
-         <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-start',
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: 'info',
-                title: 'Cliquer sur la button envoyer ton travail pour enregistree '
-            });
-        </script>";
-    }
- ?>

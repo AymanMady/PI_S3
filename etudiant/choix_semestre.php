@@ -19,12 +19,18 @@ include "nav_bar.php";
     }
 </style>
 <div class="content-wrapper">
+    <div class="content">
 
-<div class="container">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> Accueil
+            </h3>
+        </div>
 
-
-
-    <div class="row">
+        <div class="content">
+            <div class="row">
          <?php 
 
 $i = 0;

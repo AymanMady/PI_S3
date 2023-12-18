@@ -111,17 +111,22 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
 }
 ?>
 <div class="content-wrapper">
-    <div class="container">
+    <div class="content">
 
-        <h3 class="page-title">Dètails sur la soumission <?php echo $row['titre_sous']; ?></h3>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php"><?php echo $_SESSION['nom_mat'] ?></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dètails</li>
-            </ol>
-        </nav>
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo "S" . $_SESSION['id_sem'] ?>"><?php echo "S" . $_SESSION['id_sem'] ?></a>   / <a href="soumission_etu_par_matiere.php"><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="#"><?php echo $row['titre_sous']; ?></a> 
+            </h3>
+        </div>
+
+    <div class="content">
         <div class="row">
+        <h3 class="page-title">Dètails sur la soumission <?php echo $row['titre_sous']; ?> : </h3><br><br>
+
+      
+
 
             <div class="col-md-6 grid-margin">
                 <div class="card">

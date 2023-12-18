@@ -30,9 +30,15 @@ include "nav_bar.php";
               
   $type_sous = "SELECT * FROM type_soumission";
   $type_sous_qry = mysqli_query($conn, $type_sous);
+$id_sem=$_SESSION['id_semestre'];
 
-
-  $req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.*,type_soumission.libelle as 'libelle_type' FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE  soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+  $req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.*,type_soumission.libelle
+   as 'libelle_type' FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE  
+   soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere
+    and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and 
+    enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere 
+    FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+    and id_semestre=$id_sem
   ORDER BY date_debut DESC";
 
   $req1 = mysqli_query($conn , $req_sous1);
@@ -46,7 +52,18 @@ include "nav_bar.php";
 if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                   
 ?>
-            <div class="row p-4">
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-calendar-clock"></i>
+            </span> Soumission / Soumission en Ligne
+            </h3>
+        </div>
+
+    <div class="content">
+        <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -113,7 +130,20 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
   // Supprimer l'indicateur de succès de la session
   unset($_SESSION['ajout_reussi']);
 }
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Modification réussi !',
+      text: 'La soumission a été modifié avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
 
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['modifier_reussi']);
+}
 
 
 else if (isset($_SESSION['cloture_reussi']) && $_SESSION['cloture_reussi'] === true) {

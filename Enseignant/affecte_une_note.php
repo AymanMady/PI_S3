@@ -23,42 +23,47 @@ if (isset($_POST['fin']) && $_POST['Note'] <= 20 && $_POST['Note'] >= 0) {
 include "nav_bar.php";
 ?>
 
-</head>
 
-<body>
-    <div class="container">
-
-    </div>
     <?php
 
-    $sql = "select * from reponses where id_rep='$id_rep' ";
+    $sql = "select * from reponses ,etudiant, soumission where id_rep='$id_rep' and reponses.id_sous=soumission.id_sous and etudiant.id_etud=reponses.id_etud";
     $req = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($req);
     ?>
-    <div class="form-horizontal">
-        <?php if (isset($_POST['Note']) && $message != "") {
-            echo $message;
-        }
-        ?>
-        <form action="" method="POST">
-            <div class="form-group">
+    <div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-calendar-clock"></i>
+            </span> Soumission / <?php echo $row['titre_sous']; ?> / <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> ) / Note
+            </h3>
+        </div>
 
-                <label class="col-md-1" style="font-size: 18px;">Note :</label>
-                <div class="col-md-6">
-                    <input type="float" name="Note" style="font-size: 22px;" class="form-control" value="<?= $row['note'] ?>">
+        <div class="content">
+        <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Note :</h4>
+                            <br>
+
+                            <?php if (isset($_POST['Note']) && $message != "") {
+                                echo $message;
+                            }
+                            ?>
+                            <form action="" method="POST">
+                                <div class="form-group col-md-12">
+                                    <div style="display:flex;justify-content:space-bettwen;">
+                                        <div class="col-md-2">
+                                            <input type="float" name="Note" style="font-size: 22px;" class="form-control" value="<?= $row['note'] ?>">
+                                        </div>
+                                            <input type="submit" value="Affecter" name="fin" class="btn btn-primary ">
+                                    </div>
+                            </form>
+<br>
+                            <p>NB : Virgule dans le nombre représentée par un point ( . )</p>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input type="submit" value="affecter" name="fin" class="btn btn-primary p-2 mt-2">
-                </div>
-        </form>
-
-    </div>
-    </div>
-
-    <p>NB : Virgule dans le nombre représentée par un point ( . )</p>
-</body>
-
-</html>
-<?php
-
-?>
+            </div>
+        </div>

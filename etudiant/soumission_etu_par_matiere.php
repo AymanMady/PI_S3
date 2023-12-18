@@ -28,10 +28,6 @@ $sql2 = mysqli_query($conn, $sql1);
 $row1 =  mysqli_fetch_assoc($sql2);
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
         #tou:hover {
@@ -39,12 +35,7 @@ $row1 =  mysqli_fetch_assoc($sql2);
             background-color: aliceblue;
             text-decoration: none;
         }
-    </style>
-</head>
 
-<body>
-
-    <style>
         .div-hover:hover {
             background-color: #dfe9f7;
             cursor: pointer;
@@ -59,10 +50,6 @@ $row1 =  mysqli_fetch_assoc($sql2);
         */
     </style>
 
-    <div class="main-panel">
-        <div class="content-wrapper">
-
-            <!-- partial:partials/_navbar.html -->
 
             <?php
             $enline = "outline-dark";
@@ -84,16 +71,20 @@ $row1 =  mysqli_fetch_assoc($sql2);
                 $cloture = "outline-dark";
             }
             ?>
+<div class="content-wrapper">
+    <div class="content">
 
-            <h3 class="page-title"> Les soumissions dans le matière <?php echo "" . $row1['libelle'] . "" . " " ?></h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><a href="index_etudiant.php?id_semestre=<?php echo $row['id_semestre']; ?>"><?php echo "S" . $_SESSION['id_sem'] ?></a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo "" . $row1['libelle'] . "" . " " ?></li>
-                </ol>
-            </nav>
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo $row['id_semestre']; ?>"><?php echo "S" . $_SESSION['id_sem'] ?></a>  / <a href="#"><?php echo $row1['libelle'] ; ?></a> 
+            </h3>
+        </div>
+
+        <div class="content">
             <div class="row">
+
                 <div class="col-md-3.5 stretch-card grid-margin">
                     <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                         <div class="card-body">

@@ -12,7 +12,18 @@ $req_sous =  "SELECT DISTINCT soumission.*, matiere.* FROM soumission, matiere, 
 $req = mysqli_query($conn, $req_sous);
 ?>
 
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-calendar-clock"></i>
+            </span> Soumission / Soumissions archivées
+            </h3>
+        </div>
 
+    <div class="content">
+        <div class="row">
 
 <div class="col-lg-12 grid-margin stretch-card p-4">
         <div class="card">
@@ -48,4 +59,6 @@ $req = mysqli_query($conn, $req_sous);
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
