@@ -29,13 +29,24 @@ $req2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($req2);
 ?>
 
-
-<div class="container pt-4">
-    <div class="row">
-
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+            </span>     <a href="choix_semester.php">Accuei</a>
+    <?php echo" / "?>
+    <a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a>
+    <?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $row_sous['libelle']?></a>
+    <?php echo" / "?><a href="#"><?php echo $row_sous['titre_sous']; ?></a>
+    <?php $_SESSION['titre_sous']=$row_sous['titre_sous']; ?>
+            </h3>
+        </div>
+    <div class="content">
+        <div class="row">
         <div class="col-md-9 grid-margin">
-        <div><?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $_SESSION['libelle']?></a><?php echo" / "?><a href="#">Reponses ou "<?php echo $row['titre_sous'];?>" </a></div>
-<br>
+
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center">Description de la soumission</h4><br>

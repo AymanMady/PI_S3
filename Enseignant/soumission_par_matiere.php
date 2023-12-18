@@ -99,7 +99,8 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-home"></i>
             </span> 
-            <a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a>            
+            <a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="#"><?php echo $row_mat['libelle']?></a>  
+            <?php $_SESSION['libelle']=$row_mat['libelle'] ?>          
           </h3>
         </div>
 

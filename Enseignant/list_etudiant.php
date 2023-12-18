@@ -30,10 +30,11 @@ if($_SESSION["role"]!="ens"){
     <div class="content">
         <div class="row">
 
+
         <div class="col-lg-12 grid-margin stretch-card p-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Les Soumissions archivées :</h4>
+                <h4 class="card-title">Liste des etudiants inscrient :</h4>
                 <br>
                 <table id="example" class="table table-bordered" style="width:100%">
                     <thead>    
