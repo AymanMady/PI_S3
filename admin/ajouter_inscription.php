@@ -7,11 +7,11 @@ if($_SESSION["role"]!="admin"){
 
 include_once "../connexion.php";
 
-$etudiant = "SELECT * FROM etudiant ";
+$etudiant = "SELECT * FROM `etudiant` ORDER by `matricule`ASC;";
 $etudiant_qry = mysqli_query($conn, $etudiant); 
 $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
-$code="SELECT * FROM matiere";
+$code="SELECT * FROM matiere order by code";
 $code_qry = mysqli_query($conn, $code);
 
 ?>
@@ -110,7 +110,7 @@ $code_qry = mysqli_query($conn, $code);
                                 <select class="form-control" id="matiereSelect" value="Codes" name="code">
                                     <option selected disabled> Les codes </option>
                                     <?php while ($row_code = mysqli_fetch_assoc($code_qry)) : ?>
-                                    <option value="<?= $row_code['id_matiere']; ?>"> <?=" ".$row_code['code']; ?> </option>
+                                    <option value="<?= $row_code['id_matiere']; ?>"> <?=" ".$row_code['libelle']; ?> </option>
                                 <?php endwhile; ?>
                                 </select>
                             </div>

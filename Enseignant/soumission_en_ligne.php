@@ -30,9 +30,15 @@ include "nav_bar.php";
               
   $type_sous = "SELECT * FROM type_soumission";
   $type_sous_qry = mysqli_query($conn, $type_sous);
+$id_sem=$_SESSION['id_semestre'];
 
-
-  $req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.*,type_soumission.libelle as 'libelle_type' FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE  soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+  $req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.*,type_soumission.libelle
+   as 'libelle_type' FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE  
+   soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere
+    and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and 
+    enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere 
+    FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+    and id_semestre=$id_sem
   ORDER BY date_debut DESC";
 
   $req1 = mysqli_query($conn , $req_sous1);

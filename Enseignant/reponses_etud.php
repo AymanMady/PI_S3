@@ -27,26 +27,15 @@ $row1 = mysqli_fetch_assoc($req1);
 $sql2 = "SELECT COUNT(*) as num_insc FROM inscription, matiere, soumission WHERE inscription.id_matiere=matiere.id_matiere and matiere.id_matiere=soumission.id_matiere and id_sous = $id_sous; ";
 $req2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($req2);
-$_SESSION['libelle'] = $row_sous['libelle'];
-$_SESSION['titre_sous'] = $row_sous['titre_sous'];
 ?>
-    <div class="content-wrapper">
-    <div class="content">
-        <div class="page-header">
-            <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white me-2">
-            <i class="mdi mdi-home"></i>
-            </span>     <a href="choix_semester.php">Accuei</a>
-    <?php echo" / "?>
-    <a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a>
-    <?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $row_sous['libelle']?></a>
-    <?php echo" / "?><a href="#"><?php echo $row_sous['titre_sous']; ?></a>
-            </h3>
-        </div>
-    <div class="content">
-        <div class="row">
+
+
+<div class="container pt-4">
+    <div class="row">
 
         <div class="col-md-9 grid-margin">
+        <div><?php echo" "?><a href="choix_semester.php">Accuei</a><?php echo" / "?><a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a><?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $_SESSION['libelle']?></a><?php echo" / "?><a href="#">Reponses ou "<?php echo $row['titre_sous'];?>" </a></div>
+<br>
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center">Description de la soumission</h4><br>
@@ -78,8 +67,9 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                 </div>
             </div>
         </div>
-        <div class="card-body" style="display: flex ; justify-content: space-between;">
 
+        <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
+            <div class="card-body" style="display: flex ; justify-content: space-between;">
                 <div>
                     <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
                 </div>
@@ -93,7 +83,7 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
         <?php
         }
 
-        $req_detail = "SELECT soumission.id_sous ,etudiant.id_etud ,matricule,nom,prenom FROM soumission,etudiant,inscription WHERE   soumission.id_matiere = inscription.id_matiere and etudiant.id_etud = inscription.id_etud and soumission.id_sous = $id_sous;";
+        $req_detail = "SELECT soumission.id_sous ,etudiant.id_etud,etudiant.id_groupe ,matricule,nom,prenom FROM soumission,etudiant,inscription WHERE   soumission.id_matiere = inscription.id_matiere and etudiant.id_etud = inscription.id_etud and soumission.id_sous = $id_sous;";
         $req = mysqli_query($conn, $req_detail);
         ?>
         </div>
@@ -108,6 +98,7 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                             <tr>
                                 <th>Matricule</th>
                                 <th>Nom et prénom</th>
+                                <th>Groupe</th>
                                 <th>Date</th>
                                 <th>Statut</th>
                                 <th>Détails</th>
@@ -123,8 +114,9 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                                     $status = ($row2['confirmer'] == 1) ? "<label class='badge badge-success'>Confirmé<label>" : "<label class='badge badge-warning'>Non-confirmé<label>";
                             ?>
                                 <tr <?php if ($row2['confirmer'] == 1) { ?> class="table-success" <?php } else { ?> class="table-warning" <?php } ?>>
-                                    <td><?php echo $row['matricule'] ?></td>
+                                <td><?php echo $row['matricule'] ?></td>
                                     <td><?php echo $row['nom']; echo $row['prenom'] ?></td>
+                                    <td style="text-align:center"><?php echo "G".$row['id_groupe'] ?></td>
                                     <td><?php echo $row2['date'] ?></td>
                                     <td><?php echo $status ?></td>
                                     <td><a style="text-decoration:None" href="consiltation_de_reponse.php?id_rep=<?php echo $row2['id_rep']; ?>&titre_sous=<?=$row_sous['titre_sous']?>">Consulter</a></td>
@@ -132,7 +124,7 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                             <?php
                                 }
                             }
-                            $req_detail = "SELECT soumission.id_sous ,etudiant.id_etud ,matricule,nom,prenom FROM soumission,etudiant,inscription WHERE   soumission.id_matiere = inscription.id_matiere and etudiant.id_etud = inscription.id_etud and soumission.id_sous = $id_sous;";
+                            $req_detail = "SELECT soumission.id_sous ,etudiant.id_etud,etudiant.id_groupe ,matricule,nom,prenom FROM soumission,etudiant,inscription WHERE   soumission.id_matiere = inscription.id_matiere and etudiant.id_etud = inscription.id_etud and soumission.id_sous = $id_sous;";
                             $req = mysqli_query($conn, $req_detail);
                             while ($row = mysqli_fetch_assoc($req)) {
                                 $id_sous = $row['id_sous'];
@@ -144,6 +136,8 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                                 <tr class="table-danger">
                                     <td><?php echo $row['matricule'] ?></td>
                                     <td><?php echo $row['nom']." ".$row['prenom']?></td>
+                                    <td style="text-align:center"><?php echo "G".$row['id_groupe'] ?></td>
+
                                     <td></td>
                                     <td><label class="badge badge-danger">En attente</label></td>
                                     <td></td>
@@ -151,6 +145,7 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
                             <?php
                                 }
                             }
+
                             ?>
 
                         </table>
@@ -160,3 +155,6 @@ $_SESSION['titre_sous'] = $row_sous['titre_sous'];
         </div>
     </div>
 </div>
+<?php 
+        }
+?>

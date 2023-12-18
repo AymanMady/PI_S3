@@ -18,7 +18,7 @@ if (isset($_GET['id_rep'])) {
     $id_rep = $_SESSION['id_rep'];
 }
 include "nav_bar.php";
-$req_detail = "SELECT matricule, nom, prenom, titre_sous, date_debut, date_fin, person_contact, description_sous, soumission.id_sous, description_rep, date, note ,confirmer FROM `reponses`, `etudiant`, `soumission`
+$req_detail = "SELECT matricule, id_groupe,nom, prenom, titre_sous, date_debut, date_fin, person_contact, description_sous, soumission.id_sous, description_rep, date, note FROM `reponses`, `etudiant`, `soumission`
 WHERE reponses.id_etud = etudiant.id_etud  and reponses.id_rep ='$id_rep' and soumission.id_sous=reponses.id_sous";
 $req = mysqli_query($conn, $req_detail);
 $row = mysqli_fetch_assoc($req);
@@ -46,38 +46,10 @@ $id_sous = $row["id_sous"];
         <div class="col-md-12" style="display:flex;justify-content:space-around">
             <ol class="breadcrumb">
                 <li>
-                    <h4>Consultation de réponse de l'étudiant <a> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> )</a></h4>
+                    <h4>Consultation de réponse de l'étudiant <a> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ." G".$row['id_groupe']?> )</a></h4>
                 </li>
             </ol>
-            <?php 
-            if( $row['confirmer'] == 1 ) {
-            ?>
-
-            <blockquote class="blockquote blockquote-info" style="border-radius:10px;width:130px;padding:10px 0px 10px 0px;height:120;">
-                <h4 class="text-center" style='font-size: 20px;'><strong>Note</strong></h4>
-                <?php
-                if ($row['note'] != NULL) {
-                    echo "<center><b style='font-size: 20px;'>" . $row['note'] . " /20</b></center>";
-                }
-                ?>
-                <?php
-                $sql3 = "select * from reponses where id_rep='$id_rep' ";
-                $req3 = mysqli_query($conn, $sql3);
-                $row3 = mysqli_fetch_assoc($req3);
-                if ($row3['note'] > 0) {
-                ?>
-                    <a href="affecte_une_note.php?id_etud=<?= $id_rep ?>" class="btn btn-inverse-info btn-sm ms-4">Modifier</a>
-                <?php
-                } else {
-                ?>
-                    <a href="affecte_une_note.php?id_etud=<?= $id_rep ?>" class="btn btn-inverse-info btn-sm ms-4">Noter</a>
-                <?php
-                }
-                ?>
-            </blockquote>
-            <?php
-            }
-            ?>
+           
         </div>
 
         <div class="col-md-6 grid-margin">
@@ -139,6 +111,7 @@ $id_sous = $row["id_sous"];
                         <p><?php echo "<strong>Description de la réponse : </strong>" . $row['description_rep']; ?></p>
                         <p><?php echo "<strong>Date de la réponse : </strong>" . $row['date']; ?></p>
                     </h4>
+                    
                     <?php
                     $sql2 = "SELECT * FROM fichiers_reponses, reponses, etudiant WHERE fichiers_reponses.id_rep = reponses.id_rep AND reponses.id_etud = etudiant.id_etud AND reponses.id_rep = $id_rep AND reponses.id_sous = '$id_sous';";
                     $req2 = mysqli_query($conn, $sql2);
@@ -179,7 +152,39 @@ $id_sous = $row["id_sous"];
                     ?>
                     </ul>
                 </div>
+                <center>
+                                <blockquote class="blockquote blockquote-info" style="border-radius:7px;width:130px;padding:10px;">
+                                <h4  style='font-size: 20px;'><strong>Note</strong></h4>
+                                <?php
+                                if ($row['note'] != NULL) {
+                                    echo "<center><b style='font-size: 20px;'>" . $row['note'] . " /20</b></center>";
+                                }
+                                ?>
+                                <?php
+                                $sql3 = "select * from reponses where id_rep='$id_rep' ";
+                                $req3 = mysqli_query($conn, $sql3);
+                                $row3 = mysqli_fetch_assoc($req3);
+                                if ($row3['note'] > 0) {
+                                ?>
+                                    <a href="affecte_une_note.php?id_etud=<?= $id_rep ?>" class="btn btn-inverse-info btn-sm ms-4">Modifier</a>
+                                <?php
+                                } else {
+                                    if($row3['confirmer']==0){
+                                        ?>
+                                    <a href="#" class="btn btn-inverse-warning btn-sm ">En attente de confirmation</a>
+                                         <?php
+                                    }
+                                    else{
+                                    
+                                ?>
+                                    <a href="affecte_une_note.php?id_etud=<?= $id_rep ?>" class="btn btn-inverse-info btn-sm ">Noter</a>
+                                <?php
+                                }}
+                                ?>
+                            </blockquote>
+                </center>
             </div>
+            
         </div>
         <div style="display: flex ; justify-content: space-between;">
             <div>
