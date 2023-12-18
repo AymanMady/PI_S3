@@ -6,7 +6,7 @@ if ($_SESSION["role"] != "ens") {
 }
 include_once "../connexion.php";
 $id_sous = $_GET['id_sous'];
-if (isset($_POST['sou'])) {
+if (isset($_POST['enoyer_note'])) {
     $sql = "UPDATE reponses SET render=1 WHERE id_sous='$id_sous'";
     mysqli_query($conn, $sql);
 }
@@ -15,6 +15,9 @@ $sql_affichage = "SELECT * FROM reponses, etudiant WHERE reponses.id_sous='$id_s
 $req_affichage = mysqli_query($conn, $sql_affichage);
 include "nav_bar.php";
 ?>
+
+    <!-- sweetalert2 links -->
+<script src="../JS/sweetalert2.js"></script>
 
 <?php
 $req_detail = "SELECT * FROM soumission INNER JOIN matiere USING(id_matiere), enseignant WHERE id_sous = $id_sous AND soumission.id_ens=enseignant.id_ens ";
@@ -72,7 +75,9 @@ $row2 = mysqli_fetch_assoc($req2);
                     <h4 class="card-description">Nombre d'étudiants ayant répondu</h4>
                     <div class="media">
                         <div class="media-body">
-                            <center><p class="card-text display-3"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p></center>
+                            <center>
+                                <p class="card-text display-3"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -84,11 +89,10 @@ $row2 = mysqli_fetch_assoc($req2);
                 <div>
                     <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
                 </div>
-        <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
-
+                <div><a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a></div>
                 <div>
                     <form action="" method="POST">
-                        <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="sou">
+                        <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="enoyer_note">
                     </form>
                 </div>
         <?php
@@ -104,7 +108,7 @@ $row2 = mysqli_fetch_assoc($req2);
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Les réponses des étudiants  :</h4>
+                        <h4 class="card-title">Les réponses des étudiants :</h4>
                         <table id="example" class="table table-bordered" style="width:100%">
                             <tr>
                                 <th>Matricule</th>
@@ -166,6 +170,29 @@ $row2 = mysqli_fetch_assoc($req2);
         </div>
     </div>
 </div>
+
+
 <?php 
-        }
+    // if (isset($_SESSION['exporte_ressi']) && $_SESSION['exporte_ressi'] === true) {
+    //     echo " <script>
+    //             const Toast = Swal.mixin({
+    //                 toast: true,
+    //                 position: 'top-start',
+    //                 showConfirmButton: false,
+    //                 timer: 3000,
+    //                 timerProgressBar: true,
+    //                 didOpen: (toast) => {
+    //                     toast.onmouseenter = Swal.stopTimer;
+    //                     toast.onmouseleave = Swal.resumeTimer;
+    //                 }
+    //             });
+    //             Toast.fire({
+    //                 icon: 'info',
+    //                 title: 'Exportation réussi '
+    //             });
+    //             </script>";
+
+    //     // Supprimer l'indicateur de succès de la session
+    //     unset($_SESSION['exporte_ressi']);
+    // }
 ?>

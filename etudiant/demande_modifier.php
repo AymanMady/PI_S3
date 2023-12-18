@@ -120,7 +120,7 @@ if (mysqli_num_rows($req3) > 0) {
                         </p>
                         <form action="" method="POST" class="forms-sample">
                             <input type="hidden" name="email" value="<?php echo $row_personne_contacte['person_contact'] ?>" class="form-control">
-                            <input type="hidden" name="subject" value="<?php echo $row['matricule'] . " " . "demander des modifications " ?>">
+                            <input type="hidden" name="subject" value="<?php echo "L'étudiant ".$row['nom']."de matricule  ". "(".$row['matricule'].")". "demander des modifications " ?>">
                             <div class="form-group">
                                 <label>Justification : </label>
                                 <div class="col-md-12">
