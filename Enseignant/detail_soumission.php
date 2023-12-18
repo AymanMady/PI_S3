@@ -29,13 +29,23 @@ $req_detail = "SELECT * FROM soumission INNER JOIN matiere USING(id_matiere), en
 $req = mysqli_query($conn, $req_detail);
 while ($row = mysqli_fetch_assoc($req)) {
 ?>
+    <div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+            </span>     <a href="choix_semester.php">Accuei</a>
+    <?php echo" / "?>
+    <a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a>
+    <?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $_SESSION['libelle']?></a>
+    <?php echo" / "?><a href="#"><?php echo $row['titre_sous']?></a>
+            </h3>
+        </div>
 
-    <div class="page-header">
-        <h3 class="page-title"> Détails sur la soumission <?php echo $row['titre_sous']; ?> </h3>
-    </div>
-
-    <div class="container">
+    <div class="content">
         <div class="row">
+
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

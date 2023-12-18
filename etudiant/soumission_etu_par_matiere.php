@@ -9,28 +9,24 @@ if ($_SESSION["role"] != "etudiant") {
 include_once "nav_bar.php";
 include_once "../connexion.php";
 
-if(isset($_GET['id_matiere'])){
-    $_SESSION['id_mat']=$_GET['id_matiere'];
+if (isset($_GET['id_matiere'])) {
+    $_SESSION['id_mat'] = $_GET['id_matiere'];
     $id_matiere = $_GET['id_matiere'];
 }
-$id_matiere =$_SESSION['id_mat'];
+$id_matiere = $_SESSION['id_mat'];
 
-if(isset($_GET['color'])){
-    $_SESSION['color']=$_GET['color'];
+if (isset($_GET['color'])) {
+    $_SESSION['color'] = $_GET['color'];
     $color = $_GET['color'];
 }
 $color = $_SESSION['color'];
 
-$id_matiere =$_SESSION['id_mat'];
+$id_matiere = $_SESSION['id_mat'];
 
 $sql1 = "select * from matiere where id_matiere=$id_matiere";
 $sql2 = mysqli_query($conn, $sql1);
 $row1 =  mysqli_fetch_assoc($sql2);
 ?>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
@@ -39,15 +35,11 @@ $row1 =  mysqli_fetch_assoc($sql2);
             background-color: aliceblue;
             text-decoration: none;
         }
-    </style>
-</head>
 
-<body>
-
-    <style>
         .div-hover:hover {
             background-color: #dfe9f7;
-            cursor: pointer; /* Changer le curseur de la souris */
+            cursor: pointer;
+            /* Changer le curseur de la souris */
         }
 
         .div-hover {
@@ -55,13 +47,9 @@ $row1 =  mysqli_fetch_assoc($sql2);
             border-radius: 5px;
         }
 
- */
+        */
     </style>
 
-    <div class="main-panel">
-        <div class="content-wrapper">
-
-            <!-- partial:partials/_navbar.html -->
 
             <?php
             $enline = "outline-dark";
@@ -83,22 +71,28 @@ $row1 =  mysqli_fetch_assoc($sql2);
                 $cloture = "outline-dark";
             }
             ?>
+<div class="content-wrapper">
+    <div class="content">
 
-            <h3 class="page-title"> Les soumissions dans le matière <?php echo "" . $row1['libelle'] . "" . " " ?></h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo "" . $row1['libelle'] . "" . " " ?></li>
-                </ol>
-            </nav>
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo $row['id_semestre']; ?>"><?php echo "S" . $_SESSION['id_sem'] ?></a>  / <a href="#"><?php echo $row1['libelle'] ; ?></a> 
+            </h3>
+        </div>
+
+        <div class="content">
             <div class="row">
+
                 <div class="col-md-3.5 stretch-card grid-margin">
                     <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                         <div class="card-body">
-                            <h4 class="mb-5">  <?php echo " " . $row1['libelle'] . "" . " ";$_SESSION['nom_mat']=$row1['libelle']; ?></h4>
+                            <h4 class="mb-5"> <?php echo " " . $row1['libelle'] . "" . " ";
+                                                $_SESSION['nom_mat'] = $row1['libelle']; ?></h4>
                             <form method="post">
-                                <input type="submit" id="statu" class="btn btn-<?php echo $enline ;?> p-2" name="enline" value="Les soumissions en ligne">
-                                <input type="submit" id="statu" class="btn btn-<?php echo $cloture ;?> p-2 " name="cloture" value="Les soumissions terminées">
+                                <input type="submit" id="statu" class="btn btn-<?php echo $enline; ?> p-2" name="enline" value="Les soumissions en ligne">
+                                <input type="submit" id="statu" class="btn btn-<?php echo $cloture; ?> p-2 " name="cloture" value="Les soumissions terminées">
                             </form>
                         </div>
                     </div>
@@ -114,33 +108,32 @@ $row1 =  mysqli_fetch_assoc($sql2);
                     $sqt = "select * from enseignant where id_ens='$m'";
                     $red = mysqli_query($conn, $sqt);
                     $rot = mysqli_fetch_assoc($red);
-                    ?>
+            ?>
                     <tr>
                         <?php
-                    ?>
-                    <div class="col-md-14 stretch-card grid-margin">
-                        <div class="card bg-gradient card-img-holder text-black" id="tou">
-                            <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
-                                <div class="btn-gradient-info" style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
-                                    <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i>
-                                </div>
-                                <div onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
-                                    <p class="m-0"><?= $rot['nom'] . " " . $rot['prenom'] ?> a publié un nouveau  <?= $row['titre_sous'] ?> </p>
-                                    <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp;  <?= $row['date_fin']  ?> </p>
+                        ?>
+                        <div class="col-md-14 stretch-card grid-margin">
+                            <div class="card bg-gradient card-img-holder text-black" id="tou">
+                                <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
+                                    <div class="btn-gradient-info" style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
+                                        <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i>
+                                    </div>
+                                    <div onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
+                                        <p class="m-0"><?= $rot['nom'] . " " . $rot['prenom'] ?> a publié un nouveau <?= $row['titre_sous'] ?> </p>
+                                        <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp; <?= $row['date_fin']  ?> </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    </a>
+                        </a>
 
-                <?php
+                    <?php
                 }
-
             } else {
-                ?>
-            <?php
+                    ?>
+                <?php
             }
-            ?>
+                ?>
         </div>
     </div>
     </div>

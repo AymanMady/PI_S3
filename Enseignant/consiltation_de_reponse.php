@@ -18,7 +18,7 @@ if (isset($_GET['id_rep'])) {
     $id_rep = $_SESSION['id_rep'];
 }
 include "nav_bar.php";
-$req_detail = "SELECT matricule, nom, prenom, titre_sous, date_debut, date_fin, person_contact, description_sous, soumission.id_sous, description_rep, date, note FROM `reponses`, `etudiant`, `soumission`
+$req_detail = "SELECT matricule, nom, prenom, titre_sous, date_debut, date_fin, person_contact, description_sous, soumission.id_sous, description_rep, date, note ,confirmer FROM `reponses`, `etudiant`, `soumission`
 WHERE reponses.id_etud = etudiant.id_etud  and reponses.id_rep ='$id_rep' and soumission.id_sous=reponses.id_sous";
 $req = mysqli_query($conn, $req_detail);
 $row = mysqli_fetch_assoc($req);
@@ -28,15 +28,31 @@ $id_sous = $row["id_sous"];
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<div class="container">
-    <div class="row">
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-home"></i>
+            </span>     <a href="choix_semester.php">Accuei</a>
+    <?php echo" / "?>
+    <a href="index_enseignant.php?id_semestre=<?php echo $_SESSION['id_semestre'] ; ?>"><?php echo "S".$_SESSION['id_semestre'];?></a>
+    <?php echo" / "?><a href="soumission_par_matiere.php"><?php echo $_SESSION['libelle']?></a>
+    <?php echo" / "?><a href="#"><?php echo $row['titre_sous']; ?></a>/ <a href="#"> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> )</a>
+            </h3>
+        </div>
+    <div class="content">
+        <div class="row">
         <div class="col-md-12" style="display:flex;justify-content:space-around">
             <ol class="breadcrumb">
                 <li>
                     <h4>Consultation de réponse de l'étudiant <a> <?php echo $row['nom'] . " " . $row['prenom'] ?> ( <?php echo $row['matricule'] ?> )</a></h4>
                 </li>
             </ol>
+            <?php 
+            if( $row['confirmer'] == 1 ) {
+            ?>
+
             <blockquote class="blockquote blockquote-info" style="border-radius:10px;width:130px;padding:10px 0px 10px 0px;height:120;">
                 <h4 class="text-center" style='font-size: 20px;'><strong>Note</strong></h4>
                 <?php
@@ -59,6 +75,9 @@ $id_sous = $row["id_sous"];
                 }
                 ?>
             </blockquote>
+            <?php
+            }
+            ?>
         </div>
 
         <div class="col-md-6 grid-margin">

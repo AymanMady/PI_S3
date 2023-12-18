@@ -46,7 +46,18 @@ include "nav_bar.php";
 if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                   
 ?>
-            <div class="row p-4">
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+            <i class="mdi mdi-calendar-clock"></i>
+            </span> Soumission / Soumission en Ligne
+            </h3>
+        </div>
+
+    <div class="content">
+        <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -113,7 +124,20 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
   // Supprimer l'indicateur de succès de la session
   unset($_SESSION['ajout_reussi']);
 }
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Modification réussi !',
+      text: 'La soumission a été modifié avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
 
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['modifier_reussi']);
+}
 
 
 else if (isset($_SESSION['cloture_reussi']) && $_SESSION['cloture_reussi'] === true) {

@@ -27,8 +27,18 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
 $req_sous =  "SELECT DISTINCT soumission.*, matiere.* FROM soumission , matiere, enseignant WHERE  soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and  status = 1  and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner, enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')  ORDER BY date_fin DESC  ";
 $req = mysqli_query($conn, $req_sous);
 ?>
+<div class="content-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-calendar-clock"></i>
+            </span> Soumission / Soumissions terminées 
+            </h3>
+        </div>
 
-<div class="row p-4">
+    <div class="content">
+        <div class="row">
   <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
