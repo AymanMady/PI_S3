@@ -6,7 +6,7 @@ if ($_SESSION["role"] != "ens") {
 }
 include_once "../connexion.php";
 $id_sous = $_GET['id_sous'];
-if (isset($_POST['sou'])) {
+if (isset($_POST['enoyer_note'])) {
     $sql = "UPDATE reponses SET render=1 WHERE id_sous='$id_sous'";
     mysqli_query($conn, $sql);
 }
@@ -15,6 +15,9 @@ $sql_affichage = "SELECT * FROM reponses, etudiant WHERE reponses.id_sous='$id_s
 $req_affichage = mysqli_query($conn, $sql_affichage);
 include "nav_bar.php";
 ?>
+
+    <!-- sweetalert2 links -->
+<script src="../JS/sweetalert2.js"></script>
 
 <?php
 $req_detail = "SELECT * FROM soumission INNER JOIN matiere USING(id_matiere), enseignant WHERE id_sous = $id_sous AND soumission.id_ens=enseignant.id_ens ";
@@ -59,7 +62,9 @@ $row2 = mysqli_fetch_assoc($req2);
                     <h4 class="card-description">Nombre d'étudiants ayant répondu</h4>
                     <div class="media">
                         <div class="media-body">
-                            <center><p class="card-text display-3"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p></center>
+                            <center>
+                                <p class="card-text display-3"><?php echo $row1['num_rep'] . "/" . $row2['num_insc']; ?></p>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -71,9 +76,10 @@ $row2 = mysqli_fetch_assoc($req2);
                 <div>
                     <a href="list_etudiant.php?id_matiere=<?= $row['id_matiere'] ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
                 </div>
+                <div><a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a></div>
                 <div>
                     <form action="" method="POST">
-                        <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="sou">
+                        <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="enoyer_note">
                     </form>
                 </div>
             </div>
@@ -88,7 +94,7 @@ $row2 = mysqli_fetch_assoc($req2);
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Les réponses des étudiants  :</h4>
+                        <h4 class="card-title">Les réponses des étudiants :</h4>
                         <table id="example" class="table table-bordered" style="width:100%">
                             <tr>
                                 <th>Matricule</th>
@@ -107,14 +113,15 @@ $row2 = mysqli_fetch_assoc($req2);
                                     $row2 = mysqli_fetch_assoc($req2);
                                     $status = ($row2['confirmer'] == 1) ? "<label class='badge badge-success'>Confirmé<label>" : "<label class='badge badge-warning'>Non-confirmé<label>";
                             ?>
-                                <tr <?php if ($row2['confirmer'] == 1) { ?> class="table-success" <?php } else { ?> class="table-warning" <?php } ?>>
-                                    <td><?php echo $row['matricule'] ?></td>
-                                    <td><?php echo $row['nom']; echo $row['prenom'] ?></td>
-                                    <td><?php echo $row2['date'] ?></td>
-                                    <td><?php echo $status ?></td>
-                                    <td><a style="text-decoration:None" href="consiltation_de_reponse.php?id_rep=<?php echo $row2['id_rep']; ?>">Consulter</a></td>
-                                </tr>
-                            <?php
+                                    <tr <?php if ($row2['confirmer'] == 1) { ?> class="table-success" <?php } else { ?> class="table-warning" <?php } ?>>
+                                        <td><?php echo $row['matricule'] ?></td>
+                                        <td><?php echo $row['nom'];
+                                            echo $row['prenom'] ?></td>
+                                        <td><?php echo $row2['date'] ?></td>
+                                        <td><?php echo $status ?></td>
+                                        <td><a style="text-decoration:None" href="consiltation_de_reponse.php?id_rep=<?php echo $row2['id_rep']; ?>">Consulter</a></td>
+                                    </tr>
+                                <?php
                                 }
                             }
                             $req_detail = "SELECT soumission.id_sous ,etudiant.id_etud ,matricule,nom,prenom FROM soumission,etudiant,inscription WHERE   soumission.id_matiere = inscription.id_matiere and etudiant.id_etud = inscription.id_etud and soumission.id_sous = $id_sous;";
@@ -125,14 +132,14 @@ $row2 = mysqli_fetch_assoc($req2);
                                 $req_detail2 = "SELECT * FROM reponses WHERE  id_sous = $id_sous and id_etud = $id_etud";
                                 $req2 = mysqli_query($conn, $req_detail2);
                                 if (mysqli_num_rows($req2) == 0) {
-                            ?>
-                                <tr class="table-danger">
-                                    <td><?php echo $row['matricule'] ?></td>
-                                    <td><?php echo $row['nom']." ".$row['prenom']?></td>
-                                    <td></td>
-                                    <td><label class="badge badge-danger">En attente</label></td>
-                                    <td></td>
-                                </tr>
+                                ?>
+                                    <tr class="table-danger">
+                                        <td><?php echo $row['matricule'] ?></td>
+                                        <td><?php echo $row['nom'] . " " . $row['prenom'] ?></td>
+                                        <td></td>
+                                        <td><label class="badge badge-danger">En attente</label></td>
+                                        <td></td>
+                                    </tr>
                             <?php
                                 }
                             }
@@ -145,3 +152,29 @@ $row2 = mysqli_fetch_assoc($req2);
         </div>
     </div>
 </div>
+
+
+<?php 
+    // if (isset($_SESSION['exporte_ressi']) && $_SESSION['exporte_ressi'] === true) {
+    //     echo " <script>
+    //             const Toast = Swal.mixin({
+    //                 toast: true,
+    //                 position: 'top-start',
+    //                 showConfirmButton: false,
+    //                 timer: 3000,
+    //                 timerProgressBar: true,
+    //                 didOpen: (toast) => {
+    //                     toast.onmouseenter = Swal.stopTimer;
+    //                     toast.onmouseleave = Swal.resumeTimer;
+    //                 }
+    //             });
+    //             Toast.fire({
+    //                 icon: 'info',
+    //                 title: 'Exportation réussi '
+    //             });
+    //             </script>";
+
+    //     // Supprimer l'indicateur de succès de la session
+    //     unset($_SESSION['exporte_ressi']);
+    // }
+?>

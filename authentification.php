@@ -5,6 +5,13 @@ include_once("controller.php");
 <!-- Liens pour SweetAlert2 -->
 <script src="JS/sweetalert2.js"></script>
 
+<!-- <span id="element"></span> -->
+
+<!-- bibliothèque d'animation du texte  -->
+<script src="JS/typed.umd.js"></script>
+
+
+
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -19,7 +26,8 @@ include_once("controller.php");
                             <h6 class="font-weight-light">Plateforme de soumission des évaluations</h6>
                         </center>
                         <form action="" method="POST">
-                            <?php
+
+                        <?php
                             if (count($errors) > 0) {
                                 foreach ($errors as $displayErrors) {
                             ?>
@@ -28,6 +36,7 @@ include_once("controller.php");
                                 }
                             }
                             ?>
+
                             <div class="form-group me-4 ms-4">
                                 <input type="email" name="email" class="form-control form-control-sm " id="exampleInputEmail1" placeholder="Adresse e-mail" required>
                             </div>
@@ -39,9 +48,11 @@ include_once("controller.php");
                                     <input type="submit" name="entrer" value="Se connecter" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
                                 </center>
                             </div>
-                            <div class="text-center mt-4 font-weight-light">Créer un compte <a href="verification.php" class="text-primary">S'inscrire</a></div>
-                            <div class="my-2 d-flex justify-content-between align-items-center">
-                                <a href="forgot.php" class="text-center auth-link text-black">Mot de passe oublié ?</a>
+                            <div class="text-center mt-4 font-weight-light ">
+                                Créer un compte <a href="verification.php" class="text-primary">S'inscrire</a>
+                            </div><br>
+                            <div class="text-center font-weight-light">
+                                <a href="forgot.php" class=" text-primary">Mot de passe oublié ?</a>
                             </div>
                         </form>
                     </div>
