@@ -22,6 +22,7 @@
   <script src="Scripts/jquery-ui-1.12.1.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/commun.js"></script>
+  
   <script src="js/sweetalert2.js"></script>
 
 

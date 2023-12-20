@@ -80,6 +80,7 @@ include "nav_bar.php";
                 <h4 class="col-md-12">
                     <?php echo $row2['nom'] . ' ' . $row2['prenom'] . ' (' . $row2['matricule'] . ')'; ?> demande de faire une modification sur la soumission <?php echo "<a style='text-decoration:none;' href='detail_soumission.php?id_sous=" . $row2['id_sous'] . "&id_matiere=" . $row2['id_matiere'] . "'>" . $row2['titre_sous'] . "</a>"; ?>
                 </h4>
+                <h4>justification : <br><?php echo $row2['description'] ?></h4>
                 <br><br><br>
                 <form action="" method="POST" class="forms-sample">
                     <input type="text" name="id_sous" style="display:none;" value="<?= $id_sous ?>">
