@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="CSS/data_table.css">
     <link rel="stylesheet" href="CSS/data_table_boostrapp.css">
     <!-- end css for table-data -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
        
        .logo{

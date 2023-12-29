@@ -155,6 +155,34 @@ if (isset($_SESSION['desactive_non_autorise']) && $_SESSION['desactive_non_autor
 
     // Supprimer la variable de session pour éviter qu'elle ne s'affiche à nouveau lors du rechargement de la page
     unset($_SESSION['desactive_non_autorise']);
+
+}if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+  echo '<script>
+  Swal.fire({
+      title: "Suppression réussie !",
+      text: "L\'utilisateur a été supprimée avec succès.",
+      icon: "info",
+      confirmButtonColor: "#3099d6",
+      confirmButtonText: "OK"
+  });
+  </script>';
+
+  // Supprimer la variable de session pour éviter qu'elle ne s'affiche à nouveau lors du rechargement de la page
+  unset($_SESSION['supp_reussi']);
+
+}if (isset($_SESSION['supp_non_reussi']) && $_SESSION['supp_non_reussi'] === true) {
+  echo '<script>
+  Swal.fire({
+      title: "Suppression non réussie !",
+      text: "Vous ne pouvez pas supprimer le compte de l\'administrateur.",
+      icon: "error",
+      confirmButtonColor: "#3099d6",
+      confirmButtonText: "OK"
+  });
+  </script>';
+
+  // Supprimer la variable de session pour éviter qu'elle ne s'affiche à nouveau lors du rechargement de la page
+  unset($_SESSION['supp_non_reussi']);
 }
 ?>
 
@@ -162,10 +190,11 @@ if (isset($_SESSION['desactive_non_autorise']) && $_SESSION['desactive_non_autor
 <script>
 
 
-var liensArchiver = document.querySelectorAll("#supprimer");
+
+var liensArchivers = document.querySelectorAll("#supprimer");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
-liensArchiver.forEach(function(lien) {
+liensArchivers.forEach(function(lien) {
   lien.addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
@@ -178,25 +207,14 @@ liensArchiver.forEach(function(lien) {
       cancelButtonText: "Annuler",
       confirmButtonText: "Supprimer"
     }).then((result) => {
-      if (result.isConfirmed) {
-        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        Swal.fire({
-          title: "Suppression réussie !",
-          text: "L'utilisateur a été supprimée avec succès.",
-          icon: "success",
-          confirmButtonColor: "#3099d6",
-          confirmButtonText: "OK",
-          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
-          //timerProgressBar: true,
-          showConfirmButton: true
-        }).then(() => {
+
           // Redirection après le délai
           window.location.href = this.href;
         });
-      }
+      })
     });
-  });
-});
+
+
 
 
 var liensArchivers = document.querySelectorAll("#active");
