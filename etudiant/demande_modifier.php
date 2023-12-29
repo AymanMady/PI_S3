@@ -89,22 +89,33 @@ if (mysqli_num_rows($req3) > 0) {
 
     include "nav_bar.php";
 
+    $id_sous = $_GET['id_sous'];
+    $id_matiere = $_GET['id_matiere'];
+    $color = $_GET['color'];
+    $id_semestre = $_GET['id_semestre'];
+
+    $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous ";
+    $req = mysqli_query($conn, $req_detail);
+    $row_titre = mysqli_fetch_assoc($req);
 ?>
-    <div class="main-panel">
-        <div class="content-wrapper">
-            <h3 class="page-title"> Demande d'autorisation de modifier le travail en question.</h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Démande</li>
-                </ol>
-            </nav>
-            <div class="row">
+<div class="content-wrapper">
+    <div class="content">
+
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo "S" . $id_semestre ?></a>   / <a href="soumission_etu_par_matiere.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="soumission_etu.php?id_sous=<?=$id_sous?>&id_matiere=<?=$id_matiere?>&color=<?$color?>&id_semestre=<?=$id_semestre?>"><?php echo $row_titre['titre_sous']; ?></a> / <a href="#">Demande</a>
+            </h3>
+        </div>
+
+    <div class="content">
+        <div class="row">
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
+                        <h3 class="page-title"> Demande d'autorisation de modifier le travail en question.</h3>
+                            <br>
                             <p class="erreur_message">
                                 <?php
                                 if (isset($message)) {

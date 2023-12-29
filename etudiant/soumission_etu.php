@@ -36,6 +36,7 @@ require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
 
 
+$id_semestre = $_GET['id_semestre'];
 
 
 // ferification si touts les eturdient sont rapondu a le somission 
@@ -85,30 +86,6 @@ mysqli_num_rows($req);
 $row = mysqli_fetch_assoc($req);
 
 
-if (isset($_SESSION['temp_fin']) && ($_SESSION['temp_fin'] === true)) {
-    echo "<div class='alert alert-danger' id='success-alert' >
-        L'heure spécifiée pour l'examen est déjà écoulée.
-                        </div>";
-
-    // Supprimer l'indicateur de succès de la session
-    unset($_SESSION['temp_fin']);
-}
-if (isset($_SESSION['temp_finni']) && ($_SESSION['temp_finni'] === true)) {
-    echo "<div class='alert alert-danger' id='success-alert' >
-                    L'enregistrement précédent n'a pas été pris en compte car le temps imparti était écoulé.
-                    </div>";
-
-    // Supprimer l'indicateur de succès de la session
-    unset($_SESSION['temp_finni']);
-}
-if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === true)) {
-    echo "<div class='alert alert-danger' id='success-alert' >
-                L'envoi du message a échoué car le temps a expiré.
-                </div>";
-
-    // Supprimer l'indicateur de succès de la session
-    unset($_SESSION['modification_fin']);
-}
 ?>
 <div class="content-wrapper">
     <div class="content">
@@ -117,22 +94,47 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                     <i class="mdi mdi-home"></i>
-                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo "S" . $_SESSION['id_sem'] ?>"><?php echo "S" . $_SESSION['id_sem'] ?></a>   / <a href="soumission_etu_par_matiere.php"><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="#"><?php echo $row['titre_sous']; ?></a> 
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo "S" . $id_semestre ?></a>   / <a href="soumission_etu_par_matiere.php?id_semestre=<?php echo  $id_semestre ?>""><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="#"><?php echo $row['titre_sous']; ?></a> 
             </h3>
         </div>
 
     <div class="content">
         <div class="row">
         <h3 class="page-title">Dètails sur la soumission <?php echo $row['titre_sous']; ?> : </h3><br><br>
+            <?php
 
-      
+             if (isset($_SESSION['temp_fin']) && ($_SESSION['temp_fin'] === true)) {
+            echo "<div class='alert alert-danger' id='success-alert' >
+                L'heure spécifiée pour l'examen est déjà écoulée.
+                                            </div>";
 
+                // Supprimer l'indicateur de succès de la session
+                unset($_SESSION['temp_fin']);
+            }
+            if (isset($_SESSION['temp_finni']) && ($_SESSION['temp_finni'] === true)) {
+                echo "<div class='alert alert-danger' id='success-alert' >
+                                L'enregistrement précédent n'a pas été pris en compte car le temps imparti était écoulé.
+                                </div>";
+
+                // Supprimer l'indicateur de succès de la session
+                unset($_SESSION['temp_finni']);
+            }
+            if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === true)) {
+                echo "<div class='alert alert-danger' id='success-alert' >
+                            L'envoi du message a échoué car le temps a expiré.
+                            </div>";
+
+                // Supprimer l'indicateur de succès de la session
+                unset($_SESSION['modification_fin']);
+            }
+            ?>
 
             <div class="col-md-6 grid-margin">
                 <div class="card">
                     <div class="card-body mb-4">
                         <h2 class="card-title">L'annonce jointe pour la soumission.</h2>
                         <?php
+
                         if (strtotime(gmdate("Y-m-d H:i:s")) >= strtotime($row['date_fin'])) {
                             echo ' <div class="alert alert-danger mt-3" id="success-alert">
                                 <strong>La date spécifiée pour cette soumission à été terminé.</strong>
@@ -252,7 +254,7 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
                         $_SESSION['autorisation'] = true;
             ?>
                         <p>
-                            <a href="automatisation.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Rendre le travail</a>
+                            <a href="automatisation.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Rendre le travail</a>
                         </p>
                     <?php
                     } else {
@@ -261,14 +263,14 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
                         if ($row['confirmer'] ==  1) {
                         ?>
                             <p>
-                                <a href="demande_modifier.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Demande de faire une modification</a>
+                                <a href="demande_modifier.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Demande de faire une modification</a>
                             </p>
                         <?php
                         } else {
                             $_SESSION['autorisation'] = true;
                         ?>
                             <p>
-                                <a href="reponse_etudiant.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Modifier le travail</a>
+                                <a href="reponse_etudiant.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Modifier le travail</a>
                             </p>
                         <?php
                         }
@@ -278,7 +280,7 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
                         $_SESSION['autorisation'] = true;
                         ?>
                         <p>
-                            <a href="automatisation.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Rendre le travail</a>
+                            <a href="automatisation.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Rendre le travail</a>
                         </p>
                     <?php
                     } else {
@@ -287,14 +289,14 @@ if (isset($_SESSION['modification_fin']) && ($_SESSION['modification_fin'] === t
                         if ($row['confirmer'] ==  1) {
                         ?>
                             <p>
-                                <a href="demande_modifier.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Demande de faire une modification</a>
+                                <a href="demande_modifier.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Demande de faire une modification</a>
                             </p>
                         <?php
                         } else {
                             $_SESSION['autorisation'] = true;
                         ?>
                             <p>
-                                <a href="reponse_etudiant.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>" class="btn btn-primary">Modifier le travail</a>
+                                <a href="reponse_etudiant.php?id_sous=<?= $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>&id_semestre=<?php echo $id_semestre ?>" class="btn btn-primary">Modifier le travail</a>
                             </p>
                         <?php
                         }

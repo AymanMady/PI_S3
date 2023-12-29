@@ -89,7 +89,8 @@ $row2 = mysqli_fetch_assoc($req2);
                 <div>
                     <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
                 </div>
-                <div><a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a></div>
+                <div>
+                    <a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a></div>
                 <div>
                     <form action="" method="POST">
                         <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="enoyer_note">

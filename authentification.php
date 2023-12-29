@@ -11,7 +11,6 @@ include_once("controller.php");
 <script src="JS/typed.umd.js"></script>
 
 
-
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -19,7 +18,7 @@ include_once("controller.php");
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left p-2">
                         <center>
-                            <div class="brand-logo ">
+                            <div class="brand-logo">
                                 <img src="images/logo-supnum2.png">
                             </div>
                             <h4>Institut supérieur du numérique</h4>

@@ -75,7 +75,7 @@ if (isset($_POST['button'])) {
                     $code_matiere_result = mysqli_query($conn, $sql3);
                     $row = mysqli_fetch_assoc($code_matiere_result);
                     $code_matire = $row['code'];
-                    $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
+                    $matiere_directory = '/home/projet_sous-main/Files/' . $code_matire;
 
                     // Créer le dossier s'il n'existe pas
                     if (!is_dir($matiere_directory)) {
