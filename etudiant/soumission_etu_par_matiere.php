@@ -113,12 +113,12 @@ $row1 =  mysqli_fetch_assoc($sql2);
                         <?php
                         ?>
                         <div class="col-md-14 stretch-card grid-margin">
-                            <div class="card bg-gradient card-img-holder text-black" id="tou">
+                            <div class="card bg-gradient card-img-holder text-black" id="tou"onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                                 <div class="card-body div-hover" class="div-hover" style="display: flex;justify-content: left;padding: 15px; ">
                                     <div class="btn-gradient-info" style="width: 37px;border-radius: 100%;height: 40px;display: flex;justify-content: center;align-items: center;margin-right: 10px;" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
                                         <i class="mdi mdi-book-open-page-variant " style="font-size: 20px;"></i>
                                     </div>
-                                    <div onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
+                                    <div >
                                         <p class="m-0"><?= $rot['nom'] . " " . $rot['prenom'] ?> a publié un nouveau <?= $row['titre_sous'] ?> </p>
                                         <p style="margin: 0%;">De &nbsp;<?= $row['date_debut'] ?> &nbsp; à &nbsp; <?= $row['date_fin']  ?> </p>
                                     </div>
