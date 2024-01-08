@@ -18,10 +18,8 @@
   <link rel="stylesheet" href="CSS/data_table_boostrapp.css"> -->
 
   
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
-  <!-- end css for table-data -->
-  <script src="../JS/sweetalert2.js"></script>
 
 </head>
 

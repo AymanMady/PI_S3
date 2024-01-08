@@ -29,7 +29,8 @@ if ($_SESSION["role"] == "ens") {
     <!-- end css for table-data -->
 
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
     <style>
       .logo {
