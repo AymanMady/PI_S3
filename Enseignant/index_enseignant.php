@@ -78,7 +78,6 @@ $id_sem = $_SESSION;
                     $i++;
                 }
             }
-            //Bla bla 
             ?>
         </div>
     </div>
