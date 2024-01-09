@@ -8,7 +8,7 @@ if ($_SESSION["role"] != "ens") {
 
 include_once "../connexion.php";
 $id_sem=$_SESSION['id_semestre'];
-$semestre = "SELECT matiere.*, enseigner.*, enseignant.* FROM matiere, enseigner, enseignant 
+$semestre = "SELECT DISTINCT matiere.*, enseignant.* FROM matiere, enseigner, enseignant 
     WHERE matiere.id_matiere = enseigner.id_matiere AND
     enseigner.id_ens = enseignant.id_ens AND email='$email' and matiere.id_semestre=$id_sem";
 $semestre_qry = mysqli_query($conn, $semestre);
@@ -146,8 +146,8 @@ include "nav_bar.php";
                         <div class="col-md-12">
                             <select class="form-control" id="academic" value="Semesters" name="matiere">
                                 <option selected disabled> Matière </option>
-                                <?php while ($row = mysqli_fetch_assoc($semestre_qry)) : ?>
-                                    <option value="<?= $row['id_matiere']; ?>"><?= $row['code']; ?> <?= $row['libelle']; ?> </option>
+                                <?php while ($row_select_matiere = mysqli_fetch_assoc($semestre_qry)) : ?>
+                                    <option value="<?= $row_select_matiere['id_matiere']; ?>"><?= $row_select_matiere['code']; ?> <?= $row_select_matiere['libelle']; ?> </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
