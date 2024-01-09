@@ -68,17 +68,14 @@ if (isset($_POST['button'])) {
                         $code_matiere_result = mysqli_query($conn, $sql3);
                         $row = mysqli_fetch_assoc($code_matiere_result);
                         $code_matire = $row['code'];
-                        $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
+                        $matiere_directory = '../files/' . $code_matire;
 
                         // Créer le dossier s'il n'existe pas
                         if (!is_dir($matiere_directory)) {
                             mkdir($matiere_directory, 0777, true);
                         }
-
-                        // Chemin complet 
                         $destination = $matiere_directory . '/' . $new_file_name;
                         move_uploaded_file($file_tmp, $destination);
-
                         echo $destination;
                         echo $file_name;
                         // Insérer les infos dans la base de données
@@ -96,7 +93,7 @@ if (isset($_POST['button'])) {
     }
 
 include "nav_bar.php";
-$sql = "SELECT * ,matiere.libelle as libelle_matiere FROM soumission,matiere,enseignant,type_soumission WHERE soumission.id_ens = enseignant.id_ens and soumission.id_matiere = matiere.id_matiere and soumission.id_type_sous = type_soumission.id_type_sous and id_sous = 1;";
+$sql = "SELECT * ,matiere.libelle as libelle_matiere FROM soumission,matiere,enseignant,type_soumission WHERE soumission.id_ens = enseignant.id_ens and soumission.id_matiere = matiere.id_matiere and soumission.id_type_sous = type_soumission.id_type_sous and id_sous = $id_sous;";
 $req = mysqli_query($conn, $sql);
 $row_glob = mysqli_fetch_assoc($req);
 ?>
