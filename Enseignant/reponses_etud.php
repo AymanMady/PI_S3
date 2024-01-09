@@ -72,7 +72,7 @@ $row2 = mysqli_fetch_assoc($req2);
         <div class="col-md-3 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-description">Nombre d'étudiants ayant répondu</h4>
+                    <h4 class="card-description">Nombre d'étudiants ayant répondu </h4>
                     <div class="media">
                         <div class="media-body">
                             <center>
@@ -84,12 +84,15 @@ $row2 = mysqli_fetch_assoc($req2);
             </div>
         </div>
 
-        <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
-            <div class="card-body" style="display: flex ; justify-content: space-between;">
+        <div class="card-body" style="display: flex ; justify-content: space-between;">
                 <div>
-                    <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
+                    <a href="list_etudiant.php?id_matiere=<?= $row_sous['id_matiere'] ?>&id_sous=<?= $id_sous ?>" class="btn btn-gradient-primary">Liste des étudiants inscrits</a>
                 </div>
-                <div><a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a></div>
+                
+        <?php if (mysqli_num_rows($req_affichage) > 0) { ?>
+                <div>
+                    <a href="exporter_note.php?id_sous=<?= $id_sous ?>&id_matiere=<?= $row_sous['id_matiere'] ?>" class="btn btn-primary">Exporter les notes</a>
+                </div>
                 <div>
                     <form action="" method="POST">
                         <input type="submit" class="btn btn-gradient-primary ml-25" value="Envoyer les Notes" name="enoyer_note">

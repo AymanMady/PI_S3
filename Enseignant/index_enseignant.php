@@ -38,7 +38,15 @@ $id_sem = $_SESSION;
         <div class="row">
 
             <?php
-            $req_ens_mail =  "SELECT matiere.*, semestre.* FROM matiere, enseigner, enseignant, semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email' and semestre.id_semestre=$id_semestre";
+            $req_ens_mail =  "SELECT DISTINCT matiere.*, semestre.*
+            FROM matiere
+            JOIN enseigner ON matiere.id_matiere = enseigner.id_matiere
+            JOIN enseignant ON enseigner.id_ens = enseignant.id_ens
+            JOIN semestre ON matiere.id_semestre = semestre.id_semestre
+            WHERE
+                enseignant.email = '$email'
+                AND semestre.id_semestre = $id_semestre";
+
             $i = 0;
             $list_colors = array("success", "info", "secondary", "primary");
             $list_colors_hover = array("#24b2d016", "#dfe9f7", "#dfe9f7", "rgba(163, 93, 255, 0.15)");

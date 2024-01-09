@@ -19,6 +19,14 @@ use function PHPSTORM_META\type;
         cursor: pointer;
         background-color: aliceblue;
     }
+    div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+
+
+
 </style>
 
 <?php 
@@ -51,18 +59,16 @@ $id_sem=$_SESSION['id_semestre'];
 
 if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                   
-?>
-<div class="content-wrapper">
+ ?>
+
+    <div class="content-wrapper">
     <div class="content">
-        <div class="page-header">
+    <div class="scrollmenu">
             <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-calendar-clock"></i>
             </span> Soumission / Soumission en Ligne
             </h3>
-        </div>
-
-    <div class="content">
         <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
@@ -105,10 +111,14 @@ if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
                                 ?>
                                 </tbody>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+      
+        </div>
+        </div>
         </div>
 <?php
 }

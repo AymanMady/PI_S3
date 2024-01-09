@@ -105,7 +105,6 @@ $type_sous_qry = mysqli_query($conn, $type_sous);
         </div>
 
     <div class="content">
-        <div class="row">
         <div class="col-md-12 stretch-card grid-margin">
                 <div class="card bg-gradient-<?php echo $color ?> card-img-holder text-white">
                   <div class="card-body ">

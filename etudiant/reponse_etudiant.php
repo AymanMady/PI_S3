@@ -1,28 +1,27 @@
 <?php
 session_start();
-$id_matiere = $_GET['id_matiere'];
-$color = $_GET['color'];
 $email = $_SESSION['email'];
 if ($_SESSION["role"] != "etudiant") {
     header("location:../authentification.php");
 }
 
 include_once "../connexion.php";
-?>
 
-<?php
 
-if (!empty($_GET['id_sous'])) {
-    $id_sous = $_GET['id_sous'];
-} else {
-    $id_sous = $_SESSION['id_sous'];
-}
+$id_sous = $_GET['id_sous'];
+$id_matiere = $_GET['id_matiere'];
+$color = $_GET['color'];
+$id_semestre = $_GET['id_semestre'];
 
 
 if (!isset($_SESSION['autorisation']) && $_SESSION['autorisation'] != true) {
     $_SESSION['id_sous'] = $id_sous;
-    header("location:soumission_etu.php");
+    header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
 }
+
+$req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous ";
+$req = mysqli_query($conn, $req_detail);
+$row_titre = mysqli_fetch_assoc($req);
 ?>
 
 
@@ -69,7 +68,7 @@ if (mysqli_num_rows($req) == 0) {
                         $code_matiere_result = mysqli_query($conn, $sql3);
                         $row = mysqli_fetch_assoc($code_matiere_result);
                         $matricule = $row['matricule'];
-                        $matricule_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $matricule;
+                        $matricule_directory = '../files/reponses/' . $matricule;
 
                         // Créer le dossier s'il n'exist pas
                         if (!is_dir($matricule_directory)) {
@@ -84,18 +83,17 @@ if (mysqli_num_rows($req) == 0) {
                         $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ($id_rep, '$file_name', '$destination')";
                         $req2 = mysqli_query($conn, $sql2);
                         if ($req1 and $req2) {
-                            $id_matiere = $_GET['id_matiere'];
-                            $color = $_GET['color'];
+
                             $_SESSION['id_sous'] = $id_sous;
                             $_SESSION['ajout_reussi'] = true;
-                            header("location:reponse_etudiant.php?id_matiere=$id_matiere&color=$color");
+                            header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
                         }
                     }
                 }
             }
         } else {
             $_SESSION['id_sous'] = $id_sous;
-            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+            header("location:soumission_etu.php?$id_sous&$id_matiere&$color&$id_semestre");
             $_SESSION['temp_finni'] = true;
         }
     }
@@ -103,21 +101,23 @@ if (mysqli_num_rows($req) == 0) {
 
     include "nav_bar.php";
 
+
+
 ?>
+<div class="content-wrapper">
+    <div class="content">
 
-    <div class="content-wrapper">
-        <div class="container">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo "S" . $id_semestre ?></a>   / <a href="soumission_etu_par_matiere.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="soumission_etu.php?id_sous=<?=$id_sous?>&id_matiere=<?=$id_matiere?>&color=<?$color?>&id_semestre=<?=$id_semestre?>"><?php echo $row_titre['titre_sous']; ?></a> / <a href="#">Réponse</a>
+            </h3>
+        </div>
 
-            <h3 class="page-title"> Mettez votre réponse ici </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Réponse</li>
-                </ol>
-            </nav>
-            <div class="row">
+    <div class="content">
+        <div class="row">
+        <h3 class="page-title"> Mettez votre réponse ici </h3>
 
                 <div class="form-horizontal">
                     <p class="erreur_message">
@@ -173,7 +173,6 @@ if (mysqli_num_rows($req) == 0) {
     }
 
     if (isset($_POST['button'])) {
-
         $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
         $req3 = mysqli_query($conn, $req_detail3);
         if (mysqli_num_rows($req3) > 0) {
@@ -199,7 +198,7 @@ if (mysqli_num_rows($req) == 0) {
                         $code_matiere_result = mysqli_query($conn, $sql3);
                         $row = mysqli_fetch_assoc($code_matiere_result);
                         $matricule = $row['matricule'];
-                        $matricule_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $matricule;
+                        $matricule_directory = '../files/reponses/' . $matricule;
 
                         // Créer le dossier s'il n'exist pas
                         if (!is_dir($matricule_directory)) {
@@ -216,12 +215,9 @@ if (mysqli_num_rows($req) == 0) {
 
 
                         if ($req1 && $req2) {
-                            unset($_SESSION['autorisation']);
-                            $_SESSION['id_sous'] = $id_sous;
+                            // unset($_SESSION['autorisation']);
                             $_SESSION['ajout_reussi'] = true;
-                            $id_matiere = $_GET['id_matiere'];
-                            $color = $_GET['color'];
-                            header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+                            header("location:reponse_etudiant.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
                         } else {
                             mysqli_connect_error();
                         }
@@ -230,26 +226,12 @@ if (mysqli_num_rows($req) == 0) {
             }
         } else {
             $_SESSION['id_sous'] = $id_sous;
-            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
             $_SESSION['temp_finni'] = true;
         }
     }
 
     if (isset($_POST['confirmer'])) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $req_detail3 = "SELECT  *   FROM soumission   WHERE id_sous = $id_sous and (status=0 or status=1)  and date_fin > NOW()  ";
         $req3 = mysqli_query($conn, $req_detail3);
         if (mysqli_num_rows($req3) > 0) {
@@ -258,26 +240,15 @@ if (mysqli_num_rows($req) == 0) {
             $req1 = mysqli_query($conn, $sql);
 
             if ($req1) {
-
-
-
-
-
                 $_SESSION['autorisation'] = false;
                 unset($_SESSION['autorisation']);
-                $id_matiere = $_GET['id_matiere'];
-                $color = $_GET['color'];
-                $_SESSION['id_sous'] = $id_sous;
                 $_SESSION['ajout_reussi'] = true;
-                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+                header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
             } else {
                 echo "il y'a un erreur ! ";
             }
         } else {
-            $id_matiere = $_GET['id_matiere'];
-            $color = $_GET['color'];
-            $_SESSION['id_sous'] = $id_sous;
-            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color");
+            header("location:soumission_etu.php?id_sous=$id_sous&id_matiere=$id_matiere&color=$color&id_semestre=$id_semestre");
             $_SESSION['temp_finni'] = true;
         }
     }
@@ -289,19 +260,20 @@ if (mysqli_num_rows($req) == 0) {
     $row = mysqli_fetch_assoc($req1);
 
 ?>
-    <div class="content-wrapper">
-        <div class="container">
-            <h3 class="page-title"> Modifier votre réponse </h3>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index_etudiant.php">Accueil</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Soumission par matière</a></li>
-                    <li class="breadcrumb-item"><a href="soumission_etu.php?id_sous=<?php echo $id_sous ?>&id_matiere=<?php echo $id_matiere ?>&color=<?php echo $color ?>">Dètails</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Réponse</li>
-                </ol>
-            </nav>
-            <div class="row">
+<div class="content-wrapper">
+    <div class="content">
 
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                    <i class="mdi mdi-home"></i>
+                </span> <a href="choix_semestre.php">Accueil</a>  / <a href="index_etudiant.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo "S" . $id_semestre ?></a>   / <a href="soumission_etu_par_matiere.php?id_semestre=<?php echo  $id_semestre ?>"><?php echo $_SESSION['nom_mat'] ?></a>  / <a href="soumission_etu.php?id_sous=<?=$id_sous?>&id_matiere=<?=$id_matiere?>&color=<?$color?>&id_semestre=<?=$id_semestre?>"><?php echo $row_titre['titre_sous']; ?></a> / <a href="#">Réponse</a>
+            </h3>
+        </div>
+
+    <div class="content">
+        <div class="row">
+        <h3 class="page-title"> Modifier votre réponse </h3><br><br>
                 <div class="col-md-5 grid-margin">
                     <div class="card">
                         <div class="card-body">
@@ -321,7 +293,7 @@ if (mysqli_num_rows($req) == 0) {
                 <div class="col-md-7 grid-margin">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Réponce de l'etudiant à cette soumission.</p>
+                            <p class="card-title">Votre réponse : </p>
                             <?php
                             $sql2 = "SELECT * FROM fichiers_reponses, reponses, etudiant WHERE fichiers_reponses.id_rep = reponses.id_rep AND reponses.id_etud = etudiant.id_etud AND email = '$email' AND reponses.id_sous = '$id_sous';";
                             $req2 = mysqli_query($conn, $sql2);
@@ -356,7 +328,7 @@ if (mysqli_num_rows($req) == 0) {
                                             }
                                             ?>
                                             <a class="btn btn-inverse-info btn-sm ms-4" href="telecharger_fichier.php?file_name=<?= $file_name ?>&id_rep=<?= $id_rep ?>">Télécharger</a>
-                                            <a class="btn btn-inverse-danger btn-sm ms-4" href="supprime_fichier.php?file_name=<?= $file_name ?>&id_sous=<?= $id_sous ?>">Supprimer</a>
+                                            <a class="btn btn-inverse-danger btn-sm ms-4" href="supprime_fichier.php?id_file=<?= $row2['id_fich_rep'] ?>&id_sous=<?= $id_sous ?>&id_matiere=<?=$id_matiere?>&color=<?=$color?>&id_semestre=<?=$id_semestre?>">Supprimer</a>
                                         </blockquote>
                                         <br>
                                 <?php

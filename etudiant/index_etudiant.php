@@ -47,7 +47,7 @@ if (isset($_GET['id_semestre'])) {
                         ?>
                         <div class="col-md-4 stretch-card grid-margin">
                             <div class="card bg-gradient-<?php echo $list_colors[$i] ?> card-img-holder text-white">
-                                <a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $list_colors[$i] ?>" style="text-decoration: none;" class="text-white">
+                                <a href="soumission_etu_par_matiere.php?id_matiere=<?php echo $row['id_matiere']?>&color=<?php echo $list_colors[$i] ?>&id_semestre=<?= $row['id_semestre'] ?>" style="text-decoration: none;" class="text-white">
                                     <div class="card-body"  onclick="redirectToDetails(<?php echo $row['id_matiere'] ?>)" >
                                         <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                         <h3 class="mb-5"><?= $row['libelle'] ?> <?= $row['code'] ?></h3>

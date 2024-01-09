@@ -47,7 +47,7 @@ if (isset($_POST['button'])) {
     $dateTime = new DateTime($date_fin);
     $date_fin_justifie = $dateTime->format('Y-m-d H:i:s');
 
-    if(strtotime($date_fin_justifie) < strtotime($date) || strtotime($date_debut_justifie) > strtotime($date) ){
+    if(strtotime($date_fin_justifie) < strtotime($date)  ){
         $message = "veuillez verifier les dates !";
     } else {
 
@@ -75,7 +75,7 @@ if (isset($_POST['button'])) {
                     $code_matiere_result = mysqli_query($conn, $sql3);
                     $row = mysqli_fetch_assoc($code_matiere_result);
                     $code_matire = $row['code'];
-                    $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
+                    $matiere_directory = '../files/' . $code_matire;
 
                     // Créer le dossier s'il n'existe pas
                     if (!is_dir($matiere_directory)) {
