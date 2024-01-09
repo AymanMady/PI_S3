@@ -11,7 +11,7 @@ use function PHPSTORM_META\type;
 ?>
 
     <!-- sweetalert2 links -->
-    <script src="../JS/sweetalert2.js"></script>
+    <!-- <script src="../JS/sweetalert2.js"></script> -->
 
 <style>
     /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */

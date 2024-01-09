@@ -25,6 +25,19 @@ include_once "nav_bar.php";
         </li>
       </ul>
     </nav>
+
   </div>
+  
+
+    <span class="text-center mt-5" id="element"></span>
+
+<script src="../node_modules/typed.js/dist/typed.umd.js"></script>
+<script>
+  var typed = new Typed('#element', {
+    strings: ['<h4>﴾ يَاأَيُّهَا الَّذِينَ آمَنُوا لَا تَسْأَلُوا عَنْ أَشْيَاءَ إِنْ تُبْدَ لَكُمْ تَسُؤْكُمْ  وَإِنْ تَسْأَلُوا عَنْهَا حِينَ يُنَزَّلُ الْقُرْآنُ تُبْدَ لَكُم عَفَا اللَّهُ عَنْهَا وَاللَّهُ غَفُورٌ حَلِيمٌ ﴿</h4>'],
+    typeSpeed: 10,
+    // loop: true,
+  });
+</script>
 </div>
 </div>
